@@ -239,6 +239,7 @@ namespace NullSpace.SDK.Demos
 			{
 				MarkElementChanged();
 			}
+
 			//Debug.Log("File has been modified since load: [" + FileHasBeenModified() + "]\n");
 			try
 			{
@@ -298,6 +299,26 @@ namespace NullSpace.SDK.Demos
 				return false;
 			}
 			return true;
+		}
+
+		public HapticHandle CreateCodeHaptic()
+		{
+			//Debug.Log("Hit\n");
+			CodeSequence seq = new CodeSequence();
+			seq.AddChild(0.0f, new CodeEffect("buzz", .2f));
+			seq.AddChild(0.3f, new CodeEffect("click", 0.0f));
+			//seq.Play(AreaFlag.All_Areas);
+
+			CodePattern pat = new CodePattern();
+			pat.AddChild(0.5f, AreaFlag.Lower_Ab_Both, seq);
+			pat.AddChild(1.0f, AreaFlag.Mid_Ab_Both, seq);
+			pat.AddChild(1.5f, AreaFlag.Upper_Ab_Both, seq);
+			pat.AddChild(2.0f, AreaFlag.Chest_Both, seq);
+			pat.AddChild(2.5f, AreaFlag.Shoulder_Both, seq);
+			pat.AddChild(2.5f, AreaFlag.Back_Both, seq);
+			pat.AddChild(3.0f, AreaFlag.Upper_Arm_Both, seq);
+			pat.AddChild(3.5f, AreaFlag.Forearm_Both, seq);
+			return pat.Play();
 		}
 
 		void Update()
