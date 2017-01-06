@@ -1,0 +1,18 @@
+{
+	"pattern" : [
+		{"time" : 0.0, "sequence" : "ns.triple_click", "area": "Lower_Ab_Left", "strength" : 0.5},
+		{"time" : 0.2, "sequence" : "ns.triple_click", "area": "Mid_Ab_Left", "strength" : 0.5},
+		{"time" : 0.4, "sequence" : "ns.triple_click", "area": "Upper_Ab_Left", "strength" : 0.5},
+		{"time" : 0.6, "sequence" : "ns.triple_click", "area": "Chest_Left", "strength" : 0.5},
+		{"time" : 0.8, "sequence" : "ns.click", "area": "Shoulder_Left"},
+		{"time" : 1.6, "sequence" : "ns.click", "area": "Shoulder_Left"},
+		{"time" : 2.4, "sequence" : "ns.click", "area": "Shoulder_Left"},
+
+		{"time" : 3.2, "sequence" : "ns.buzz", "area": "Chest_Right"},
+		{"time" : 3.25, "sequence" : "ns.buzz", "area": "Upper_Ab_Right"},
+		{"time" : 3.3, "sequence" : "ns.buzz", "area": "Mid_Ab_Right"},
+		{"time" : 3.35, "sequence" : "ns.buzz", "area": "Lower_Ab_Right"}
+	
+	]		
+
+}

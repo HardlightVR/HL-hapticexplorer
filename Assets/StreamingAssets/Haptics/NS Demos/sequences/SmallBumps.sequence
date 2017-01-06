@@ -1,0 +1,11 @@
+{
+	"sequence" : [
+
+		{"time" : 0.0, "effect" : "transition_hum", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.05, "effect" : "bump", "strength" : 0.2, "duration" : 0.1},
+		{"time" : 0.15, "effect" : "bump", "strength" : 0.4, "duration" : 0.1},
+		{"time" : 0.25, "effect" : "bump", "strength" : 0.2, "duration" : 0.1},
+		{"time" : 0.4, "effect" : "bump", "strength" : 1.5, "duration" : 0.1}
+	]
+}
+

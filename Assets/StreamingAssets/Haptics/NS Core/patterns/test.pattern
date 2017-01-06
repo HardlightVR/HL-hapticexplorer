@@ -1,0 +1,7 @@
+{
+	"pattern" : [
+		{"time" : 0.0, "sequence" : "ns.demos.click_click_click", "area": "Lower_Ab_Left"},
+		{"time" : 3.8, "sequence" : "ns.demos.click_click_click", "area": "Mid_Ab_Left"},
+		{"time" : 7.6, "sequence" : "ns.demos.click_click_click", "area": "Upper_Ab_Left"}
+	]
+}

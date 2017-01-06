@@ -1,0 +1,15 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 0.70, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 1.40, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 2.10, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 2.80, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 3.50, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 4.20, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 4.90, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 5.60, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 6.30, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"}
+	]
+}

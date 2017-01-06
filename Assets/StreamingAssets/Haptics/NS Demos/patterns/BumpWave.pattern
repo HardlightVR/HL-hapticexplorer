@@ -1,0 +1,15 @@
+{
+	"pattern" : [
+		{"time" : 0.0, "sequence" : "ns.demos.SmallBumps", "area": "Forearm_Right"},
+		{"time" : 0.5, "sequence" : "ns.demos.MediumBumps", "area": "Upper_Arm_Right"},
+		{"time" : 1.0, "sequence" : "ns.demos.BigBumps", "area": "Shoulder_Right"},
+		{"time" : 1.5, "sequence" : "ns.demos.BigBumps", "area": "Shoulder_Left"},
+		{"time" : 2.0, "sequence" : "ns.demos.MediumBumps", "area": "Upper_Arm_Left"},
+		{"time" : 2.5, "sequence" : "ns.demos.SmallBumps", "area": "Forearm_Left"},
+		{"time" : 3.0, "sequence" : "ns.demos.MediumBumps", "area": "Upper_Arm_Left"},
+		{"time" : 3.5, "sequence" : "ns.demos.BigBumps", "area": "Shoulder_Left"},
+		{"time" : 4.0, "sequence" : "ns.demos.BigBumps", "area": "Shoulder_Right"},
+		{"time" : 4.5, "sequence" : "ns.demos.MediumBumps", "area": "Upper_Arm_Right"},
+		{"time" : 5.0, "sequence" : "ns.demos.SmallBumps", "area": "Forearm_Right"}
+	]
+}

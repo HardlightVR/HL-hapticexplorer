@@ -1,0 +1,13 @@
+{
+	"sequence" : [
+
+		{"time" : 0.0, "effect" : "pulse", "strength" : 0.5, "duration" : 0.2},
+		{"time" : 0.2, "effect" : "pulse", "strength" : 0.1, "duration" : 0.2},
+		{"time" : 0.4, "effect" : "pulse", "strength" : 0.2, "duration" : 0.2},
+		{"time" : 0.6, "effect" : "pulse", "strength" : 0.3, "duration" : 0.2},
+		{"time" : 0.8, "effect" : "pulse", "strength" : 0.4, "duration" : 0.2},
+		{"time" : 1.0, "effect" : "pulse", "strength" : 0.5, "duration" : 0.2},
+		{"time" : 1.2, "effect" : "double_click", "strength" : 1.0, "duration" : 0.0}
+	]
+}
+

@@ -1,0 +1,9 @@
+{
+	"sequence" : [
+
+		{"time" : 0.0, "effect" : "pulse", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.1, "effect" : "pulse", "strength" : 0.6, "duration" : 0.1},
+		{"time" : 0.2, "effect" : "hum", "strength" : 0.3, "duration" : 0.1}
+	]
+}
+

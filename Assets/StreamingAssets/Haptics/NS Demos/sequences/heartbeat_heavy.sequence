@@ -1,0 +1,8 @@
+{
+	"sequence" : [
+		{"time" : 0.06, "effect" 	: "fuzz", 	"strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.1, "effect" 	: "bump", 	"strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.46, "effect" 	: "fuzz", 	"strength" : 0.6, "duration" : 0.0},
+		{"time" : 0.5, "effect"	: "sharp_tick", 	"strength" : 0.8, "duration" : 0.0}
+	]
+}

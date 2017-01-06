@@ -1,0 +1,15 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"},
+		{"time" : 0.90, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"},
+		{"time" : 1.80, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"},
+		{"time" : 2.70, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"},
+		{"time" : 3.60, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"},
+		{"time" : 4.50, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"},
+		{"time" : 5.40, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"},
+		{"time" : 6.30, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"},
+		{"time" : 7.20, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"},
+		{"time" : 8.10, "sequence" : "ns.demos.heartbeat", "area": "Chest_Left"}
+	]
+}

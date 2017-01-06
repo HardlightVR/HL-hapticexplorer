@@ -1,0 +1,9 @@
+{
+	"experience" : [
+		{"time" : 0.0, "pattern" : "ns.demos.chest_swirl"},
+		{"time" : 0.8, "pattern" : "ns.demos.chest_swirl"},
+		{"time" : 1.6, "pattern" : "ns.demos.chest_swirl"},
+		{"time" : 2.4, "pattern" : "ns.demos.chest_swirl"}
+ 
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"pattern" : [
+		{"time" : 0.0, "sequence" : "ns.click", "area": "Lower_Ab_Both"},
+		{"time" : 0.1, "sequence" : "ns.click", "area": "Mid_Ab_Both"},
+		{"time" : 0.2, "sequence" : "ns.click", "area": "Upper_Ab_Both"},
+		{"time" : 0.3, "sequence" : "ns.click", "area": "Chest_Both"},
+		{"time" : 0.4, "sequence" : "ns.click", "area": "Shoulder_Both"},
+		{"time" : 0.5, "sequence" : "ns.click", "area": "Upper_Arm_Both|Back_Both"},
+		{"time" : 0.6, "sequence" : "ns.click", "area": "Forearm_Both"}
+	]
+}

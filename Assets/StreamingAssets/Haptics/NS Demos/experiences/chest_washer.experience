@@ -1,0 +1,15 @@
+{
+	"experience" : [
+		{"time" : 0.0, "pattern" : "ns.demos.chest_swirl"},
+		{"time" : 0.8, "pattern" : "ns.demos.chest_swirl"},
+		{"time" : 1.6, "pattern" : "ns.demos.chest_pulse"},
+		{"time" : 1.7, "pattern" : "ns.demos.chest_swirl_reverse"},
+		{"time" : 2.5, "pattern" : "ns.demos.chest_swirl_reverse"},
+		{"time" : 3.3, "pattern" : "ns.demos.chest_pulse"},
+		{"time" : 3.4, "pattern" : "ns.demos.chest_swirl"},
+		{"time" : 4.2, "pattern" : "ns.demos.chest_swirl"},
+		{"time" : 5.1, "pattern" : "ns.demos.chest_pulse"},
+		{"time" : 5.2, "pattern" : "ns.demos.chest_swirl_reverse"},
+		{"time" : 6.0, "pattern" : "ns.demos.chest_swirl_reverse"}
+	]
+}

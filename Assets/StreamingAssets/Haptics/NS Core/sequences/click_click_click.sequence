@@ -1,0 +1,15 @@
+{
+	"sequence" : [
+
+		{"time" : 0.0, "effect" : "sharp_click", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.1, "effect" : "click", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.2, "effect" : "hum", "strength" : 1.0, "duration" : 1.0},
+		{"time" : 2.3, "effect" : "click", "strength" : 1.0, "duration" : 0.0}
+
+
+
+
+
+	]
+}
+

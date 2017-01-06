@@ -1,0 +1,28 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.demos.Leaving", "area": "Lower_Ab_Both"},
+		{"time" : 0.30, "sequence" : "ns.demos.Left", "area": "Lower_Ab_Both"},
+
+		{"time" : 0.15, "sequence" : "ns.demos.Leaving", "area": "Mid_Ab_Both"},
+		{"time" : 0.45, "sequence" : "ns.demos.Left", "area": "Mid_Ab_Both"},
+
+		{"time" : 0.30, "sequence" : "ns.demos.Leaving", "area": "Upper_Ab_Both"},
+		{"time" : 0.70, "sequence" : "ns.demos.Left", "area": "Upper_Ab_Both"},
+
+		{"time" : 0.45, "sequence" : "ns.demos.Leaving", "area": "Chest_Both"},
+		{"time" : 0.75, "sequence" : "ns.demos.Left", "area": "Chest_Both"},
+
+		{"time" : 0.20, "sequence" : "ns.demos.Leaving", "area": "Forearm_Both"},
+		{"time" : 0.55, "sequence" : "ns.demos.Left", "area": "Forearm_Both"},
+
+		{"time" : 0.30, "sequence" : "ns.demos.Leaving", "area": "Upper_Arm_Both"},
+		{"time" : 0.65, "sequence" : "ns.demos.Left", "area": "Upper_Arm_Both"},
+		
+		{"time" : 0.40, "sequence" : "ns.demos.Leaving", "area": "Upper_Arm_Both"},
+		{"time" : 0.75, "sequence" : "ns.demos.Left", "area": "Upper_Arm_Both"},
+
+		{"time" : 0.8, "sequence" : "ns.demos.Gathering", "area": "Shoulder_Both"},
+		{"time" : 1.1, "sequence" : "ns.demos.Gathering", "area": "Shoulder_Both"}
+	]
+}

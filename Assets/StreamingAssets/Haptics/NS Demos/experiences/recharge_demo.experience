@@ -1,0 +1,9 @@
+{
+	"experience" : [
+		{"time" : 0.0, "pattern" : "ns.demos.recharge_click"},
+		{"time" : 1.0, "pattern" : "ns.demos.recharge_hum"},
+		{"time" : 2.0, "pattern" : "ns.demos.recharge_tick"},
+		{"time" : 3.0, "pattern" : "ns.demos.recharge_reverse"}
+ 
+	]
+}

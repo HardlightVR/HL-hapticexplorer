@@ -1,0 +1,13 @@
+{
+	"sequence" : [
+		{"time" : 0.0, "effect" : "double_click", 				"strength" : 1.0, 	"duration" : 0.0},
+		{"time" : 0.1, "effect" : "click", 						"strength" : 1.0, 	"duration" : 0.0},
+		{"time" : 0.2, "effect" : "long_double_sharp_tick", 	"strength" : 1.0, 	"duration" : 0.0},
+		{"time" : 0.3, "effect" : "sharp_click", 				"strength" : 1.0, 	"duration" : 0.0},
+		{"time" : 0.4, "effect" : "sharp_tick", 				"strength" : 1.0, 	"duration" : 0.0},
+		{"time" : 0.5, "effect" : "short_double_click", 		"strength" : 1.0, 	"duration" : 0.0},
+		{"time" : 0.6, "effect" : "short_double_sharp_tick", 	"strength" : 1.0, 	"duration" : 0.0},
+		{"time" : 0.7, "effect" : "triple_click", 				"strength" : 1.0, 	"duration" : 0.0}
+	]
+}
+

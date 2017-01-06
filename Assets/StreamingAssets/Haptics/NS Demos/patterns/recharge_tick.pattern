@@ -1,0 +1,11 @@
+{
+	"pattern" : [
+		{"time" : 0.0, "sequence" : "ns.sharp_tick", "area": "Lower_Ab_Both"},
+		{"time" : 0.1, "sequence" : "ns.sharp_tick", "area": "Mid_Ab_Both"},
+		{"time" : 0.2, "sequence" : "ns.sharp_tick", "area": "Upper_Ab_Both"},
+		{"time" : 0.3, "sequence" : "ns.sharp_tick", "area": "Chest_Both"},
+		{"time" : 0.4, "sequence" : "ns.sharp_tick", "area": "Shoulder_Both"},
+		{"time" : 0.5, "sequence" : "ns.sharp_tick", "area": "Upper_Arm_Both|Back_Both"},
+		{"time" : 0.6, "sequence" : "ns.sharp_tick", "area": "Forearm_Both"}
+	]
+}

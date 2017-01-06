@@ -1,0 +1,28 @@
+{
+	"pattern" : [
+		{"time" : 0.0, "sequence" : "ns.click", "area": "Chest_Left", "strength" : 1.0},
+				{"time" : 0.95, "sequence" : "ns.transition_hum", "area": "Chest_Left", "strength" : 1.0},
+
+		{"time" : 1.0, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.0},
+		{"time" : 1.2, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.1},
+		{"time" : 1.4, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.2},
+		{"time" : 1.6, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.3},
+		{"time" : 1.8, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.4},
+		{"time" : 2.0, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.5},
+		{"time" : 2.2, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.6},
+		{"time" : 2.4, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.7},
+		{"time" : 2.6, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.8},
+		{"time" : 2.8, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.9},
+		{"time" : 3.0, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 1.0},
+		{"time" : 3.2, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.9},
+		{"time" : 3.4, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.8},
+		{"time" : 3.6, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.7},
+		{"time" : 3.8, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.6},
+		{"time" : 4.0, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.5},
+		{"time" : 4.2, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.4},
+		{"time" : 4.4, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.3},
+		{"time" : 4.6, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.2},
+		{"time" : 4.8, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.1},
+		{"time" : 5.0, "sequence" : "ns.hum", "area": "Chest_Left", "strength" : 0.0}
+	]
+}

@@ -1,0 +1,7 @@
+{
+	"pattern" : [
+		{"time" : 0.0, "sequence" :  "ns.demos.click_hum", "area": "Shoulder_Both"},
+		{"time" : 0.75, "sequence" : "ns.demos.click_hum", "area": "Upper_Arm_Both"},
+		{"time" : 1.5, "sequence" :  "ns.demos.click_hum", "area": "Forearm_Both"}
+	]
+}

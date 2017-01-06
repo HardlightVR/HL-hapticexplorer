@@ -1,0 +1,11 @@
+{
+	"pattern" : [
+		{"time" : 0.0, "sequence" : "ns.hum", "area": "Lower_Ab_Both"},
+		{"time" : 0.1, "sequence" : "ns.hum", "area": "Mid_Ab_Both"},
+		{"time" : 0.2, "sequence" : "ns.hum", "area": "Upper_Ab_Both"},
+		{"time" : 0.3, "sequence" : "ns.hum", "area": "Chest_Both"},
+		{"time" : 0.4, "sequence" : "ns.hum", "area": "Shoulder_Both"},
+		{"time" : 0.5, "sequence" : "ns.hum", "area": "Upper_Arm_Both|Back_Both"},
+		{"time" : 0.6, "sequence" : "ns.hum", "area": "Forearm_Both"}
+	]
+}

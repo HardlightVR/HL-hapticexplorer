@@ -1,0 +1,9 @@
+{
+	"experience" : [
+		{"time" : 0.0, "pattern" : "ns.demos.Gathering"},
+		{"time" : 1.1, "pattern" : "ns.demos.Gathering"},
+		{"time" : 2.2, "pattern" : "ns.demos.Gathering"},
+		{"time" : 3.3, "pattern" : "ns.demos.Gathering"},
+		{"time" : 4.4, "pattern" : "ns.demos.Gathering"}
+	]
+}
