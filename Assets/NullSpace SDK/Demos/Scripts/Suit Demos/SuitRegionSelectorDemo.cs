@@ -32,8 +32,7 @@ namespace NullSpace.SDK.Demos
 		//Turn on my needed things
 		public override void ActivateDemo()
 		{
-			enabled = true;
-
+			HandleRequiredObjects(true);
 			//Set the colors of the suit
 			SelectAllSuitColliders();
 		}
@@ -41,10 +40,12 @@ namespace NullSpace.SDK.Demos
 		//Turn off my needed things
 		public override void DeactivateDemo()
 		{
-			enabled = false;
+			HandleRequiredObjects(false);
+			//Default behavior of inactive selector demo is all the colliders selected
+			SelectAllSuitColliders();
 
-			//Revert the colors of the suit
-			DeselectAllSuitColliders();
+			//But defaulting them to normal colors.
+			UncolorAllSuitColliders();
 		}
 
 		public IEnumerator ChangeColorDelayed(GameObject g, Color c, float timeout)
@@ -82,11 +83,16 @@ namespace NullSpace.SDK.Demos
 
 		public void DeselectAllSuitColliders()
 		{
+			UncolorAllSuitColliders();
+			selected.Clear();
+		}
+
+		public void UncolorAllSuitColliders()
+		{
 			for (int i = 0; i < selected.Count; i++)
 			{
 				selected[i].GetComponent<MeshRenderer>().material.color = unselectedColor;
 			}
-			selected.Clear();
 		}
 	}
 }

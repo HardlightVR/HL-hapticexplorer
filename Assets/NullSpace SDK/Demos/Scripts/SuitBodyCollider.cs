@@ -17,7 +17,7 @@ namespace NullSpace.SDK
 		[Header("Note: Attach this to your player's body.")]
 		[Header("You can select multiple areas for a single collider.")]
 		//You can enable [EnumFlag] over [RegionFlag] if you're having problems with the more customized inspector.
-		//Additionally, I provided EnumFlag for 
+		//Additionally, I provided EnumFlag for easy reference of a similar implementation
 		//[EnumFlag]
 		[RegionFlag]
 		public AreaFlag regionID;
@@ -25,19 +25,27 @@ namespace NullSpace.SDK
 
 		void Awake()
 		{
+			//In case it isn't assigned or created by the BodySetup tool.
 			if (myCollider == null)
 			{
+				//Find our collider
 				myCollider = gameObject.GetComponent<Collider>();
 			}
 		}
 
 		void Start()
 		{
-			if (!myCollider.isTrigger)
+			if (myCollider == null)
 			{
-				Debug.LogWarning("Haptic Collider " + regionID + " is not attached to a trigger volume.\n");
+				Debug.LogError("SuitBodyCollider does not have a collider set - Name [" + name + "] with regionID [" + regionID + "].\n");
+			}
+			else
+			{
+				if (!myCollider.isTrigger)
+				{
+					Debug.LogWarning("Haptic Collider " + regionID + " is not attached to a trigger volume.\n");
+				}
 			}
 		}
-
 	}
 }
