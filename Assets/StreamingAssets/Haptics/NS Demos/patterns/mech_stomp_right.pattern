@@ -1,0 +1,17 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.demos.HeavyBuzz", "area": "Lower_Ab_Right"},
+		{"time" : 0.05, "sequence" : "ns.demos.HeavyBuzz", "area": "Mid_Ab_Right"},
+		{"time" : 0.1, "sequence" : "ns.demos.HeavyBuzz", "area": "Upper_Ab_Right"},
+		{"time" : 0.15, "sequence" : "ns.demos.HeavyBuzz", "area": "Chest_Right"},
+		{"time" : 0.2, "sequence" : "ns.demos.HeavyBuzz", "area": "Shoulder_Right"},
+		{"time" : 0.2, "sequence" : "ns.demos.HeavyBuzz", "area": "Shoulder_Right"},
+		{"time" : 0.3, "sequence" : "ns.sharp_tick", "area": "Shoulder_Right"},
+		{"time" : 0.4, "sequence" : "ns.sharp_tick", "area": "Upper_Arm_Right"},
+		{"time" : 0.5, "sequence" : "ns.sharp_tick", "area": "Back_Right"},
+		{"time" : 0.5, "sequence" : "ns.demos.HeavyBuzz", "area": "Back_Right|Upper_Arm_Right|Chest_Right"}
+
+
+	]
+}

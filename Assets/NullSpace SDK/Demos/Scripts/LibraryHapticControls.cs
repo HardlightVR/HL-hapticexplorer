@@ -17,16 +17,24 @@ namespace NullSpace.SDK.Demos
 	public class LibraryHapticControls : MonoBehaviour
 	{
 		Rigidbody myRB;
+		public Camera cam;
+
+		public SuitDemo CurrentDemo;
 		/// <summary>
 		/// This is controlled based on the suit and contents within NSEnums.
 		/// This number exists for easier testing of experimental hardware.
 		/// </summary>
 		private bool massage = false;
 		public float Extent = 5f;
-	
+
 		void Start()
 		{
 			myRB = LibraryManager.Inst.greenBox.GetComponent<Rigidbody>();
+
+			if (CurrentDemo != null)
+			{
+				SelectSuitDemo(CurrentDemo);
+			}
 		}
 
 		IEnumerator MoveFromTo(Vector3 pointA, Vector3 pointB, float time)
@@ -80,6 +88,24 @@ namespace NullSpace.SDK.Demos
 			}
 			#endregion
 
+			#region Clicking on SuitBodyCollider
+			if (Input.GetMouseButtonDown(0))
+			{
+				Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+				RaycastHit hit;
+				Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 3.5f);
+
+				if (Physics.Raycast(ray, out hit, 100))
+				{
+					SuitBodyCollider clicked = hit.collider.gameObject.GetComponent<SuitBodyCollider>();
+					if (clicked != null)
+					{
+						CurrentDemo.OnSuitClicked(clicked, hit);
+					}
+				}
+			}
+			#endregion
+
 			#region Application Quit Code
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
@@ -88,6 +114,13 @@ namespace NullSpace.SDK.Demos
 			#endregion
 		}
 
+		public void SelectSuitDemo(SuitDemo demo)
+		{
+			//Debug.Log("Enabling: " + CurrentDemo.GetType().ToString() + "\t\t" + demo.GetType().ToString() + "\n");
+			CurrentDemo.DeactivateDemo();
+			CurrentDemo = demo;
+			CurrentDemo.ActivateDemo();
+		}
 		public void ToggleMassage()
 		{
 			massage = !massage;

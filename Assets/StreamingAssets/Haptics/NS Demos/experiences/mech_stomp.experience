@@ -1,0 +1,24 @@
+{
+	"experience" : [
+		{"time" : 0.0, "pattern" : "ns.demos.mech_stomp_left"},
+		{"time" : 1.2, "pattern" : "ns.demos.mech_stomp_right"},
+		{"time" : 2.4, "pattern" : "ns.demos.mech_stomp_left"},
+		{"time" : 3.4, "pattern" : "ns.demos.mech_stomp_right"},
+		{"time" : 4.4, "pattern" : "ns.demos.mech_stomp_left"},
+		{"time" : 5.2, "pattern" : "ns.demos.mech_stomp_right"},
+		{"time" : 6.0, "pattern" : "ns.demos.mech_stomp_left"},
+		{"time" : 6.6, "pattern" : "ns.demos.mech_stomp_right"},
+		{"time" : 7.2, "pattern" : "ns.demos.mech_stomp_left"},
+ 		{"time" : 7.8, "pattern" : "ns.demos.mech_stomp_right"},
+		{"time" : 8.4, "pattern" : "ns.demos.mech_stomp_left"},
+		{"time" : 9.0, "pattern" : "ns.demos.mech_stomp_right"},
+		{"time" : 9.6, "pattern" : "ns.demos.mech_stomp_left"},
+		{"time" : 10.2, "pattern" : "ns.demos.mech_stomp_right"},
+		{"time" : 10.8, "pattern" : "ns.demos.mech_stomp_left"},
+		{"time" : 11.2, "pattern" : "ns.demos.intense"},
+		{"time" : 13.0, "pattern" : "ns.demos.on_fire"},
+		{"time" : 15.0, "pattern" : "ns.demos.on_fire"}
+
+
+	]
+}

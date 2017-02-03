@@ -1,0 +1,6 @@
+{
+  "sequence" : [
+    {"time" : 0.0, "effect" : "buzz", "duration" : 0.18},
+    {"time" : 0.2, "effect" : "sharp_click"}
+  ]
+}

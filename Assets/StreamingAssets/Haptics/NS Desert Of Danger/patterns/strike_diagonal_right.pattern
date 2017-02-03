@@ -1,0 +1,7 @@
+{
+  "pattern" : [
+    {"time" : 0.0, "sequence" : "ns.dod.strong_scorp", "area" : "Shoulder_Right"},
+    {"time" : 0.1, "sequence" : "ns.dod.strong_scorp", "area" : "Chest_Right"},
+    {"time" : 0.2, "sequence" : "ns.dod.strong_scorp", "area" : "Mid_Ab_Left"}
+  ]
+}

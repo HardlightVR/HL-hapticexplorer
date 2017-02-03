@@ -1,0 +1,16 @@
+{
+	"experience" : [
+		{"time" : 0.0, "pattern" : "ns.dod.scorpion_smash_layer1"},
+		{"time" : 0.02, "pattern" : "ns.dod.scorpion_smash_layer1"},
+		{"time" : 0.02, "pattern" : "ns.dod.scorpion_smash_layer2"},
+		{"time" : 0.04, "pattern" : "ns.dod.scorpion_smash_layer1"},
+		{"time" : 0.04, "pattern" : "ns.dod.scorpion_smash_layer2"},
+		{"time" : 0.04, "pattern" : "ns.dod.scorpion_smash_layer3"},
+		{"time" : 0.04, "pattern" : "ns.dod.scorpion_smash_layer1"},
+		{"time" : 0.04, "pattern" : "ns.dod.scorpion_smash_layer2"},
+		{"time" : 0.04, "pattern" : "ns.dod.scorpion_smash_layer3"},
+		{"time" : 0.04, "pattern" : "ns.dod.scorpion_smash_layer4"},
+		{"time" : 0.1, "pattern" : "ns.dod.full_body_jolt"}
+
+	]
+}

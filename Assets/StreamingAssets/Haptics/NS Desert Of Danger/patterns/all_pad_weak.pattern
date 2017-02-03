@@ -1,0 +1,5 @@
+{
+  "pattern" : [
+    {"time" : 0.0, "sequence" : "ns.click", "area" : "All_Areas", "strength" : 0.3}
+  ]
+}

@@ -1,0 +1,6 @@
+{
+	"experience" : [
+		{"time" : 0.0, "pattern" : "ns.dod.giant_scorpion_bottom_abs"},
+		{"time" : 0.08, "pattern" : "ns.dod.full_body_jolt"}
+	]
+}

@@ -1,0 +1,8 @@
+{
+  "sequence" :
+  [
+    {"time" : 0.0, "effect" : "transition_hum", "strength" : 0.5, "duration" : 0.1},
+    {"time" : 0.1, "effect" : "transition_hum", "strength" : 1.0, "duration" : 0.1},
+    {"time" : 0.2, "effect" : "transition_hum", "strength" : 0.5, "duration" : 0.1}
+  ]
+}

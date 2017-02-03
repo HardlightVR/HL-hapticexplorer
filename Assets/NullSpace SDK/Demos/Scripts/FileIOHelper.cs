@@ -1,4 +1,11 @@
-﻿using System;
+﻿/* This code is licensed under the NullSpace Developer Agreement, available here:
+** ***********************
+** http://www.hardlightvr.com/wp-content/uploads/2017/01/NullSpace-SDK-License-Rev-3-Jan-2016-2.pdf
+** ***********************
+** Make sure that you have read, understood, and agreed to the Agreement before using the SDK
+*/
+
+using System;
 using System.IO;
 using Diag = System.Diagnostics;
 using UnityEngine;
@@ -260,7 +267,7 @@ namespace IOHelper
 			{
 				if (!openInsidesOfFolder)
 				{
-					Diag.Process.Start("notepad.exe", winPath);
+					Diag.Process.Start(winPath);
 				}
 				else
 				{

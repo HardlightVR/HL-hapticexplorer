@@ -1,0 +1,5 @@
+{
+  "pattern" : [
+    {"time" : 0.0, "sequence" : "ns.sharp_tick", "area" : "All_Areas"}
+  ]
+}

@@ -1,6 +1,6 @@
 ﻿/* This code is licensed under the NullSpace Developer Agreement, available here:
 ** ***********************
-** http://nullspacevr.com/?wpdmpro=nullspace-developer-agreement
+** http://www.hardlightvr.com/wp-content/uploads/2017/01/NullSpace-SDK-License-Rev-3-Jan-2016-2.pdf
 ** ***********************
 ** Make sure that you have read, understood, and agreed to the Agreement before using the SDK
 */
@@ -9,63 +9,66 @@ using UnityEngine;
 using NullSpace.SDK;
 using NullSpace.SDK.Tracking;
 
-public class TrackingTest : MonoBehaviour
+namespace NullSpace.SDK.Demos
 {
-	private IImuCalibrator imus;
-	public GameObject TrackedObject;
-	public GameObject ParentObject;
-	public bool DisableObject = true;
-	public bool ShowOnGUI = false;
-
-	void Start()
+	public class TrackingTest : MonoBehaviour
 	{
-		imus = NSManager.Instance.GetImuCalibrator();
-		NSManager.Instance.SetImuCalibrator(GetComponent<DefaultImuCalibrator>());
+		private IImuCalibrator imus;
+		public GameObject TrackedObject;
+		public GameObject ParentObject;
+		public bool DisableObject = true;
+		public bool ShowOnGUI = false;
 
-		if (ParentObject != null)
+		void Start()
 		{
-			ParentObject.SetActive(!DisableObject);
-		}
-	}
+			imus = NSManager.Instance.GetImuCalibrator();
+			NSManager.Instance.SetImuCalibrator(GetComponent<DefaultImuCalibrator>());
 
-	void OnGUI()
-	{
-		if (ShowOnGUI)
-		{
-			if (GUI.Button(new Rect(25, 25, 120, 80), "Enable Tracking"))
+			if (ParentObject != null)
 			{
-				EnableTracking();
-			}
-			if (GUI.Button(new Rect(25, 110, 120, 80), "Disable Tracking"))
-			{
-				DisableTracking();
+				ParentObject.SetActive(!DisableObject);
 			}
 		}
-	}
 
-	public void EnableTracking()
-	{
-		if (ParentObject != null)
+		void OnGUI()
 		{
-			ParentObject.SetActive(true);
+			if (ShowOnGUI)
+			{
+				if (GUI.Button(new Rect(25, 25, 120, 80), "Enable Tracking"))
+				{
+					EnableTracking();
+				}
+				if (GUI.Button(new Rect(25, 110, 120, 80), "Disable Tracking"))
+				{
+					DisableTracking();
+				}
+			}
 		}
-		NSManager.Instance.EnableTracking();
-	}
 
-	public void DisableTracking()
-	{
-		if (ParentObject != null)
+		public void EnableTracking()
 		{
-			ParentObject.SetActive(false);
+			if (ParentObject != null)
+			{
+				ParentObject.SetActive(true);
+			}
+			NSManager.Instance.EnableTracking();
 		}
-		NSManager.Instance.DisableTracking();
-	}
 
-	void Update()
-	{
-		if (TrackedObject != null)
+		public void DisableTracking()
 		{
-			TrackedObject.transform.rotation = imus.GetOrientation(Imu.Chest);
+			if (ParentObject != null)
+			{
+				ParentObject.SetActive(false);
+			}
+			NSManager.Instance.DisableTracking();
+		}
+
+		void Update()
+		{
+			if (TrackedObject != null)
+			{
+				TrackedObject.transform.rotation = imus.GetOrientation(Imu.Chest);
+			}
 		}
 	}
 }

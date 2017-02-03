@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿/* This code is licensed under the NullSpace Developer Agreement, available here:
+** ***********************
+** http://www.hardlightvr.com/wp-content/uploads/2017/01/NullSpace-SDK-License-Rev-3-Jan-2016-2.pdf
+** ***********************
+** Make sure that you have read, understood, and agreed to the Agreement before using the SDK
+*/
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using NullSpace.SDK;
@@ -50,18 +57,24 @@ namespace NullSpace.SDK.Demos
 					myType = LibraryElementType.Sequence;
 					myIcon.sprite = LibraryManager.Inst.seqIcon;
 					visual.color = LibraryManager.Inst.seqColor;
+					TooltipDescriptor.AddDescriptor(gameObject, fileParts[0] + " - Sequence", "Plays on all selected pads\nOr when the green haptic trigger touches a pad");
+					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "Edit File", "View Source of " + fileParts[0] + "\nWe recommend a text editor");
 				}
 				else if (fullFilePath.Contains(".pat"))
 				{
 					myType = LibraryElementType.Pattern;
 					myIcon.sprite = LibraryManager.Inst.patIcon;
 					visual.color = LibraryManager.Inst.patColor;
+					TooltipDescriptor.AddDescriptor(gameObject, fileParts[0] + " - Pattern", "Plays pattern which is composed of sequences on specified areas");
+					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "Edit File", "View Source of " + fileParts[0] + "\nWe recommend a text editor");
 				}
 				else if (fullFilePath.Contains(".exp"))
 				{
 					myType = LibraryElementType.Experience;
 					myIcon.sprite = LibraryManager.Inst.expIcon;
 					visual.color = LibraryManager.Inst.expColor;
+					TooltipDescriptor.AddDescriptor(gameObject, fileParts[0] + " - Experience", "Plays experience which is composed of multiple Patterns.");
+					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "Edit File", "View Source of " + fileParts[0] + "\nWe recommend a text editor");
 				}
 				else
 				{
@@ -69,6 +82,9 @@ namespace NullSpace.SDK.Demos
 					myIcon.sprite = LibraryManager.Inst.folderIcon;
 					visual.color = LibraryManager.Inst.folderColor;
 					copyButton.transform.parent.parent.gameObject.SetActive(false);
+
+					TooltipDescriptor.AddDescriptor(gameObject, fileParts[0], "Haptic Package: A collection of sequences, patterns and experiences\nDefined by its config.json");
+					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "Open Explorer", "View directories of " + fileParts[0]);
 				}
 
 				//Temporary disabling of the copy-me feature.
@@ -80,6 +96,8 @@ namespace NullSpace.SDK.Demos
 				}
 
 				lastModified = FileModifiedHelper.GetLastModified(fullFilePath);
+
+
 
 				initialized = true;
 			}
@@ -305,19 +323,19 @@ namespace NullSpace.SDK.Demos
 		{
 			//Debug.Log("Hit\n");
 			CodeSequence seq = new CodeSequence();
-			seq.AddChild(0.0f, new CodeEffect("buzz", .2f));
-			seq.AddChild(0.3f, new CodeEffect("click", 0.0f));
+			seq.AddEffect(0.0f, new CodeEffect("buzz", .2f));
+			seq.AddEffect(0.3f, new CodeEffect("click", 0.0f));
 			//seq.Play(AreaFlag.All_Areas);
 
 			CodePattern pat = new CodePattern();
-			pat.AddChild(0.5f, AreaFlag.Lower_Ab_Both, seq);
-			pat.AddChild(1.0f, AreaFlag.Mid_Ab_Both, seq);
-			pat.AddChild(1.5f, AreaFlag.Upper_Ab_Both, seq);
-			pat.AddChild(2.0f, AreaFlag.Chest_Both, seq);
-			pat.AddChild(2.5f, AreaFlag.Shoulder_Both, seq);
-			pat.AddChild(2.5f, AreaFlag.Back_Both, seq);
-			pat.AddChild(3.0f, AreaFlag.Upper_Arm_Both, seq);
-			pat.AddChild(3.5f, AreaFlag.Forearm_Both, seq);
+			pat.AddSequence(0.5f, AreaFlag.Lower_Ab_Both, seq);
+			pat.AddSequence(1.0f, AreaFlag.Mid_Ab_Both, seq);
+			pat.AddSequence(1.5f, AreaFlag.Upper_Ab_Both, seq);
+			pat.AddSequence(2.0f, AreaFlag.Chest_Both, seq);
+			pat.AddSequence(2.5f, AreaFlag.Shoulder_Both, seq);
+			pat.AddSequence(2.5f, AreaFlag.Back_Both, seq);
+			pat.AddSequence(3.0f, AreaFlag.Upper_Arm_Both, seq);
+			pat.AddSequence(3.5f, AreaFlag.Forearm_Both, seq);
 			return pat.Play();
 		}
 

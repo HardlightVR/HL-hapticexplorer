@@ -1,0 +1,28 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.buzz", "area": "Lower_Ab_Both", "strength" : 0.2},
+		{"time" : 0.10, "sequence" : "ns.buzz", "area": "Mid_Ab_Both", "strength" : 0.2},
+		{"time" : 0.20, "sequence" : "ns.buzz", "area": "Upper_Ab_Both", "strength" : 0.2},
+		{"time" : 0.30, "sequence" : "ns.buzz", "area": "Chest_Both|Back_Both", "strength" : 0.2},
+		{"time" : 0.40, "sequence" : "ns.buzz", "area": "Shoulder_Both", "strength" : 0.2},
+		{"time" : 0.50, "sequence" : "ns.buzz", "area": "Mid_Ab_Both|Upper_Arm_Left", "strength" : 0.2},
+		{"time" : 0.60, "sequence" : "ns.buzz", "area": "Upper_Ab_Both|Upper_Arm_Left|Forearm_Left", "strength" : 0.2},
+		{"time" : 0.70, "sequence" : "ns.buzz", "area": "Lower_Ab_Both|Upper_Arm_Right|Forearm_Left", "strength" : 0.2},
+		{"time" : 0.80, "sequence" : "ns.buzz", "area": "Mid_Ab_Both|Upper_Arm_Right|Forearm_Right", "strength" : 0.2},
+		{"time" : 0.90, "sequence" : "ns.buzz", "area": "Chest_Both|Forearm_Right", "strength" : 0.2},
+		{"time" : 1.00, "sequence" : "ns.buzz", "area": "Back_Both", "strength" : 0.2},
+		{"time" : 1.10, "sequence" : "ns.buzz", "area": "Mid_Ab_Both|Upper_Arm_Both", "strength" : 0.2},
+		{"time" : 1.20, "sequence" : "ns.buzz", "area": "Upper_Ab_Both|Forearm_Both", "strength" : 0.2},
+		{"time" : 1.30, "sequence" : "ns.buzz", "area": "Lower_Ab_Both", "strength" : 0.2},
+		{"time" : 1.40, "sequence" : "ns.buzz", "area": "Mid_Ab_Both", "strength" : 0.2},
+		{"time" : 1.50, "sequence" : "ns.buzz", "area": "Chest_Both", "strength" : 0.2},
+		{"time" : 1.60, "sequence" : "ns.buzz", "area": "Back_Both", "strength" : 0.2},
+		{"time" : 1.70, "sequence" : "ns.buzz", "area": "Upper_Ab_Both", "strength" : 0.2},
+		{"time" : 1.80, "sequence" : "ns.buzz", "area": "Mid_Ab_Both", "strength" : 0.2},
+		{"time" : 1.90, "sequence" : "ns.buzz", "area": "Lower_Ab_Both", "strength" : 0.2},
+		{"time" : 2.00, "sequence" : "ns.buzz", "area": "Mid_Ab_Both", "strength" : 0.2},
+		{"time" : 2.10, "sequence" : "ns.buzz", "area": "Lower_Ab_Both", "strength" : 0.2}
+
+	]
+}

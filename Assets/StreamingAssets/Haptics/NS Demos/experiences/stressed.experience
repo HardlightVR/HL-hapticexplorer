@@ -1,8 +1,7 @@
 {
 	"experience" : [
 		{"time" : 0.0, "pattern" : "ns.demos.beating_heart_very_fast"},
-		{"time" : 7.0, "pattern" : "ns.demos.beating_heart_very_fast"},
-		{"time" : 14.0, "pattern" : "ns.demos.intense_short"}
+		{"time" : 7.0, "pattern" : "ns.demos.intense_short"}
  
 	]
 }
