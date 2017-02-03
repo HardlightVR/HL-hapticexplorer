@@ -46,9 +46,12 @@ namespace NullSpace.SDK.Demos
 
 		void OnTriggerEnter(Collider collider)
 		{
-			AreaFlag flag = collider.GetComponent<SuitBodyCollider>().regionID;
-			//Debug.Log(flag.ToString() + "  " + (int)flag + "\n");
-			onTriggerEnterSequence.CreateHandle(collider.GetComponent<SuitBodyCollider>().regionID).Play();
-		}
+			SuitBodyCollider hit = collider.GetComponent<SuitBodyCollider>();
+			if (hit != null)
+			{
+				AreaFlag flag = hit.regionID;
+				//Debug.Log(flag.ToString() + "  " + (int)flag + "\n");
+				onTriggerEnterSequence.CreateHandle(collider.GetComponent<SuitBodyCollider>().regionID).Play();
+			} }
 	}
 }
