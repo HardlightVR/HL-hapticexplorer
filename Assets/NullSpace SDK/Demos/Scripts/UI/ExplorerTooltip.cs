@@ -191,7 +191,7 @@ namespace NullSpace.SDK.Demos
 			//Debug.Log("HIT from : " + descriptor.name + " \n");
 			TooltipNameDisplay.text = descriptor.TooltipName;
 			TooltipDescriptionDisplay.text = descriptor.DetailedTooltip;
-			TooltipBackground.color = descriptor.backgroundColor;
+			TooltipBackground.color = descriptor.BackgroundColor;
 			PositionTooltip(descriptor);
 			ShowTooltip();
 		}

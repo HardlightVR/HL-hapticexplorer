@@ -10,7 +10,12 @@ namespace NullSpace.SDK.Demos
 		public string TooltipName;
 		[Multiline]
 		public string DetailedTooltip;
-		public Color32 backgroundColor = new Color32(255, 255, 255, 160);
+		private Color32 backgroundColor = new Color32(255, 255, 255, 200);
+		public Color32 BackgroundColor
+		{
+			get { return backgroundColor; }
+			set { backgroundColor = value; }
+		}
 
 		EventTrigger et;
 
