@@ -12,6 +12,7 @@ namespace NullSpace.SDK
 	/// <summary>
 	/// A simple class to link up a collider with a certain area on the suit
 	/// </summary>
+	[AddComponentMenu("Hardlight/Suit Body Collider")]
 	public class SuitBodyCollider : MonoBehaviour
 	{
 		[Header("Note: Attach this to your player's body.")]
@@ -25,16 +26,13 @@ namespace NullSpace.SDK
 
 		void Awake()
 		{
-			//In case it isn't assigned or created by the BodySetup tool.
-			if (myCollider == null)
-			{
-				//Find our collider
-				myCollider = gameObject.GetComponent<Collider>();
-			}
+			TryFindCollider();
 		}
 
 		void Start()
 		{
+			TryFindCollider();
+
 			if (myCollider == null)
 			{
 				Debug.LogError("SuitBodyCollider does not have a collider set - Name [" + name + "] with regionID [" + regionID + "].\n");
@@ -45,6 +43,16 @@ namespace NullSpace.SDK
 				{
 					Debug.LogWarning("Haptic Collider " + regionID + " is not attached to a trigger volume.\n");
 				}
+			}
+		}
+
+		void TryFindCollider()
+		{
+			//In case it isn't assigned or created by the BodySetup tool.
+			if (myCollider == null)
+			{
+				//Find our collider
+				myCollider = gameObject.GetComponent<Collider>();
 			}
 		}
 	}
