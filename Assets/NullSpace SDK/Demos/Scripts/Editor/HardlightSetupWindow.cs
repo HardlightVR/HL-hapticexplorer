@@ -117,7 +117,8 @@ namespace NullSpace.SDK.Demos
 			{
 				scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
-				GUIStyle style = GUI.skin.button;
+				GUIStyle style = new GUIStyle(GUI.skin.button);
+				GUILayoutOption[] options = new GUILayoutOption[0];
 				string rootName = SuitRoot == null ? "No Root Defined" : SuitRoot.name;
 				TopFoldout = GUILayout.Toggle(TopFoldout, "Show Suit: ", style);
 				if (TopFoldout)
@@ -125,12 +126,21 @@ namespace NullSpace.SDK.Demos
 					//NOTE TO SELF: Add tooltips
 					//new GUIContent("Test Float", "Here is a tooltip")
 
+					EditorGUILayout.BeginVertical("Box");
+					SuitNaming(options);
 
-					GUILayoutOption[] options = new GUILayoutOption[0];
-					DrawOptions(options);
-					DrawAssignmentAndDisplay();
+					ObjectFieldFoldout = GUILayout.Toggle(ObjectFieldFoldout, "Show Suit Configuration", style);
+					if (ObjectFieldFoldout)
+					{
+						DrawOptions(options);
+
+						DrawAssignmentAndDisplay();
+					}
+
 					DrawProcessControls();
 				}
+
+				DrawOutputMessages();
 
 				EditorGUILayout.EndScrollView();
 			}
@@ -138,15 +148,40 @@ namespace NullSpace.SDK.Demos
 			#region Options
 			void DrawOptions(GUILayoutOption[] options)
 			{
-				SuitNaming(options);
+				GUIContent content = new GUIContent();
+				float width = EditorGUIUtility.currentViewWidth;
+				GUILayoutOption[] innerOptions = { GUILayout.MaxWidth(width / 2 - 10), GUILayout.MinWidth(35) };
+
+				GUIStyle columnStyle = new GUIStyle(EditorStyles.toolbarButton);
+
+				EditorGUILayout.BeginVertical("Box");
+				EditorGUILayout.LabelField("Suit Options");
 				SuitRootObjectField(options);
-				AddChildObjectsOption(options);
-				AddCollidersTriggerOption(options);
+
+
+				content = new GUIContent("Autoconfigure based on Root Object", "Uses common names to try and establish the different suit body colliders for the suit.");
+				bool Result = OperationButton(SuitRoot == null, content);
+				if (Result)
+				{
+					//Check if they have anything assigned.
+					//If they do, warn them this will overwrite it.
+				}
+
+				EditorGUILayout.BeginHorizontal();
+
+				content = new GUIContent("Add Child Objects", "Create child objects instead of directly adding to the targeted object.");
+				AddChildObjects = ToggleButton(!CanChangeValues, AddChildObjects, content, innerOptions);
+
+				content = new GUIContent("Add New Colliders", "Adds SuitBodyCollider objects instead of using existing ones or letting you configure it manually.\nWill add the colliders to child objects if that is also selected.");
+				AddExclusiveTriggerCollider = ToggleButton(!CanChangeValues, AddExclusiveTriggerCollider, content, innerOptions);
+
+				EditorGUILayout.EndHorizontal();
+				EditorGUILayout.EndVertical();
 			}
 
 			void SuitNaming(GUILayoutOption[] options)
 			{
-				SuitName = EditorGUILayout.TextField(SuitName, options);
+				SuitName = EditorGUILayout.TextField("Suit Name", SuitName, options);
 			}
 			void SuitRootObjectField(GUILayoutOption[] options)
 			{
@@ -158,21 +193,39 @@ namespace NullSpace.SDK.Demos
 					SuitRoot = null;
 				}
 			}
+			bool OperationButton(bool disabledWhenTrue, GUIContent content)
+			{
+				GUIStyle style = new GUIStyle(GUI.skin.button);
+				using (new EditorGUI.DisabledGroupScope(disabledWhenTrue))
+				{
+					return GUILayout.Button(content);
+				}
+			}
+			bool ToggleButton(bool disabled, bool toggleState, GUIContent content, GUILayoutOption[] options)
+			{
+				//GUIStyle style = GUI.skin.button;
+				GUIStyle style = new GUIStyle(GUI.skin.button);
+				//style.fixedWidth = EditorGUIUtility.currentViewWidth / 3;
+				using (new EditorGUI.DisabledGroupScope(disabled))
+				{
+					return EditorGUILayout.Foldout(toggleState, content, style);
+				}
+			}
 			void AddChildObjectsOption(GUILayoutOption[] options)
 			{
-				//GUILayout.Label("Suit Object Field " + SuitHolders.Count);
-				if (CanChangeValues)
+				GUIStyle style = GUI.skin.button;
+				using (new EditorGUI.DisabledGroupScope(CanChangeValues))
 				{
-					//EditorGUI
-					AddChildObjects = EditorGUILayout.Toggle("Add Child Objects", AddChildObjects, options);
+					GUIContent content = new GUIContent("Add Child Objects", "Create child objects instead of directly adding to the targeted object.");
+					AddChildObjects = EditorGUILayout.Foldout(AddChildObjects, content, style);
 				}
 			}
 			void AddCollidersTriggerOption(GUILayoutOption[] options)
 			{
-				//GUILayout.Label("Suit Object Field " + SuitHolders.Count);
-				if (CanChangeValues)
+				GUIStyle style = GUI.skin.button;
+				using (new EditorGUI.DisabledGroupScope(CanChangeValues))
 				{
-					AddExclusiveTriggerCollider = EditorGUILayout.Toggle("Add Colliders if none exist", AddExclusiveTriggerCollider, options);
+					AddExclusiveTriggerCollider = EditorGUILayout.Foldout(AddExclusiveTriggerCollider, "Add Colliders if none exist", style);
 				}
 			}
 			#endregion
@@ -180,64 +233,40 @@ namespace NullSpace.SDK.Demos
 			#region Core Columns
 			void DrawAssignmentAndDisplay()
 			{
-				GUIStyle style = GUI.skin.button;
-				EditorGUILayout.BeginVertical("Box");
-				ObjectFieldFoldout = GUILayout.Toggle(ObjectFieldFoldout, "Show Suit Configuration", style);
-				if (ObjectFieldFoldout)
-				{
-					float width = EditorGUIUtility.currentViewWidth;
-					GUILayoutOption[] innerOptions = { GUILayout.MaxWidth(width / 3 - 10), GUILayout.MinWidth(35) };
 
+				float width = EditorGUIUtility.currentViewWidth;
+				GUILayoutOption[] innerOptions = { GUILayout.MaxWidth(width / 3 - 10), GUILayout.MinWidth(35) };
+
+				GUIStyle columnStyle = new GUIStyle(EditorStyles.toolbarButton);
+				//columnStyle.fixedHeight = 22;
+
+
+				for (int i = 0; i < DefaultOptions.Count; i++)
+				{
 					//New Horizontal
 					EditorGUILayout.BeginHorizontal("Box");
 
-					GUIStyle columnStyle = new GUIStyle(EditorStyles.toolbarButton);
-					//columnStyle.fixedHeight = 22;
-
 					EditorGUILayout.BeginHorizontal(columnStyle);
 					//Create the default option display
-
+					DisplayAreaFlag(i, innerOptions);
 					EditorGUILayout.EndHorizontal();
 
-
 					EditorGUILayout.BeginHorizontal(columnStyle);
-
+					//The object field for selecting the relevant object
+					CreateSuitObjectField(i, innerOptions);
 					EditorGUILayout.EndHorizontal();
 
 					EditorGUILayout.BeginHorizontal(columnStyle);
 					//If we have a suitbodycollider for this index
-
+					SuitQuickButton(i, innerOptions);
 					EditorGUILayout.EndHorizontal();
 
 					//End Horizontal
 					EditorGUILayout.EndHorizontal();
 
-					for (int i = 0; i < DefaultOptions.Count; i++)
-					{
-						//New Horizontal
-						EditorGUILayout.BeginHorizontal("Box");
-
-						EditorGUILayout.BeginHorizontal(columnStyle);
-						//Create the default option display
-						DisplayAreaFlag(i, innerOptions);
-						EditorGUILayout.EndHorizontal();
-
-						EditorGUILayout.BeginHorizontal(columnStyle);
-						//The object field for selecting the relevant object
-						CreateSuitObjectField(i, innerOptions);
-						EditorGUILayout.EndHorizontal();
-
-						EditorGUILayout.BeginHorizontal(columnStyle);
-						//If we have a suitbodycollider for this index
-						SuitQuickButton(i, innerOptions);
-						EditorGUILayout.EndHorizontal();
-
-						//End Horizontal
-						EditorGUILayout.EndHorizontal();
-
-						//GUILayout.Space(24);
-					}
+					//GUILayout.Space(24);
 				}
+
 			}
 
 			void DisplayAreaFlag(int index, GUILayoutOption[] options)
@@ -319,33 +348,24 @@ namespace NullSpace.SDK.Demos
 
 				GUILayout.EndHorizontal();
 
-				GUILayout.Space(12);
-				DrawOutputMessages();
-
 				EditorGUILayout.EndVertical();
 			}
 			string SuitSetupOperation()
 			{
 				string output = string.Empty;
-				bool disabled = true;
-				if (CountValidSuitHolders() > 0)
+				string tooltip = "This will create Suit components on " + (AddChildObjects ? " children of the selected objects" : " the selected objects");
+				GUIContent content = new GUIContent("Create SuitBodyColliders", tooltip);
+				bool OperationForbidden = CountValidSuitHolders() < 1;
+				bool Result = OperationButton(OperationForbidden, content);
+				if (Result)
 				{
-					disabled = false;
+					//If we should add child objects
+					if (AddChildObjects)
+						output += AddChildNodesForSuit();
+					//Then create the component (it will handle the Collider functionalities)
+					output += AddComponentForSuit();
 				}
 
-				using (new EditorGUI.DisabledGroupScope(disabled))
-				{
-					bool beginOperation = GUILayout.Button("Create SuitBodyColliders");
-
-					if (beginOperation)
-					{
-						//If we should add child objects
-						if (AddChildObjects)
-							output += AddChildNodesForSuit();
-						//Then create the component (it will handle the Collider functionalities)
-						AddComponentForSuit();
-					}
-				}
 				return output;
 			}
 
@@ -480,9 +500,12 @@ namespace NullSpace.SDK.Demos
 				string output = string.Empty;
 				for (int i = 0; i < SuitHolders.Count; i++)
 				{
-					GameObject go = new GameObject();
-					go.transform.SetParent(SuitHolders[i].transform);
-					go.name = SuitHolders[i].name + childAppendName;
+					if (SuitHolders[i] != null)
+					{
+						GameObject go = new GameObject();
+						go.transform.SetParent(SuitHolders[i].transform);
+						go.name = SuitHolders[i].name + childAppendName;
+					}
 				}
 				return output;
 			}
