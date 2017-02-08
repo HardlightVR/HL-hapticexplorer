@@ -94,7 +94,7 @@ namespace NullSpace.SDK.Demos
 			}
 			set
 			{
-				effectDuration = (int)value;
+				effectDuration = value;
 			}
 		}
 		/// <summary>
