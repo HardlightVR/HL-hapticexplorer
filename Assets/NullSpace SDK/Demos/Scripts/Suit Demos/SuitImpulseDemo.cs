@@ -25,6 +25,9 @@ namespace NullSpace.SDK.Demos
 		public ImpulseType CurrentMode = ImpulseType.Emanating;
 
 		#region Impulse Defining Attributes
+		//For some reason Unity back-recognizes Header tags. I put them in reverse order to fix that
+		//Weird.
+		[Header("These values are default. Slider & display values are set by hand")]
 		//Impulse information
 		/// <summary>
 		/// Maximum possible depth is currently 7 (Forearm to Forearm)
@@ -43,7 +46,7 @@ namespace NullSpace.SDK.Demos
 		[SerializeField]
 		private float impulseDuration = .75f;
 
-		
+		[Header("[Not Yet Supported]")]
 		public float Attenuation = 1.0f;
 		public float EffectStrength = 1.0f;
 
@@ -57,6 +60,8 @@ namespace NullSpace.SDK.Demos
 		/// </summary>
 		[Range(0, 15)]
 		private int currentEffect = 6;
+
+		private int selectedCodeSequence = -1;
 
 		#region Properties
 		public float Depth
@@ -112,6 +117,17 @@ namespace NullSpace.SDK.Demos
 				currentEffect = Mathf.RoundToInt(value);
 			}
 		}
+		public float SelectedCodeSequence
+		{
+			get
+			{
+				return selectedCodeSequence;
+			}
+			set
+			{
+				selectedCodeSequence = Mathf.RoundToInt(value);
+			}
+		}
 		#endregion
 
 		//Repeat count
@@ -138,15 +154,18 @@ namespace NullSpace.SDK.Demos
 			"transition_hum",
 			"triple_click"
 		};
+
 		#endregion
 
-		//Impulse Visual Color
-		private Color selectedColor = new Color(227 / 255f, 127 / 255f, 127 / 255f, 1f);
-		private Color unselectedColor = new Color(227 / 255f, 227 / 255f, 227 / 255f, 1f);
-		private Color OriginColor = new Color(218 / 255f, 165 / 255f, 32 / 255f, 1f);
+		//Impulse Visual Color - feel free to change these if you have preferences.
+		//Region Selector Suit Demo uses a light green.
+		public Color selectedColor = new Color(227 / 255f, 127 / 255f, 127 / 255f, 1f);
+		public Color unselectedColor = new Color(227 / 255f, 227 / 255f, 227 / 255f, 1f);
+		public Color OriginColor = new Color(218 / 255f, 165 / 255f, 32 / 255f, 1f);
 		#endregion
 
 		#region Scene Refs
+		[Header("Public Objects for ease of understanding")]
 		//First Selected - For showing where we clicked/last clicked.
 		public SuitBodyCollider ImpulseOrigin;
 		//Second Selected - for showing the start/end points
@@ -303,15 +322,103 @@ namespace NullSpace.SDK.Demos
 				StartCoroutine(ColorSuitForTraversal());
 			}
 
-			//These are broken up by lines for readability
-			imp.WithDuration(ImpulseDuration);
-			imp.WithAttenuation(Attenuation);
-			imp.WithEffect(effectOptions[currentEffect], EffectDuration, EffectStrength);
-			imp.Play();
+			//To support CodeSequence Samples
+			if (SelectedCodeSequence < 0)
+			{
+				//These are broken up by lines for readability
+				imp.WithDuration(ImpulseDuration);
+				imp.WithAttenuation(Attenuation);
+				imp.WithEffect(effectOptions[currentEffect], EffectDuration, EffectStrength);
+				imp.Play();
 
-			//You can do something like:
-			//i.WithAttenuation(Attenuation).WithDuration(ImpulseDuration).WithEffect(effectOptions[CurrentEffect], EffectDuration, EffectStrength).Play();
-			//Chaining and Functional Programming!
+				//You can do something like:
+				//i.WithAttenuation(Attenuation).WithDuration(ImpulseDuration).WithEffect(effectOptions[CurrentEffect], EffectDuration, EffectStrength).Play();
+				//Chaining and Functional Programming!
+			}
+			else
+			{
+				//These are broken up by lines for readability
+				imp.WithDuration(ImpulseDuration);
+				imp.WithAttenuation(Attenuation);
+				imp.WithEffect(GetCodeSequence());
+				imp.Play();
+			}
+		}
+
+		#region Code Sequence Names
+		//Note: This is a junky way to do Code Sequences but I wanted to include them as samples
+		public static string[] SampleCodeSequence =
+		{
+			"ClickHum",
+			"ThockClunk",
+			"ClickStorm",
+			"DoubleClickImpact",
+			"Shimmer",
+			"ClickHumDoubleClick",
+			"PulseBumpPulse",
+			"TripleClickFuzzFalloff",
+			"RandomPulses",
+			"ThreeRandomEffects",
+			"VeryRandomEffect",
+			//If I add more later
+			"",
+			"",
+			"",
+			"",
+			" "
+		};
+		#endregion
+
+		CodeSequence GetCodeSequence()
+		{
+			if (SelectedCodeSequence == 0)
+			{
+				return ImpulseCodeSequenceSamples.ClickHum();
+			}
+			else if (SelectedCodeSequence == 1)
+			{
+				return ImpulseCodeSequenceSamples.ThockClunk();
+			}
+			else if (SelectedCodeSequence == 2)
+			{
+				return ImpulseCodeSequenceSamples.ClickStorm();
+			}
+			else if (SelectedCodeSequence == 3)
+			{
+				return ImpulseCodeSequenceSamples.DoubleClickImpact();
+			}
+			else if (SelectedCodeSequence == 4)
+			{
+				return ImpulseCodeSequenceSamples.Shimmer();
+			}
+			else if (SelectedCodeSequence == 5)
+			{
+				return ImpulseCodeSequenceSamples.ClickHumDoubleClick();
+			}
+			else if (SelectedCodeSequence == 6)
+			{
+				return ImpulseCodeSequenceSamples.PulseBumpPulse();
+			}
+			else if (SelectedCodeSequence == 7)
+			{
+				return ImpulseCodeSequenceSamples.TripleClickFuzzFalloff();
+			}
+			else if (SelectedCodeSequence == 8)
+			{
+				return ImpulseCodeSequenceSamples.RandomPulses(Random.Range(0, 10000));
+			}
+			else if (SelectedCodeSequence == 9)
+			{
+				return ImpulseCodeSequenceSamples.ThreeRandomEffects(Random.Range(0, 10000));
+			}
+			else if (SelectedCodeSequence == 10)
+			{
+				return ImpulseCodeSequenceSamples.VeryRandomEffect(Random.Range(0, 10000));
+			}
+			else //if (SelectedCodeSequence == 10)
+			{
+				return ImpulseCodeSequenceSamples.VeryRandomEffect(Random.Range(0, 10000));
+			}
 		}
 
 		SuitBodyCollider GetSuitForNode(GraphEngine.SuitNode target)
@@ -409,7 +516,8 @@ namespace NullSpace.SDK.Demos
 			//You could do a fancy color lerp functionality here...
 			ColorSuit(current, selectedColor);
 
-			yield return new WaitForSeconds(EffectDuration);
+			//I clamp this to a min of .1 for user visibility.
+			yield return new WaitForSeconds(Mathf.Clamp(EffectDuration, .1f, 100));
 
 			//Revert our color
 			Color targetColor = (current == ImpulseOrigin || current == ImpulseDestination) ? OriginColor : unselectedColor;

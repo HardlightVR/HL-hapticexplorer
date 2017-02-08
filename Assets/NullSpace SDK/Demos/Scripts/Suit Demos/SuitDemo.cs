@@ -9,6 +9,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+//Effect tooltip?
+
 namespace NullSpace.SDK.Demos
 {
 	abstract public class SuitDemo : MonoBehaviour

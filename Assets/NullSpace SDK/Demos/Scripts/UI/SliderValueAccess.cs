@@ -8,7 +8,7 @@ namespace NullSpace.SDK.Demos
 	{
 		private Text MyText;
 
-		public enum ForceType { Integer, TwoDecimals, Effect };
+		public enum ForceType { Integer, TwoDecimals, Effect, String };
 		public ForceType DisplayType = ForceType.Integer;
 		private float textValue;
 		public float TextValue
@@ -28,6 +28,10 @@ namespace NullSpace.SDK.Demos
 				else if (DisplayType == ForceType.Effect)
 				{
 					MyText.text = SuitImpulseDemo.effectOptions[(Mathf.RoundToInt(textValue))];
+				}
+				else if (DisplayType == ForceType.String)
+				{
+					MyText.text = SuitImpulseDemo.SampleCodeSequence[(Mathf.RoundToInt(textValue))];
 				}
 			}
 		}
