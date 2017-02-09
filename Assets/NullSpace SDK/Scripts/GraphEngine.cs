@@ -68,87 +68,86 @@ namespace NullSpace.SDK
 				_nodes[node.Location] = node;
 			}
 
-			//Left chest
-			InsertEdge(leftChest, rightChest, 1);
-			InsertEdge(leftChest, leftUpperAbs, 1);
-			InsertEdge(leftChest, rightUpperAbs, 1);
-			InsertEdge(leftChest, leftShoulder, 1);
+			InsertEdge(leftChest, rightChest, 10);
+			InsertEdge(leftChest, leftUpperAbs, 10);
+			InsertEdge(leftChest, rightUpperAbs, 17);
+			InsertEdge(leftChest, leftShoulder, 10);
 
 			//Right chest
-			InsertEdge(rightChest, leftChest, 1);
-			InsertEdge(rightChest, rightUpperAbs, 1);
-			InsertEdge(rightChest, leftUpperAbs, 1);
-			InsertEdge(rightChest, rightShoulder, 1);
+			InsertEdge(rightChest, leftChest, 10);
+			InsertEdge(rightChest, rightUpperAbs, 10);
+			InsertEdge(rightChest, leftUpperAbs, 17);
+			InsertEdge(rightChest, rightShoulder, 10);
 
 			//Left Upper Abs
-			InsertEdge(leftUpperAbs, leftChest, 1);
-			InsertEdge(leftUpperAbs, leftMidAbs, 1);
-			InsertEdge(leftUpperAbs, rightUpperAbs, 1);
-			InsertEdge(leftUpperAbs, rightMidAbs, 1);
-			InsertEdge(leftUpperAbs, rightChest, 1);
+			InsertEdge(leftUpperAbs, leftChest, 10);
+			InsertEdge(leftUpperAbs, leftMidAbs, 10);
+			InsertEdge(leftUpperAbs, rightUpperAbs, 10);
+			InsertEdge(leftUpperAbs, rightMidAbs, 14);
+			InsertEdge(leftUpperAbs, rightChest, 17);
 
 			//Right Upper Abs
-			InsertEdge(rightUpperAbs, rightChest, 1);
-			InsertEdge(rightUpperAbs, rightMidAbs, 1);
-			InsertEdge(rightUpperAbs, leftUpperAbs, 1);
-			InsertEdge(rightUpperAbs, leftMidAbs, 1);
-			InsertEdge(rightUpperAbs, leftChest, 1);
+			InsertEdge(rightUpperAbs, rightChest, 10);
+			InsertEdge(rightUpperAbs, rightMidAbs, 10);
+			InsertEdge(rightUpperAbs, leftUpperAbs, 10);
+			InsertEdge(rightUpperAbs, leftMidAbs, 14);
+			InsertEdge(rightUpperAbs, leftChest, 17);
 
 			//Left Mid Abs 
-			InsertEdge(leftMidAbs, leftUpperAbs, 1);
-			InsertEdge(leftMidAbs, leftLowerAbs, 1);
-			InsertEdge(leftMidAbs, rightUpperAbs, 1);
-			InsertEdge(leftMidAbs, rightMidAbs, 1);
-			InsertEdge(leftMidAbs, rightLowerAbs, 1);
+			InsertEdge(leftMidAbs, leftUpperAbs, 10);
+			InsertEdge(leftMidAbs, leftLowerAbs, 10);
+			InsertEdge(leftMidAbs, rightUpperAbs, 14);
+			InsertEdge(leftMidAbs, rightMidAbs, 10);
+			InsertEdge(leftMidAbs, rightLowerAbs, 14);
 
 			//Right Mid Abs 
-			InsertEdge(rightMidAbs, rightUpperAbs, 1);
-			InsertEdge(rightMidAbs, rightLowerAbs, 1);
-			InsertEdge(rightMidAbs, leftUpperAbs, 1);
-			InsertEdge(rightMidAbs, leftMidAbs, 1);
-			InsertEdge(rightMidAbs, leftLowerAbs, 1);
-
+			InsertEdge(rightMidAbs, rightUpperAbs, 10);
+			InsertEdge(rightMidAbs, rightLowerAbs, 10);
+			InsertEdge(rightMidAbs, leftUpperAbs, 14);
+			InsertEdge(rightMidAbs, leftMidAbs, 10);
+			InsertEdge(rightMidAbs, leftLowerAbs, 14);
 
 			//Left Lower Abs
-			InsertEdge(leftLowerAbs, rightLowerAbs, 1);
-			InsertEdge(leftLowerAbs, rightMidAbs, 1);
-			InsertEdge(leftLowerAbs, leftMidAbs, 1);
+			InsertEdge(leftLowerAbs, rightLowerAbs, 10);
+			InsertEdge(leftLowerAbs, rightMidAbs, 14);
+			InsertEdge(leftLowerAbs, leftMidAbs, 10);
 
 			//Right Lower Abs   
-			InsertEdge(rightLowerAbs, leftLowerAbs, 1);
-			InsertEdge(rightLowerAbs, leftMidAbs, 1);
-			InsertEdge(rightLowerAbs, rightMidAbs, 1);
+			InsertEdge(rightLowerAbs, leftLowerAbs, 10);
+			InsertEdge(rightLowerAbs, leftMidAbs, 14);
+			InsertEdge(rightLowerAbs, rightMidAbs, 10);
 
 			//Left shoulder
-			InsertEdge(leftShoulder, leftChest, 1);
-			InsertEdge(leftShoulder, leftBack, 10);
-			InsertEdge(leftShoulder, leftUpperArm, 1);
-
+			InsertEdge(leftShoulder, leftChest, 10);
+			InsertEdge(leftShoulder, leftBack, 20);
+			InsertEdge(leftShoulder, leftUpperArm, 10);
 
 			//Right shoulder
-			InsertEdge(rightShoulder, rightChest, 1);
-			InsertEdge(rightShoulder, rightBack, 10);
-			InsertEdge(rightShoulder, rightUpperArm, 1);
+			InsertEdge(rightShoulder, rightChest, 10);
+			InsertEdge(rightShoulder, rightBack, 20);
+			InsertEdge(rightShoulder, rightUpperArm, 10);
 
 			//Left upper arm
-			InsertEdge(leftUpperArm, leftShoulder, 1);
-			InsertEdge(leftUpperArm, leftForearm, 1);
+			InsertEdge(leftUpperArm, leftShoulder, 10);
+			InsertEdge(leftUpperArm, leftForearm, 10);
 
 			//Right upper arm
-			InsertEdge(rightUpperArm, rightShoulder, 1);
-			InsertEdge(rightUpperArm, rightForearm, 1);
+			InsertEdge(rightUpperArm, rightShoulder, 10);
+			InsertEdge(rightUpperArm, rightForearm, 10);
 
 			//Left forearm
-			InsertEdge(leftForearm, leftUpperArm, 1);
+			InsertEdge(leftForearm, leftUpperArm, 10);
 
 			//Right forearm
-			InsertEdge(rightForearm, rightUpperArm, 1);
+			InsertEdge(rightForearm, rightUpperArm, 10);
 
 			//Left back
-			InsertEdge(leftBack, leftShoulder, 10);
+			InsertEdge(leftBack, leftShoulder, 20);
+			InsertEdge(leftBack, rightBack, 20);
 
 			//Right back
-			InsertEdge(rightBack, rightShoulder, 10);
+			InsertEdge(rightBack, rightShoulder, 20);
+			InsertEdge(rightBack, leftBack, 20);
 		}
 		public List<SuitNode> Dijkstras(AreaFlag beginNode, AreaFlag endNode)
 		{
