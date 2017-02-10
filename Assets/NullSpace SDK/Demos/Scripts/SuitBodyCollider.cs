@@ -22,6 +22,10 @@ namespace NullSpace.SDK
 		//[EnumFlag]
 		[RegionFlag]
 		public AreaFlag regionID;
+
+		[Header("Add a Collider. Make it a Trigger.")]
+		[Header("Ideally, set this object to a separate layer.")]
+		[Header("So only certain things will collide to cause haptics.")]
 		public Collider myCollider;
 
 		void Awake()
@@ -53,6 +57,16 @@ namespace NullSpace.SDK
 			{
 				//Find our collider
 				myCollider = gameObject.GetComponent<Collider>();
+			}
+		}
+
+		private void OnTriggerEnter(Collider other)
+		{
+			PlayHapticWhenTouchSuit touched = other.GetComponent<PlayHapticWhenTouchSuit>();
+
+			if (touched)
+			{
+				touched.PlayHaptic(this);
 			}
 		}
 	}

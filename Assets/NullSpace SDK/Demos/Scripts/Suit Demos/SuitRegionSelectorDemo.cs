@@ -25,7 +25,11 @@ namespace NullSpace.SDK.Demos
 			selected = FindObjectsOfType<SuitBodyCollider>().ToList();
 			for (int i = 0; i < selected.Count; i++)
 			{
-				selected[i].GetComponent<MeshRenderer>().material.color = selectedColor;
+				MeshRenderer rend = selected[i].GetComponent<MeshRenderer>();
+				if (rend != null)
+				{
+					rend.material.color = selectedColor;
+				}
 			}
 		}
 
@@ -77,7 +81,11 @@ namespace NullSpace.SDK.Demos
 			selected = FindObjectsOfType<SuitBodyCollider>().ToList();
 			for (int i = 0; i < selected.Count; i++)
 			{
-				selected[i].GetComponent<MeshRenderer>().material.color = selectedColor;
+				MeshRenderer rend = selected[i].GetComponent<MeshRenderer>();
+				if (rend != null)
+				{
+					selected[i].GetComponent<MeshRenderer>().material.color = selectedColor;
+				}
 			}
 		}
 
@@ -91,7 +99,11 @@ namespace NullSpace.SDK.Demos
 		{
 			for (int i = 0; i < selected.Count; i++)
 			{
-				selected[i].GetComponent<MeshRenderer>().material.color = unselectedColor;
+				MeshRenderer rend = selected[i].GetComponent<MeshRenderer>();
+				if (rend != null)
+				{
+					selected[i].GetComponent<MeshRenderer>().material.color = unselectedColor;
+				}
 			}
 		}
 	}
