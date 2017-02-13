@@ -13,12 +13,13 @@ namespace NullSpace.SDK.Demos
 		public Rect windowRect = new Rect(100, 100, 200, 200);
 
 		bool QuickButtonFoldout = true;
+		Vector2 scrollPos;
 
 		[SerializeField]
-		public List<SuitConfiguration> Suits;
+		public List<EditorSuitConfig> Suits;
 
 		[SerializeField]
-		public class SuitConfiguration
+		public class EditorSuitConfig
 		{
 			class HelpMessage
 			{
@@ -47,7 +48,7 @@ namespace NullSpace.SDK.Demos
 
 			public List<Object> ObjectsToDestroy;
 
-			public Vector2 scrollPos;
+			//public Vector2 scrollPos;
 			public Vector2 errorScrollPos;
 			bool TopFoldout = true;
 			bool ObjectFieldFoldout = true;
@@ -60,7 +61,7 @@ namespace NullSpace.SDK.Demos
 
 			private int ComponentsToDestroy;
 			private int GameObjectsToDestroy;
-			public SuitConfiguration()
+			public EditorSuitConfig()
 			{
 				#region Setup Default Options
 				if (DefaultOptions == null || DefaultOptions.Count == 0)
@@ -123,12 +124,13 @@ namespace NullSpace.SDK.Demos
 
 			public void OnGUI()
 			{
-				scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
+				//scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
 				GUIStyle style = new GUIStyle(GUI.skin.button);
 				GUILayoutOption[] options = new GUILayoutOption[0];
-				string rootName = SuitRoot == null ? "No Root Defined" : SuitRoot.name;
-				TopFoldout = GUILayout.Toggle(TopFoldout, "Show Suit: ", style);
+				string suitDisplayName = SuitName.Length > 0 ? SuitName : SuitRoot == null ? "Unnamed Suit" : SuitRoot.name;
+				TopFoldout = GUILayout.Toggle(TopFoldout, "Show Suit: " + suitDisplayName, style);
+				#region Top Foldout
 				if (TopFoldout)
 				{
 					//NOTE TO SELF: Add tooltips
@@ -141,16 +143,19 @@ namespace NullSpace.SDK.Demos
 					if (ObjectFieldFoldout)
 					{
 						DrawOptions(options);
+						GUILayout.Space(12);
 
 						DrawAssignmentAndDisplay();
 					}
 
 					DrawProcessControls();
+
+					DrawOutputMessages();
 				}
+				#endregion
 
-				DrawOutputMessages();
 
-				EditorGUILayout.EndScrollView();
+				//EditorGUILayout.EndScrollView();
 			}
 
 			#region Options
@@ -171,9 +176,18 @@ namespace NullSpace.SDK.Demos
 				bool Result = OperationButton(SuitRoot == null, content);
 				if (Result)
 				{
-					//	//Check if they have anything assigned.
-					//	//If they do, warn them this will overwrite it.
-					AutoFindElementsFromRoot(SuitRoot);
+					DefinedSuit definition = SuitRoot.GetComponent<DefinedSuit>();
+
+					if (definition != null)
+					{
+						PopulateFromSuitDefinition(definition);
+					}
+					else
+					{
+						//	//Check if they have anything assigned.
+						//	//If they do, warn them this will overwrite it.
+						AutoFindElementsFromRoot(SuitRoot);
+					}
 				}
 				#endregion
 
@@ -197,7 +211,9 @@ namespace NullSpace.SDK.Demos
 			}
 			void SuitRootObjectField(GUILayoutOption[] options)
 			{
-				SuitRoot = EditorGUILayout.ObjectField(SuitRoot, typeof(GameObject), true, options) as GameObject;
+				GUIContent content = new GUIContent("Suit Root (Optional)", "For modifying an existing configuration. In the future this will try to find the related objects based on common naming conventions.");
+
+				SuitRoot = EditorGUILayout.ObjectField(content, SuitRoot, typeof(GameObject), true, options) as GameObject;
 
 				//Disallow Prefabs
 				if (SuitRoot != null && PrefabUtility.GetPrefabType(SuitRoot) == PrefabType.Prefab)
@@ -553,6 +569,21 @@ namespace NullSpace.SDK.Demos
 				}
 			}
 
+			public void PopulateFromSuitDefinition(DefinedSuit definition)
+			{
+				if (definition != null)
+				{
+					DefaultOptions = definition.MySuit.DefaultOptions.ToList();
+					SuitHolders = definition.MySuit.SuitHolders.ToList();
+					SceneReferences = definition.MySuit.SceneReferences.ToList();
+					HapticsLayer = definition.MySuit.HapticsLayer;
+					//We can't change stuff, we imported it
+					CanChangeValues = false;
+					AddChildObjects = definition.MySuit.AddChildObjects;
+					AddExclusiveTriggerCollider = definition.MySuit.AddExclusiveTriggerCollider;
+				}
+			}
+
 			//This function is for AUTOMATICALLY 
 			void ProcessSuitRoot()
 			{
@@ -618,6 +649,26 @@ namespace NullSpace.SDK.Demos
 			string AddComponentForSuit()
 			{
 				string output = string.Empty;
+
+				DefinedSuit suitDef = null;
+				if (SuitRoot != null)
+				{
+					suitDef = SuitRoot.GetComponent<DefinedSuit>();
+					if (suitDef == null)
+					{
+						SuitRoot.AddComponent<DefinedSuit>();
+					}
+				}
+
+				if (suitDef != null)
+				{
+					suitDef.MySuit.AddChildObjects = AddChildObjects;
+					suitDef.MySuit.AddExclusiveTriggerCollider = AddExclusiveTriggerCollider;
+					suitDef.MySuit.SuitHolders = SuitHolders.ToList();
+					suitDef.MySuit.DefaultOptions = DefaultOptions.ToList();
+					suitDef.MySuit.SuitRoot = SuitRoot;
+				}
+
 				for (int i = 0; i < SuitHolders.Count; i++)
 				{
 					if (SuitHolders[i] != null)
@@ -642,6 +693,11 @@ namespace NullSpace.SDK.Demos
 								col = AddColliderForSuit(suit);
 							}
 
+							if (suitDef != null)
+							{
+								suitDef.MySuit.SceneReferences[i] = suit;
+							}
+
 							output += "\t  Adding Suit Body Collider to " + SuitHolders[i].name + "";
 						}
 
@@ -655,7 +711,6 @@ namespace NullSpace.SDK.Demos
 						{ suit.myCollider = col; }
 
 						SceneReferences[i] = suit;
-
 
 						//Don't let the user change anything until they've deleted these?
 						//These functions aren't robust enough yet.
@@ -755,8 +810,22 @@ namespace NullSpace.SDK.Demos
 
 		public void Setup()
 		{
-			Suits = new List<SuitConfiguration>();
-			AddSuitConfiguration();
+			Suits = new List<EditorSuitConfig>();
+
+			List<DefinedSuit> existingDefinitions = FindObjectsOfType<DefinedSuit>().ToList();
+
+			EditorSuitConfig suit = null;
+
+			for (int i = 0; i < existingDefinitions.Count; i++)
+			{
+				suit = AddSuitConfiguration();
+				suit.PopulateFromSuitDefinition(existingDefinitions[i]);
+			}
+
+			if (Suits.Count == 0)
+			{
+				suit = AddSuitConfiguration();
+			}
 		}
 		#endregion
 
@@ -768,9 +837,12 @@ namespace NullSpace.SDK.Demos
 			}
 		}
 
-		void AddSuitConfiguration()
+		EditorSuitConfig AddSuitConfiguration()
 		{
-			Suits.Add(new SuitConfiguration());
+			Debug.Log("HIT\n");
+			EditorSuitConfig suit = new EditorSuitConfig();
+			Suits.Add(suit);
+			return suit;
 		}
 
 		void DrawQuickButtonsForSuitBodyColliders()
@@ -791,7 +863,8 @@ namespace NullSpace.SDK.Demos
 				{
 					EditorGUILayout.BeginVertical("box");
 				}
-				QuickButtonFoldout = GUILayout.Toggle(QuickButtonFoldout, "Existing Suit Body Colliders", style);
+				string showQuickButtonName = QuickButtonFoldout ? "Hide" : "Show";
+				QuickButtonFoldout = GUILayout.Toggle(QuickButtonFoldout, showQuickButtonName + " Existing Suit Body Colliders", style);
 				if (QuickButtonFoldout)
 				{
 					bool horizOpen = false;
@@ -829,10 +902,24 @@ namespace NullSpace.SDK.Demos
 			//Make a button that auto looks things up in children of an object
 			CheckIfInvalidSetup();
 
+			//EditorGUILayout.InspectorTitlebar(true, this, true);
+			//GUILayoutOption[] innerOptions = { GUILayout.MaxHeight(45), GUILayout.MinHeight(35) };
+			GUIStyle title = new GUIStyle();
+			title.fontSize = 18;
+			GUILayout.Label(" Hardlight Quick Setup Tool", title);
+
+			bool allowExpandAll = Suits != null && Suits.Count > 1;
+			GUIContent content = new GUIContent("Collapsed All");
+			bool result = NullSpaceEditorStyles.OperationButton(!allowExpandAll, content);
+
+			scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
+
 			for (int i = 0; i < Suits.Count; i++)
 			{
 				Suits[i].OnGUI();
 			}
+
+			EditorGUILayout.EndScrollView();
 
 			DrawQuickButtonsForSuitBodyColliders();
 
@@ -926,6 +1013,15 @@ namespace NullSpace.SDK.Demos
 			{
 				//Re-enable
 				EditorGUI.EndDisabledGroup();
+			}
+		}
+
+		public static bool OperationButton(bool disabledWhenTrue, GUIContent content)
+		{
+			GUIStyle style = new GUIStyle(GUI.skin.button);
+			using (new EditorGUI.DisabledGroupScope(disabledWhenTrue))
+			{
+				return GUILayout.Button(content);
 			}
 		}
 	}
