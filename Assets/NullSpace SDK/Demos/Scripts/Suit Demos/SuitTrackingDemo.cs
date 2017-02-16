@@ -16,15 +16,19 @@ namespace NullSpace.SDK.Demos
 	/// </summary>
 	public class SuitTrackingDemo : SuitDemo
 	{
+		public TrackingTest TrackingTestObject;
+
 		//Turn on my needed things
 		public override void ActivateDemo()
 		{
+			TrackingTestObject.EnableTracking();
 			HandleRequiredObjects(true);
 		}
 
 		//Turn off my needed things
 		public override void DeactivateDemo()
 		{
+			TrackingTestObject.DisableTracking();
 			HandleRequiredObjects(false);
 		}
 

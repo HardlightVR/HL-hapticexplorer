@@ -839,7 +839,6 @@ namespace NullSpace.SDK.Demos
 
 		EditorSuitConfig AddSuitConfiguration()
 		{
-			Debug.Log("HIT\n");
 			EditorSuitConfig suit = new EditorSuitConfig();
 			Suits.Add(suit);
 			return suit;
