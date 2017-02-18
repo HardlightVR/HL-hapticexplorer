@@ -32,91 +32,22 @@ namespace NullSpace.SDK.Demos
 				public MessageType messageType;
 			}
 
-			string SuitName = "Player Body";
-			public GameObject SuitRoot;
+			//This holds all the scene references to objects.
+			public SuitDefinition MyDefinition;
 
-			[SerializeField]
-			public List<AreaFlag> DefaultOptions;
-
-			//The Game Objects to fill the fields (which will get suit body references
-			[SerializeField]
-			public List<GameObject> SuitHolders;
-
-			//the objects added. Will get a nice button list to quick get to each of them.
-			[SerializeField]
-			public List<SuitBodyCollider> SceneReferences;
-
+			public bool CanChangeValues = true;
 			public List<Object> ObjectsToDestroy;
-
-			//public Vector2 scrollPos;
 			public Vector2 errorScrollPos;
 			bool TopFoldout = true;
 			bool ObjectFieldFoldout = true;
 			List<HelpMessage> outputMessages;
-
-			public int HapticsLayer = 31;
-			public bool CanChangeValues = true;
-			public bool AddChildObjects = true;
-			public bool AddExclusiveTriggerCollider = true;
+			string childAppendName = "'s Suit Body Collider";
 
 			private int ComponentsToDestroy;
 			private int GameObjectsToDestroy;
 			public EditorSuitConfig()
 			{
-				#region Setup Default Options
-				if (DefaultOptions == null || DefaultOptions.Count == 0)
-				{
-					DefaultOptions = new List<AreaFlag>();
-
-					DefaultOptions.Add(AreaFlag.Forearm_Left);
-					DefaultOptions.Add(AreaFlag.Upper_Arm_Left);
-
-					DefaultOptions.Add(AreaFlag.Shoulder_Left);
-					DefaultOptions.Add(AreaFlag.Back_Left);
-					DefaultOptions.Add(AreaFlag.Chest_Left);
-
-					DefaultOptions.Add(AreaFlag.Upper_Ab_Left);
-					DefaultOptions.Add(AreaFlag.Mid_Ab_Left);
-					DefaultOptions.Add(AreaFlag.Lower_Ab_Left);
-
-					DefaultOptions.Add(AreaFlag.Forearm_Right);
-					DefaultOptions.Add(AreaFlag.Upper_Arm_Right);
-
-					DefaultOptions.Add(AreaFlag.Shoulder_Right);
-					DefaultOptions.Add(AreaFlag.Back_Right);
-					DefaultOptions.Add(AreaFlag.Chest_Right);
-
-					DefaultOptions.Add(AreaFlag.Upper_Ab_Right);
-					DefaultOptions.Add(AreaFlag.Mid_Ab_Right);
-					DefaultOptions.Add(AreaFlag.Lower_Ab_Right);
-				}
-				#endregion
-
-				#region Game Object Parents
-				if (SuitHolders == null || SuitHolders.Count == 0)
-				{
-					//Debug.Log("Resetting Suit Holders\n");
-					SuitHolders = new List<GameObject>();
-
-					for (int i = 0; i < DefaultOptions.Count; i++)
-					{
-						SuitHolders.Add(null);
-					}
-				}
-				#endregion
-
-				#region Suit Body Colliders
-				if (SceneReferences == null || SceneReferences.Count == 0)
-				{
-					//Debug.Log("Resetting Filled Areas\n");
-					SceneReferences = new List<SuitBodyCollider>();
-
-					for (int i = 0; i < DefaultOptions.Count; i++)
-					{
-						SceneReferences.Add(null);
-					}
-				}
-				#endregion
+				CheckSuitDefinition();
 
 				outputMessages = new List<HelpMessage>();
 				ObjectsToDestroy = new List<Object>();
@@ -124,11 +55,13 @@ namespace NullSpace.SDK.Demos
 
 			public void OnGUI()
 			{
+				CheckSuitDefinition();
+
 				//scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
 				GUIStyle style = new GUIStyle(GUI.skin.button);
 				GUILayoutOption[] options = new GUILayoutOption[0];
-				string suitDisplayName = SuitName.Length > 0 ? SuitName : SuitRoot == null ? "Unnamed Suit" : SuitRoot.name;
+				string suitDisplayName = MyDefinition.SuitName.Length > 0 ? MyDefinition.SuitName : MyDefinition.SuitRoot == null ? "Unnamed Suit" : MyDefinition.SuitRoot.name;
 				TopFoldout = GUILayout.Toggle(TopFoldout, "Show Suit: " + suitDisplayName, style);
 				#region Top Foldout
 				if (TopFoldout)
@@ -158,6 +91,15 @@ namespace NullSpace.SDK.Demos
 				//EditorGUILayout.EndScrollView();
 			}
 
+			private void CheckSuitDefinition()
+			{
+				if (MyDefinition == null)
+				{
+					MyDefinition = ScriptableObject.CreateInstance<SuitDefinition>();
+					MyDefinition.Init();
+				}
+			}
+
 			#region Options
 			void DrawOptions(GUILayoutOption[] options)
 			{
@@ -173,10 +115,10 @@ namespace NullSpace.SDK.Demos
 				SuitRootObjectField(options);
 
 				content = new GUIContent("Autoconfigure based on Root Object", "Uses common names to try and establish the different suit body colliders for the suit.");
-				bool Result = OperationButton(SuitRoot == null, content);
+				bool Result = OperationButton(MyDefinition.SuitRoot == null, content);
 				if (Result)
 				{
-					DefinedSuit definition = SuitRoot.GetComponent<DefinedSuit>();
+					HardlightSuit definition = MyDefinition.SuitRoot.GetComponent<HardlightSuit>();
 
 					if (definition != null)
 					{
@@ -186,7 +128,7 @@ namespace NullSpace.SDK.Demos
 					{
 						//	//Check if they have anything assigned.
 						//	//If they do, warn them this will overwrite it.
-						AutoFindElementsFromRoot(SuitRoot);
+						AutoFindElementsFromRoot(MyDefinition.SuitRoot);
 					}
 				}
 				#endregion
@@ -196,10 +138,10 @@ namespace NullSpace.SDK.Demos
 
 				EditorGUILayout.BeginHorizontal();
 				content = new GUIContent("Add Child Objects", "Create child objects instead of directly adding to the targeted object.");
-				AddChildObjects = CreateStyledToggle(!CanChangeValues, AddChildObjects, content, innerOptions);
+				MyDefinition.AddChildObjects = CreateStyledToggle(!CanChangeValues, MyDefinition.AddChildObjects, content, innerOptions);
 
 				content = new GUIContent("Add New Colliders", "Adds SuitBodyCollider objects instead of using existing ones or letting you configure it manually.\nWill add the colliders to child objects if that is also selected.");
-				AddExclusiveTriggerCollider = CreateStyledToggle(!CanChangeValues, AddExclusiveTriggerCollider, content, innerOptions);
+				MyDefinition.AddExclusiveTriggerCollider = CreateStyledToggle(!CanChangeValues, MyDefinition.AddExclusiveTriggerCollider, content, innerOptions);
 
 				EditorGUILayout.EndHorizontal();
 				EditorGUILayout.EndVertical();
@@ -207,18 +149,20 @@ namespace NullSpace.SDK.Demos
 
 			void SuitNaming(GUILayoutOption[] options)
 			{
-				SuitName = EditorGUILayout.TextField("Suit Name", SuitName, options);
+				MyDefinition.SuitName = EditorGUILayout.TextField("Suit Name", MyDefinition.SuitName, options);
 			}
 			void SuitRootObjectField(GUILayoutOption[] options)
 			{
 				GUIContent content = new GUIContent("Suit Root (Optional)", "For modifying an existing configuration. In the future this will try to find the related objects based on common naming conventions.");
 
-				SuitRoot = EditorGUILayout.ObjectField(content, SuitRoot, typeof(GameObject), true, options) as GameObject;
+				if (MyDefinition.SuitRoot != null)
+					Undo.RecordObject(MyDefinition.SuitRoot, "Suit Root Selected");
+				MyDefinition.SuitRoot = EditorGUILayout.ObjectField(content, MyDefinition.SuitRoot, typeof(GameObject), true, options) as GameObject;
 
 				//Disallow Prefabs
-				if (SuitRoot != null && PrefabUtility.GetPrefabType(SuitRoot) == PrefabType.Prefab)
+				if (MyDefinition.SuitRoot != null && PrefabUtility.GetPrefabType(MyDefinition.SuitRoot) == PrefabType.Prefab)
 				{
-					SuitRoot = null;
+					MyDefinition.SuitRoot = null;
 				}
 			}
 			bool OperationButton(bool disabledWhenTrue, GUIContent content)
@@ -236,6 +180,12 @@ namespace NullSpace.SDK.Demos
 				//style.fixedWidth = EditorGUIUtility.currentViewWidth / 3;
 				using (new EditorGUI.DisabledGroupScope(disabled))
 				{
+					//if (this != null)
+					//{
+					//	Debug.Log("Record toggle\n");
+					//	Undo.RecordObject(this, "Toggle Field");
+					//}
+
 					bool result = GUILayout.Toggle(toggleState, content, style);
 					return result;
 				}
@@ -252,7 +202,7 @@ namespace NullSpace.SDK.Demos
 				//columnStyle.fixedHeight = 22;
 
 
-				for (int i = 0; i < DefaultOptions.Count; i++)
+				for (int i = 0; i < MyDefinition.DefaultOptions.Count; i++)
 				{
 					//New Horizontal
 					EditorGUILayout.BeginHorizontal("Box");
@@ -283,9 +233,9 @@ namespace NullSpace.SDK.Demos
 			void DisplayAreaFlag(int index, GUILayoutOption[] options)
 			{
 				//GUILayout.Label("Area Flag Display");
-				if (DefaultOptions != null && DefaultOptions.Count > index)
+				if (MyDefinition.DefaultOptions != null && MyDefinition.DefaultOptions.Count > index)
 				{
-					AreaFlag o = DefaultOptions[index];
+					AreaFlag o = MyDefinition.DefaultOptions[index];
 					string label = o.ToString();
 
 					//Remove the underscores?
@@ -297,20 +247,20 @@ namespace NullSpace.SDK.Demos
 			void CreateSuitObjectField(int index, GUILayoutOption[] options)
 			{
 				//GUILayout.Label("Suit Object Field " + SuitHolders.Count);
-				if (SuitHolders != null && SuitHolders.Count > index)
+				if (MyDefinition.SuitHolders != null && MyDefinition.SuitHolders.Count > index)
 				{
-					GameObject o = SuitHolders[index];
+					GameObject o = MyDefinition.SuitHolders[index];
 					//GUIContent label = new GUIContent("Intended Parent");
-					SuitHolders[index] = EditorGUILayout.ObjectField(o, typeof(GameObject), true, options) as GameObject;
+					MyDefinition.SuitHolders[index] = EditorGUILayout.ObjectField(o, typeof(GameObject), true, options) as GameObject;
 
 					//Disallow Prefabs
-					if (SuitHolders[index] != null && PrefabUtility.GetPrefabType(SuitHolders[index]) == PrefabType.Prefab)
+					if (MyDefinition.SuitHolders[index] != null && PrefabUtility.GetPrefabType(MyDefinition.SuitHolders[index]) == PrefabType.Prefab)
 					{
-						SuitHolders[index] = null;
+						MyDefinition.SuitHolders[index] = null;
 					}
 
 					//If the value changes
-					if (SuitHolders[index] != null && o != SuitHolders[index])
+					if (MyDefinition.SuitHolders[index] != null && o != MyDefinition.SuitHolders[index])
 					{
 						SuitBodyCollider suit = LookupSceneReference(index);
 						AssignQuickButton(suit, index);
@@ -322,11 +272,11 @@ namespace NullSpace.SDK.Demos
 			SuitBodyCollider LookupSceneReference(int index)
 			{
 				SuitBodyCollider suit = null;
-				GameObject targObj = SuitHolders[index];
-				if (SuitHolders[index] != null)
+				GameObject targObj = MyDefinition.SuitHolders[index];
+				if (MyDefinition.SuitHolders[index] != null)
 				{
-					string lookupName = SuitHolders[index].name + childAppendName;
-					Transform objToCheck = AddChildObjects ? targObj.transform.FindChild(lookupName) : targObj.transform;
+					string lookupName = MyDefinition.SuitHolders[index].name + childAppendName;
+					Transform objToCheck = MyDefinition.AddChildObjects ? targObj.transform.FindChild(lookupName) : targObj.transform;
 
 					if (objToCheck != null)
 					{
@@ -337,9 +287,9 @@ namespace NullSpace.SDK.Demos
 			}
 			bool AssignQuickButton(SuitBodyCollider suit, int index)
 			{
-				if (suit != null && SceneReferences[index] == null)
+				if (suit != null && MyDefinition.SceneReferences[index] == null)
 				{
-					SceneReferences[index] = suit;
+					MyDefinition.SceneReferences[index] = suit;
 					return true;
 				}
 				return false;
@@ -347,9 +297,9 @@ namespace NullSpace.SDK.Demos
 
 			void SuitQuickButton(int index, GUILayoutOption[] options)
 			{
-				if (SceneReferences != null && SceneReferences.Count > index)
+				if (MyDefinition.SceneReferences != null && MyDefinition.SceneReferences.Count > index)
 				{
-					bool invalidObj = SceneReferences[index] == null;
+					bool invalidObj = MyDefinition.SceneReferences[index] == null;
 					string buttonLabel = string.Empty;
 
 					if (invalidObj)
@@ -360,7 +310,7 @@ namespace NullSpace.SDK.Demos
 					}
 					else
 					{
-						buttonLabel = SceneReferences[index].name;
+						buttonLabel = MyDefinition.SceneReferences[index].name;
 
 						//Max out the string size?
 					}
@@ -369,7 +319,7 @@ namespace NullSpace.SDK.Demos
 					if (GUILayout.Button(buttonLabel, EditorStyles.toolbarButton, options))
 					{
 						//Go to that object.
-						Selection.activeGameObject = SceneReferences[index].gameObject;
+						Selection.activeGameObject = MyDefinition.SceneReferences[index].gameObject;
 					}
 
 					if (invalidObj)
@@ -397,14 +347,14 @@ namespace NullSpace.SDK.Demos
 			string SuitSetupOperation()
 			{
 				string output = string.Empty;
-				string tooltip = "This will create Suit components on " + (AddChildObjects ? " children of the selected objects" : " the selected objects");
+				string tooltip = "This will create Suit components on " + (MyDefinition.AddChildObjects ? " children of the selected objects" : " the selected objects");
 				GUIContent content = new GUIContent("Create SuitBodyColliders", tooltip);
 				bool OperationForbidden = CountValidSuitHolders() < 1;
 				bool Result = OperationButton(OperationForbidden, content);
 				if (Result)
 				{
 					//If we should add child objects
-					if (AddChildObjects)
+					if (MyDefinition.AddChildObjects)
 						output += AddChildNodesForSuit();
 					//Then create the component (it will handle the Collider functionalities)
 					output += AddComponentForSuit();
@@ -438,8 +388,12 @@ namespace NullSpace.SDK.Demos
 							{
 								DeleteMarkedObjects();
 								CanChangeValues = true;
+
+								//If they choose to delete their current suit
+								//Do they also want to remove the root's definition
+								//This will handle if it doesn't have a root.
+								HandleHardlightRemovalChoice();
 							}
-							//ClearSuitBodyColliders();
 						}
 					}
 				}
@@ -448,11 +402,11 @@ namespace NullSpace.SDK.Demos
 			int CountValidSuitHolders()
 			{
 				int validCount = 0;
-				if (SuitHolders != null && SuitHolders.Count == DefaultOptions.Count)
+				if (MyDefinition.SuitHolders != null && MyDefinition.SuitHolders.Count == MyDefinition.DefaultOptions.Count)
 				{
-					for (int i = 0; i < SuitHolders.Count; i++)
+					for (int i = 0; i < MyDefinition.SuitHolders.Count; i++)
 					{
-						if (SuitHolders[i] != null)
+						if (MyDefinition.SuitHolders[i] != null)
 						{
 							validCount++;
 						}
@@ -464,11 +418,11 @@ namespace NullSpace.SDK.Demos
 			int CountSuitBodyColliders()
 			{
 				int validCount = 0;
-				if (SceneReferences != null && SceneReferences.Count == DefaultOptions.Count)
+				if (MyDefinition.SceneReferences != null && MyDefinition.SceneReferences.Count == MyDefinition.DefaultOptions.Count)
 				{
-					for (int i = 0; i < SceneReferences.Count; i++)
+					for (int i = 0; i < MyDefinition.SceneReferences.Count; i++)
 					{
-						if (SceneReferences[i] != null)
+						if (MyDefinition.SceneReferences[i] != null)
 						{
 							validCount++;
 						}
@@ -535,20 +489,20 @@ namespace NullSpace.SDK.Demos
 					//}
 					//}
 
-					for (int optionIndex = 0; optionIndex < DefaultOptions.Count; optionIndex++)
+					for (int optionIndex = 0; optionIndex < MyDefinition.DefaultOptions.Count; optionIndex++)
 					{
 						for (int suitIndex = 0; suitIndex < suitObjects.Count; suitIndex++)
 						{
-							if (suitObjects[suitIndex].regionID.HasFlag(DefaultOptions[optionIndex]))
+							if (suitObjects[suitIndex].regionID.HasFlag(MyDefinition.DefaultOptions[optionIndex]))
 							{
 								//Set the object field
-								if (AddChildObjects && suitObjects[suitIndex].transform.parent != null)
+								if (MyDefinition.AddChildObjects && suitObjects[suitIndex].transform.parent != null)
 								{
-									SuitHolders[optionIndex] = suitObjects[suitIndex].transform.parent.gameObject;
+									MyDefinition.SuitHolders[optionIndex] = suitObjects[suitIndex].transform.parent.gameObject;
 								}
-								if (!AddChildObjects)
+								if (!MyDefinition.AddChildObjects)
 								{
-									SuitHolders[optionIndex] = suitObjects[suitIndex].gameObject;
+									MyDefinition.SuitHolders[optionIndex] = suitObjects[suitIndex].gameObject;
 								}
 
 								//Assign the quick button.
@@ -569,58 +523,48 @@ namespace NullSpace.SDK.Demos
 				}
 			}
 
-			public void PopulateFromSuitDefinition(DefinedSuit definition)
+			public void PopulateFromSuitDefinition(HardlightSuit hardlightSuit)
 			{
-				if (definition != null)
+				if (hardlightSuit != null)
 				{
-					DefaultOptions = definition.MySuit.DefaultOptions.ToList();
-					SuitHolders = definition.MySuit.SuitHolders.ToList();
-					SceneReferences = definition.MySuit.SceneReferences.ToList();
-					HapticsLayer = definition.MySuit.HapticsLayer;
+					MyDefinition.SuitRoot = hardlightSuit.gameObject;
+					MyDefinition.DefaultOptions = hardlightSuit.Definition.DefaultOptions.ToList();
+					MyDefinition.SuitHolders = hardlightSuit.Definition.SuitHolders.ToList();
+					MyDefinition.SceneReferences = hardlightSuit.Definition.SceneReferences.ToList();
+					MyDefinition.HapticsLayer = hardlightSuit.Definition.HapticsLayer;
 					//We can't change stuff, we imported it
 					CanChangeValues = false;
-					AddChildObjects = definition.MySuit.AddChildObjects;
-					AddExclusiveTriggerCollider = definition.MySuit.AddExclusiveTriggerCollider;
+					MyDefinition.AddChildObjects = hardlightSuit.Definition.AddChildObjects;
+					MyDefinition.AddExclusiveTriggerCollider = hardlightSuit.Definition.AddExclusiveTriggerCollider;
 				}
 			}
 
-			//This function is for AUTOMATICALLY 
+			//This function is for AUTOMATICALLY configuring a body object based on common names
+			//It is not done
 			void ProcessSuitRoot()
 			{
 
-			}
-
-			void DeleteMarkedObjects()
-			{
-				for (int i = ObjectsToDestroy.Count - 1; i > -1; i--)
-				{
-					if (ObjectsToDestroy[i] != null)
-					{
-						DestroyImmediate(ObjectsToDestroy[i]);
-					}
-				}
-				ObjectsToDestroy.Clear();
 			}
 
 			string ClearSuitBodyColliders()
 			{
 				Debug.LogError("This is not used\nYou probably shouldn't use this - it was a temporary call and was refactored into RemoveComponentsForSuit\n");
 				string output = string.Empty;
-				for (int i = 0; i < SceneReferences.Count; i++)
+				for (int i = 0; i < MyDefinition.SceneReferences.Count; i++)
 				{
-					if (SceneReferences[i] != null)
+					if (MyDefinition.SceneReferences[i] != null)
 					{
-						output += "Removing Suit Body Collider from " + SceneReferences[i].name + " which had RegionID: " + DefaultOptions[i].ToString();
+						output += "Removing Suit Body Collider from " + MyDefinition.SceneReferences[i].name + " which had RegionID: " + MyDefinition.DefaultOptions[i].ToString();
 					}
 				}
 
 				//Yep, we're going through it twice that way we can have a good output info.
-				for (int i = 0; i < SceneReferences.Count; i++)
+				for (int i = 0; i < MyDefinition.SceneReferences.Count; i++)
 				{
 					//If something is on multiple objects, it'll get cleaned up only once.
-					if (SceneReferences[i] != null)
+					if (MyDefinition.SceneReferences[i] != null)
 					{
-						DestroyImmediate(SceneReferences[i]);
+						DestroyImmediate(MyDefinition.SceneReferences[i]);
 					}
 				}
 
@@ -628,19 +572,24 @@ namespace NullSpace.SDK.Demos
 				return output;
 			}
 
-			string childAppendName = "'s Suit Body Collider";
+			#region Adding
 			string AddChildNodesForSuit()
 			{
 				string output = string.Empty;
-				for (int i = 0; i < SuitHolders.Count; i++)
+				for (int i = 0; i < MyDefinition.SuitHolders.Count; i++)
 				{
-					if (SuitHolders[i] != null)
+					if (MyDefinition.SuitHolders[i] != null)
 					{
 						GameObject go = new GameObject();
-						Undo.RecordObject(go, "Add Suit Child Node");
+						Undo.RegisterCreatedObjectUndo(go, "Add Suit Child Node");
 
-						go.transform.SetParent(SuitHolders[i].transform);
-						go.name = SuitHolders[i].name + childAppendName;
+						//Undo.SetTransformParent(myGameObject.transform, newTransformParent);
+						Undo.SetTransformParent(go.transform, MyDefinition.SuitHolders[i].transform, "Set New Suit Node as Child");
+
+						//We don't use this anymore, instead we register the transform change with Undo
+						//go.transform.SetParent(MyDefinition.SuitHolders[i].transform);
+
+						go.name = MyDefinition.SuitHolders[i].name + childAppendName;
 					}
 				}
 				return output;
@@ -650,33 +599,39 @@ namespace NullSpace.SDK.Demos
 			{
 				string output = string.Empty;
 
-				DefinedSuit suitDef = null;
-				if (SuitRoot != null)
+				HardlightSuit hardlightSuit = null;
+				if (MyDefinition.SuitRoot != null)
 				{
-					suitDef = SuitRoot.GetComponent<DefinedSuit>();
-					if (suitDef == null)
+					Undo.RecordObject(MyDefinition.SuitRoot, "Configuring Suit Definition");
+					hardlightSuit = MyDefinition.SuitRoot.GetComponent<HardlightSuit>();
+					if (hardlightSuit == null)
 					{
-						SuitRoot.AddComponent<DefinedSuit>();
+						Debug.Log("Adding Defined Suit Component\n");
+
+						hardlightSuit = Undo.AddComponent<HardlightSuit>(MyDefinition.SuitRoot);
+						//SuitRoot.AddComponent<DefinedSuit>();
 					}
 				}
 
-				if (suitDef != null)
+				if (hardlightSuit != null)
 				{
-					suitDef.MySuit.AddChildObjects = AddChildObjects;
-					suitDef.MySuit.AddExclusiveTriggerCollider = AddExclusiveTriggerCollider;
-					suitDef.MySuit.SuitHolders = SuitHolders.ToList();
-					suitDef.MySuit.DefaultOptions = DefaultOptions.ToList();
-					suitDef.MySuit.SuitRoot = SuitRoot;
+					Debug.Log("Recording DefinedSuit\n");
+					Undo.RecordObject(hardlightSuit, "Filling out Defined Suit fields");
+					hardlightSuit.Definition.AddChildObjects = MyDefinition.AddChildObjects;
+					hardlightSuit.Definition.AddExclusiveTriggerCollider = MyDefinition.AddExclusiveTriggerCollider;
+					hardlightSuit.Definition.SuitHolders = MyDefinition.SuitHolders.ToList();
+					hardlightSuit.Definition.DefaultOptions = MyDefinition.DefaultOptions.ToList();
+					hardlightSuit.Definition.SuitRoot = MyDefinition.SuitRoot;
 				}
 
-				for (int i = 0; i < SuitHolders.Count; i++)
+				for (int i = 0; i < MyDefinition.SuitHolders.Count; i++)
 				{
-					if (SuitHolders[i] != null)
+					if (MyDefinition.SuitHolders[i] != null)
 					{
-						Undo.RecordObject(SuitHolders[i], "Add Suit Node to Marked Objects");
+						Undo.RecordObject(MyDefinition.SuitHolders[i], "Add Suit Node to Marked Objects");
 
-						output += "Processing " + SuitHolders[i].name + "";
-						GameObject targetGO = AddChildObjects ? SuitHolders[i].transform.FindChild(SuitHolders[i].name + childAppendName).gameObject : SuitHolders[i];
+						output += "Processing " + MyDefinition.SuitHolders[i].name + "";
+						GameObject targetGO = MyDefinition.AddChildObjects ? MyDefinition.SuitHolders[i].transform.FindChild(MyDefinition.SuitHolders[i].name + childAppendName).gameObject : MyDefinition.SuitHolders[i];
 
 						Collider col = null;
 						//Check if it has one already
@@ -687,30 +642,32 @@ namespace NullSpace.SDK.Demos
 							//suit = targetGO.AddComponent<SuitBodyCollider>(); - Not undo-able
 
 							suit = Undo.AddComponent<SuitBodyCollider>(targetGO);
+							Undo.RecordObject(suit.gameObject, "Modifying Suit Object");
 
-							if (AddExclusiveTriggerCollider)
+							if (MyDefinition.AddExclusiveTriggerCollider)
 							{
 								col = AddColliderForSuit(suit);
 							}
 
-							if (suitDef != null)
+							if (hardlightSuit != null)
 							{
-								suitDef.MySuit.SceneReferences[i] = suit;
+								Undo.RecordObject(hardlightSuit, "Filling out Defined Suit fields");
+								hardlightSuit.Definition.SceneReferences[i] = suit;
 							}
 
-							output += "\t  Adding Suit Body Collider to " + SuitHolders[i].name + "";
+							output += "\t  Adding Suit Body Collider to " + MyDefinition.SuitHolders[i].name + "";
 						}
 
-						output += "\t  Adding " + DefaultOptions[i].ToString() + " " + SuitHolders[i].name + "\n";
+						output += "\t  Adding " + MyDefinition.DefaultOptions[i].ToString() + " " + MyDefinition.SuitHolders[i].name + "\n";
 
 						//Add this region to it.
-						suit.regionID = suit.regionID | DefaultOptions[i];
+						suit.regionID = suit.regionID | MyDefinition.DefaultOptions[i];
 
 						//Save the collider if we made one
 						if (col != null)
 						{ suit.myCollider = col; }
 
-						SceneReferences[i] = suit;
+						MyDefinition.SceneReferences[i] = suit;
 
 						//Don't let the user change anything until they've deleted these?
 						//These functions aren't robust enough yet.
@@ -722,6 +679,19 @@ namespace NullSpace.SDK.Demos
 				return output;
 			}
 
+			Collider AddColliderForSuit(SuitBodyCollider suit)
+			{
+				GameObject go = suit.gameObject;
+
+				Collider col = Undo.AddComponent<BoxCollider>(go);
+				//Collider col = go.AddComponent<BoxCollider>();
+				col.gameObject.layer = MyDefinition.HapticsLayer;
+				col.isTrigger = true;
+				return col;
+			}
+			#endregion
+
+			#region Removal
 			string DetectComponentsToRemove()
 			{
 				string output = string.Empty;
@@ -732,49 +702,49 @@ namespace NullSpace.SDK.Demos
 				ComponentsToDestroy = 0;
 				GameObjectsToDestroy = 0;
 
-				if (SceneReferences != null)
+				if (MyDefinition.SceneReferences != null)
 				{
-					for (int i = 0; i < SceneReferences.Count; i++)
+					for (int i = 0; i < MyDefinition.SceneReferences.Count; i++)
 					{
-						if (SceneReferences[i] != null)
+						if (MyDefinition.SceneReferences[i] != null)
 						{
 							//If add child objects
-							if (AddChildObjects)
+							if (MyDefinition.AddChildObjects)
 							{
-								int componentCount = SceneReferences[i].gameObject.GetComponents<Component>().Length;
+								int componentCount = MyDefinition.SceneReferences[i].gameObject.GetComponents<Component>().Length;
 
 								//Debug.Log("Component Count is equal to " + componentCount + "\n");
 
 								if (componentCount < 4)
 								{
 									ComponentsToDestroy++;
-									if (AddExclusiveTriggerCollider)
+									if (MyDefinition.AddExclusiveTriggerCollider)
 										ComponentsToDestroy++;
 									GameObjectsToDestroy++;
 									//Mark for deletion - they'll have to confirm removal.
-									ObjectsToDestroy.Add(SceneReferences[i].gameObject);
-									output += "Marking : " + SceneReferences[i].gameObject + "'s SuitBodyCollider Component for removal - has " + componentCount + " components\n";
+									ObjectsToDestroy.Add(MyDefinition.SceneReferences[i].gameObject);
+									output += "Marking : " + MyDefinition.SceneReferences[i].gameObject + "'s SuitBodyCollider Component for removal - has " + componentCount + " components\n";
 								}
 							}
 							//Attached to the parrent
 							else
 							{
-								if (SuitHolders[i] != null)
+								if (MyDefinition.SuitHolders[i] != null)
 								{
-									SuitBodyCollider suit = SuitHolders[i].GetComponent<SuitBodyCollider>();
+									SuitBodyCollider suit = MyDefinition.SuitHolders[i].GetComponent<SuitBodyCollider>();
 
 									if (suit != null)
 									{
 										ComponentsToDestroy++;
 										ObjectsToDestroy.Add(suit);
-										output += "Marking : " + SuitHolders[i].name + "'s SuitBodyCollider Component for removal\n";
+										output += "Marking : " + MyDefinition.SuitHolders[i].name + "'s SuitBodyCollider Component for removal\n";
 									}
 
-									if (AddExclusiveTriggerCollider && suit.myCollider != null)
+									if (MyDefinition.AddExclusiveTriggerCollider && suit.myCollider != null)
 									{
 										ComponentsToDestroy++;
 										ObjectsToDestroy.Add(suit.myCollider);
-										output += "Marking : " + SuitHolders[i] + "'s " + suit.myCollider.GetType().ToString() + " Component for removal\n";
+										output += "Marking : " + MyDefinition.SuitHolders[i] + "'s " + suit.myCollider.GetType().ToString() + " Component for removal\n";
 									}
 								}
 							}
@@ -786,23 +756,54 @@ namespace NullSpace.SDK.Demos
 
 				return output;
 			}
-
-			Collider AddColliderForSuit(SuitBodyCollider suit)
+			void DeleteMarkedObjects()
 			{
-				GameObject go = suit.gameObject;
-
-				Collider col = go.AddComponent<BoxCollider>();
-				col.gameObject.layer = HapticsLayer;
-				col.isTrigger = true;
-				return col;
+				for (int i = ObjectsToDestroy.Count - 1; i > -1; i--)
+				{
+					if (ObjectsToDestroy[i] != null)
+					{
+						Undo.DestroyObjectImmediate(ObjectsToDestroy[i]);
+					}
+				}
+				ObjectsToDestroy.Clear();
 			}
+
+			void HandleHardlightRemovalChoice()
+			{
+				HardlightSuit suit = GetRootHardlightSuitComponent();
+				if (suit)
+				{
+					bool userResult = EditorUtility.DisplayDialog("Remove HardlightSuit Component", "Delete Hardlight Suit Definition\n(Stores a SuitDefinition for fast reimplementation)", "Remove", "Cancel");
+					if (userResult)
+					{
+						DeleteHardlightSuitComponent(suit);
+					}
+				}
+			}
+			HardlightSuit GetRootHardlightSuitComponent()
+			{
+				if (MyDefinition.SuitRoot != null)
+				{
+					HardlightSuit suit = MyDefinition.SuitRoot.GetComponent<HardlightSuit>();
+					if (suit)
+					{
+						return suit;
+					}
+				}
+				return null;
+			}
+			void DeleteHardlightSuitComponent(HardlightSuit suit)
+			{
+				Undo.DestroyObjectImmediate(suit);
+			}
+			#endregion
 			#endregion
 		}
 
 		#region Init & Setup
 		// Add menu item to show this demo.
 		[MenuItem("Tools/Hardlight Configure Body")]
-		static void Init()
+		public static void Init()
 		{
 			myWindow = GetWindow(typeof(HardlightSetupWindow)) as HardlightSetupWindow;
 			myWindow.Setup();
@@ -810,9 +811,10 @@ namespace NullSpace.SDK.Demos
 
 		public void Setup()
 		{
+			Debug.Log("Performing Setup\n");
 			Suits = new List<EditorSuitConfig>();
 
-			List<DefinedSuit> existingDefinitions = FindObjectsOfType<DefinedSuit>().ToList();
+			List<HardlightSuit> existingDefinitions = FindObjectsOfType<HardlightSuit>().ToList();
 
 			EditorSuitConfig suit = null;
 
@@ -963,12 +965,6 @@ namespace NullSpace.SDK.Demos
 		//}
 		#endregion
 
-		void DoWindow(int unusedWindowID)
-		{
-			GUILayout.Button("Hi");
-			GUI.DragWindow();
-		}
-
 		#region Editor Saving
 		private void OnEnable()
 		{
@@ -981,7 +977,6 @@ namespace NullSpace.SDK.Demos
 			EditorPrefs.SetBool("NS-QuickButton", QuickButtonFoldout);
 		}
 		#endregion
-
 	}
 
 	public static class NullSpaceEditorStyles
