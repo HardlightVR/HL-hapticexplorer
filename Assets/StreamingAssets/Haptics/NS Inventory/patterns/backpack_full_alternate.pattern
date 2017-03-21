@@ -1,0 +1,9 @@
+{
+	"pattern" : [
+
+		{"time" : 0.0, "sequence" : "my.inventory.invalid_touch_alternate", 	"area": "Shoulder_Left"},
+		{"time" : 0.0, "sequence" : "my.inventory.invalid_touch_alternate", 	"area": "Shoulder_Left"},
+		{"time" : 0.0, "sequence" : "my.inventory.invalid_touch_alternate", 	"area": "Back_Left"},
+		{"time" : 0.0, "sequence" : "my.inventory.invalid_touch_alternate", 	"area": "Back_Left"}
+	]
+}

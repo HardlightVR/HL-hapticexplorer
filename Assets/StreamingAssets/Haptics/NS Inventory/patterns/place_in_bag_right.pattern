@@ -1,0 +1,10 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "my.inventory.minor_jostle_long", 	"area": "Forearm_Right"},
+		{"time" : 0.10, "sequence" : "my.inventory.minor_jostle_long", 	"area": "Shoulder_Right"},
+		{"time" : 0.30, "sequence" : "my.inventory.minor_jostle", 		"area": "Shoulder_Right"},
+		{"time" : 0.30, "sequence" : "my.inventory.minor_jostle", 		"area": "Back_Right"},
+		{"time" : 3.00, "sequence" : "my.inventory.touch_complete", 	"area": "Back_Right"},
+	]
+}

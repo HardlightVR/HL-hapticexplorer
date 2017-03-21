@@ -1,0 +1,6 @@
+{
+	"sequence" : [
+		{"time" : 0.0, "effect" 	: "sharp_tick", 	"strength" : 0.0, "duration" : 0.0},
+		{"time" : 0.09, "effect" 	: "sharp_tick", 	"strength" : 0.0, "duration" : 0.0}
+	]
+}

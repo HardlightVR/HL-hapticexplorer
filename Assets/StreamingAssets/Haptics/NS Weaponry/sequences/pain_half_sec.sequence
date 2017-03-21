@@ -1,0 +1,19 @@
+{
+	"sequence" : [
+		{"time" : 0.00, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.04, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.08, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.12, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.16, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.20, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.24, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.28, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.32, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.36, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.40, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.44, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.48, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.52, "effect" : "buzz", "strength" : 1.0, "duration" : 0.0}
+	]
+}
+

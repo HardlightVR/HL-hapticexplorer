@@ -1,0 +1,10 @@
+{
+	"sequence" : [
+		{"time" : 0.0, "effect" 	: "sharp_tick", 	"strength" : 1.0, "duration" : 0.0},
+		{"time" : 0.10, "effect" 	: "hum", 	"strength" : 1.0, "duration" : 0.1},
+		{"time" : 0.20, "effect" 	: "hum", 	"strength" : 0.75, "duration" : 0.1},
+		{"time" : 0.30, "effect" 	: "hum", 	"strength" : 0.5, "duration" : 0.1},
+		{"time" : 0.40, "effect" 	: "hum", 	"strength" : 0.2, "duration" : 0.1},
+		{"time" : 0.50, "effect" 	: "hum", 	"strength" : 0.0, "duration" : 0.3}
+	]
+}

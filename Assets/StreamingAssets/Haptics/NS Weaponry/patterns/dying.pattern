@@ -1,0 +1,11 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 0.70, "sequence" : "ns.demos.heartbeat_heavy", "area": "Chest_Left"},
+		{"time" : 1.40, "sequence" : "ns.demos.heartbeat_heavy", "strength": 0.6, "area": "Chest_Left"},
+		{"time" : 2.20, "sequence" : "ns.demos.heartbeat_heavy", "strength": 0.3, "area": "Chest_Left"},
+		{"time" : 3.10, "sequence" : "ns.demos.heartbeat_heavy", "strength": 0.1, "area": "Chest_Left"},
+		{"time" : 4.30, "sequence" : "ns.click", "strength": 0.1, "area": "Chest_Left"}
+	]
+}

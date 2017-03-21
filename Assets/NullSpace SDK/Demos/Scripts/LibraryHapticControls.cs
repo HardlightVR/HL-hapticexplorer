@@ -7,9 +7,10 @@
 
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections.Generic;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
 using System;
 
 namespace NullSpace.SDK.Demos
@@ -19,6 +20,7 @@ namespace NullSpace.SDK.Demos
 		Rigidbody myRB;
 		public Camera cam;
 
+		public SuitDemo[] AllDemos;
 		/// <summary>
 		/// The demo currently used.
 		/// We deactivate the old demo and activate the new one if you call SelectSuitDemo
@@ -38,6 +40,8 @@ namespace NullSpace.SDK.Demos
 
 		void Start()
 		{
+			AllDemos = FindObjectsOfType<SuitDemo>();
+
 			//So we can move the green box around
 			myRB = LibraryManager.Inst.greenBox.GetComponent<Rigidbody>();
 
@@ -74,10 +78,42 @@ namespace NullSpace.SDK.Demos
 
 		void Update()
 		{
+			GetInput();
+		}
+
+		public void GetInput()
+		{
+			#region [1-9] SuitDemos
+			for (int i = 0; i < AllDemos.Length; i++)
+			{
+				if (AllDemos[i] != null)
+				{
+					if (Input.GetKeyDown(AllDemos[i].ActivateHotkey))
+					{
+						SelectSuitDemo(AllDemos[i]);
+					}
+				}
+			}
+			#endregion
+
+			#region [7] Massage Toggle
+			if (Input.GetKeyDown(KeyCode.Alpha7))
+			{
+				ToggleMassage();
+			}
+			#endregion
+
+			#region [Space] Clear all effects
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				ClearAllEffects();
+			} 
+			#endregion
+
+			#region [Arrows] Direction Controls
 			bool moving = false;
 			float velVal = 350;
 
-			#region Direction Controls
 			if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && myRB.transform.position.x > -Extent)
 			{
 				myRB.AddForce(Vector3.left * velVal);
@@ -107,7 +143,7 @@ namespace NullSpace.SDK.Demos
 				//Where the mouse is 
 				Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;
-				
+
 				//Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 3.5f);
 
 				//Raycast to see if we hit
@@ -126,7 +162,39 @@ namespace NullSpace.SDK.Demos
 			}
 			#endregion
 
-			#region Application Quit Code
+			#region Clicking on SuitBodyCollider
+			if (Input.GetMouseButton(0))
+			{
+				//Where the mouse is 
+				Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+				RaycastHit hit;
+
+				//Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 3.5f);
+
+				//Raycast to see if we hit
+				if (Physics.Raycast(ray, out hit, 100))
+				{
+					//Get the clicked SuitBodyCollider
+					SuitBodyCollider clicked = hit.collider.gameObject.GetComponent<SuitBodyCollider>();
+
+					//Assuming there is one
+					if (clicked != null)
+					{
+						//Do whatever our current demo wants to do with that click info.
+						CurrentDemo.OnSuitClicking(clicked, hit);
+					}
+				}
+			}
+			else
+			{
+				if (CurrentDemo != null)
+				{
+					CurrentDemo.OnSuitNoInput();
+				}
+			}
+			#endregion
+
+			#region [Esc] Application Quit Code
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
 				Application.Quit();
@@ -142,12 +210,18 @@ namespace NullSpace.SDK.Demos
 		/// <param name="demo"></param>
 		public void SelectSuitDemo(SuitDemo demo)
 		{
-			//Debug.Log("Enabling: " + CurrentDemo.GetType().ToString() + "\t\t" + demo.GetType().ToString() + "\n");
-			CurrentDemo.DeactivateDemo();
-			CurrentDemo.enabled = false;
-			CurrentDemo = demo;
-			CurrentDemo.enabled = true;
-			CurrentDemo.ActivateDemo();
+			if (CurrentDemo != null)
+			{
+				//Debug.Log("Enabling: " + CurrentDemo.GetType().ToString() + "\t\t" + demo.GetType().ToString() + "\n");
+				CurrentDemo.DeactivateDemoOverhead();
+				CurrentDemo.enabled = false;
+			}
+			if (demo != null)
+			{
+				CurrentDemo = demo;
+				CurrentDemo.enabled = true;
+				CurrentDemo.ActivateDemoOverhead();
+			}
 		}
 
 		public void ToggleMassage()
@@ -157,6 +231,7 @@ namespace NullSpace.SDK.Demos
 			massage = !massage;
 			StartCoroutine(MoveFromTo(new Vector3(0, -3.5f, 0), new Vector3(0, 5.8f, 0), .8f));
 		}
+		//Hotkey: Spacebar
 		public void ClearAllEffects()
 		{
 			//This stops all haptic effects and clears them out.
@@ -169,6 +244,7 @@ namespace NullSpace.SDK.Demos
 
 			//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
+		//Hotkey: Escape
 		public void QuitScene()
 		{
 			Application.Quit();

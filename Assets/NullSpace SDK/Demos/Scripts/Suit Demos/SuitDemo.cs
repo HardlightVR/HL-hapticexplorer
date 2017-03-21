@@ -6,6 +6,7 @@
 */
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -21,10 +22,58 @@ namespace NullSpace.SDK.Demos
 		//Turn off my needed things
 		abstract public void DeactivateDemo();
 
+
 		abstract public void OnSuitClicked(SuitBodyCollider suit, RaycastHit hit);
+		abstract public void OnSuitClicking(SuitBodyCollider suit, RaycastHit hit);
+		abstract public void OnSuitNoInput();
+
+		public Button MyEnableButton;
+		public Button MyDisableButton;
+
+		public Sprite EnabledSprite;
+		public Sprite DisabledSprite;
+
+		public KeyCode ActivateHotkey = KeyCode.None;
 
 		public List<GameObject> ActiveObjects;
 		public List<GameObject> ActiveIfDisabledObjects;
+
+		protected Color buttonSelected = new Color(30 / 255f, 167 / 255f, 210 / 255f, 1f);
+		protected Color buttonUnselected = new Color(255 / 255f, 255 / 255f, 255 / 255f, 1f);
+
+		//Turn on my needed things
+		public void ActivateDemoOverhead()
+		{
+			SetEnableButtonBackgroundColor(buttonSelected);
+			ActivateDemo();
+		}
+
+		//Turn off my needed things
+		public void DeactivateDemoOverhead()
+		{
+			SetEnableButtonBackgroundColor(buttonUnselected);
+			DeactivateDemo();
+		}
+
+		public virtual void SetupButtons()
+		{
+			if (MyEnableButton != null)
+			{
+				MyEnableButton.transform.FindChild("Icon").GetComponent<Image>().sprite = EnabledSprite;
+			}
+			if (MyDisableButton != null)
+			{
+				MyDisableButton.transform.FindChild("Icon").GetComponent<Image>().sprite = DisabledSprite;
+			}
+		}
+
+		public virtual void Start()
+		{
+			SetupButtons();
+			SetEnableButtonBackgroundColor(buttonUnselected);
+			DeactivateDemo();
+			enabled = false;
+		}
 
 		public void HandleRequiredObjects(bool Activating)
 		{
@@ -46,11 +95,14 @@ namespace NullSpace.SDK.Demos
 			}
 		}
 
-		public virtual void Start()
+		public virtual void SetEnableButtonBackgroundColor(Color col)
 		{
-			DeactivateDemo();
-			enabled = false;
+			if (MyEnableButton != null)
+			{
+				MyEnableButton.GetComponent<Image>().color = col;
+			}
 		}
+
 	}
 
 	public class SuitClickDemo : SuitDemo
@@ -74,6 +126,15 @@ namespace NullSpace.SDK.Demos
 		public override void OnSuitClicked(SuitBodyCollider clicked, RaycastHit hit)
 		{
 			Debug.Log("Clicked on " + clicked.name + " with a regionID value of: " + (int)clicked.regionID + "\n");
+		}
+
+		public override void OnSuitClicking(SuitBodyCollider clicked, RaycastHit hit)
+		{
+			Debug.Log("Clicked on " + clicked.name + " with a regionID value of: " + (int)clicked.regionID + "\n");
+		}
+
+		public override void OnSuitNoInput()
+		{
 		}
 	}
 }

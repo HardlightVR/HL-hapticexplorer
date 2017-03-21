@@ -1,0 +1,15 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "my.edit_me", "area": "Chest_Left"},
+		{"time" : 1.00, "sequence" : "my.edit_me", "area": "Chest_Left"},
+		{"time" : 2.00, "sequence" : "my.edit_me", "area": "Chest_Left"},
+		{"time" : 3.00, "sequence" : "my.edit_me", "area": "Chest_Left"},
+		{"time" : 4.00, "sequence" : "my.edit_me", "area": "Chest_Left"},
+		{"time" : 5.00, "sequence" : "my.edit_me", "area": "Chest_Left"},
+		{"time" : 6.00, "sequence" : "my.edit_me", "area": "Chest_Left"},
+		{"time" : 7.00, "sequence" : "my.edit_me", "area": "Chest_Left"},
+		{"time" : 8.00, "sequence" : "my.edit_me", "area": "Chest_Left"},
+		{"time" : 9.00, "sequence" : "my.edit_me", "area": "Chest_Left"}
+	]
+}

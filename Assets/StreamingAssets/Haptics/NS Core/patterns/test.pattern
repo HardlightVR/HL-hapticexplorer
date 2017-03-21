@@ -1,7 +1,7 @@
 {
 	"pattern" : [
-		{"time" : 0.0, "sequence" : "ns.click", "area": "Lower_Ab_Both"},
-		{"time" : 1.0, "sequence" : "ns.double_click", "area": "Mid_Ab_Both"},
-		{"time" : 2.0, "sequence" : "ns.triple_click", "area": "Upper_Ab_Both"}
+		{"time" : 0.0, "sequence" : "ns.demos.click_click_click", "area": "Lower_Ab_Left"},
+		{"time" : 3.8, "sequence" : "ns.demos.click_click_click", "area": "Mid_Ab_Left"},
+		{"time" : 7.6, "sequence" : "ns.demos.click_click_click", "area": "Upper_Ab_Left"}
 	]
 }

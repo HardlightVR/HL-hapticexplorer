@@ -157,6 +157,7 @@ namespace NullSpace.SDK.Demos
 
 		#endregion
 
+		[Header("Demo Colors")]
 		//Impulse Visual Color - feel free to change these if you have preferences.
 		//Region Selector Suit Demo uses a light green.
 		public Color selectedColor = new Color(227 / 255f, 127 / 255f, 127 / 255f, 1f);
@@ -232,6 +233,14 @@ namespace NullSpace.SDK.Demos
 			{
 				ClickedSuitInTraversalMode(clicked, hit);
 			}
+		}
+
+		public override void OnSuitClicking(SuitBodyCollider clicked, RaycastHit hit)
+		{
+		}
+
+		public override void OnSuitNoInput()
+		{
 		}
 
 		private void ClickedSuitInTraversalMode(SuitBodyCollider clicked, RaycastHit hit)

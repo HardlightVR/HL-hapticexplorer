@@ -1,0 +1,21 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "my.inventory.minor_jostle",		"area": "Back_Left"},
+
+		{"time" : 0.20, "sequence" : "my.inventory.minor_jostle",		"area": "Shoulder_Right"},
+		{"time" : 0.20, "sequence" : "my.inventory.minor_jostle",		"area": "Back_Right"},
+
+		{"time" : 0.40, "sequence" : "my.inventory.minor_jostle",		"area": "Lower_Abs_Right},
+		{"time" : 0.40, "sequence" : "my.inventory.minor_jostle",		"area": "Mid_Abs_Right"},
+		{"time" : 0.40, "sequence" : "my.inventory.minor_jostle",		"area": "Upper_Abs_Right"},
+
+		{"time" : 0.60, "sequence" : "my.inventory.touch_complete",		"area": "Lower_Abs_Left},
+		{"time" : 0.60, "sequence" : "my.inventory.touch_complete",		"area": "Mid_Abs_Left"},
+		{"time" : 0.60, "sequence" : "my.inventory.touch_complete",		"area": "Upper_Abs_Left"},
+
+		{"time" : 0.60, "sequence" : "my.inventory.touch_complete",		"area": "Lower_Abs_Right},
+		{"time" : 0.60, "sequence" : "my.inventory.touch_complete",		"area": "Mid_Abs_Right"},
+		{"time" : 0.60, "sequence" : "my.inventory.touch_complete",		"area": "Upper_Abs_Right"}
+	]
+}

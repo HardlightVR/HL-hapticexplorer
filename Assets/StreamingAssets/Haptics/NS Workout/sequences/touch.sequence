@@ -1,0 +1,5 @@
+{
+	"sequence" : [
+		{"time" : 0.0, "effect" 	: "bump", 	"strength" : 0.3, "duration" : 0.0}
+	]
+}

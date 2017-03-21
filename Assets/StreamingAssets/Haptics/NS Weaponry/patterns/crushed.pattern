@@ -1,0 +1,11 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.weaponry.pain", "area": "Shoulder_Both"},
+		{"time" : 0.08, "sequence" : "ns.weaponry.pain", "area": "Back_Both|Chest_Both|Upper_Arm_Both"},
+		{"time" : 0.16, "sequence" : "ns.weaponry.pain", "area": "Upper_Ab_Both"},
+		{"time" : 0.20, "sequence" : "ns.weaponry.pain", "area": "Mid_Ab_Both|Forearm_Both"},
+		{"time" : 0.24, "sequence" : "ns.weaponry.pain_short", "area": "Lower_Ab_Both"},
+		{"time" : 0.40, "sequence" : "ns.weaponry.pain_long", "area": "All_Areas"}
+	]
+}

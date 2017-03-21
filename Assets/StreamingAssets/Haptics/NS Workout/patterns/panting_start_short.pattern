@@ -1,0 +1,11 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.workout.breath_long",		"area": "Chest_Both"},
+
+		{"time" : 0.20, "sequence" : "ns.workout.minor_jostle",		"area": "Shoulder_Both"},
+		{"time" : 0.20, "sequence" : "ns.workout.minor_jostle",		"area": "Upper_Abs_Both"},
+
+		{"time" : 0.70, "sequence" : "ns.workout.exhale_short",		"area": "Chest_Both"}
+	]
+}

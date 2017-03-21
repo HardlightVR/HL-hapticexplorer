@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
 namespace NullSpace.SDK.Demos
 {
 	[RequireComponent(typeof(EventTrigger))]
-	public class TooltipDescriptor : MonoBehaviour
+	public class TooltipDescriptor : MonoBehaviour, IScrollHandler
 	{
 		public string TooltipName;
 		[Multiline]
@@ -16,6 +17,7 @@ namespace NullSpace.SDK.Demos
 			get { return backgroundColor; }
 			set { backgroundColor = value; }
 		}
+		private ScrollRect myScrollRect;
 
 		EventTrigger et;
 
@@ -32,6 +34,27 @@ namespace NullSpace.SDK.Demos
 			);
 			et.triggers.Add(entry);
 
+			//if (gameObject.transform.parent != null)
+			//{
+			//	Debug.Log(gameObject.transform.name);
+			//	ScrollRect scrollRect = gameObject.transform.parent.GetComponent<ScrollRect>();
+			//	if (scrollRect && gameObject.transform.parent.parent != null)
+			//	{
+			//		scrollRect = gameObject.transform.parent.parent.GetComponent<ScrollRect>();
+			//	}
+
+			//	if (scrollRect != null)
+			//	{
+			//		entry = new EventTrigger.Entry();
+			//		entry.eventID = EventTriggerType.Scroll;
+			//		entry.callback.AddListener((eventData) =>
+			//		{
+			//			Debug.Log("HIT\n");
+			//			scrollRect.verticalNormalizedPosition += Input.GetAxis("Mouse ScrollWheel");
+			//		}
+			//		);
+			//	}
+			//}
 
 			entry = new EventTrigger.Entry();
 			entry.eventID = EventTriggerType.PointerExit;
@@ -43,6 +66,48 @@ namespace NullSpace.SDK.Demos
 			}
 			);
 			et.triggers.Add(entry);
+		}
+
+		/// <summary>
+		/// Implementing IScrollHandle
+		/// (finds the likely nearby ScrollRect parent(up 2 layers) and then accesses it's scrollbar)
+		/// </summary>
+		/// <param name="eventData"></param>
+		public void OnScroll(PointerEventData eventData)
+		{
+			//Debug.Log("Scrolling: " + eventData.scrollDelta + "\n");
+
+			if (gameObject.transform.parent != null)
+			{
+				if (myScrollRect == null)
+				{
+					myScrollRect = RecursiveFindParentWithScrollRect(transform);
+				}
+
+				if (myScrollRect != null)
+				{
+					myScrollRect.verticalScrollbar.value += eventData.scrollDelta.y / 10;
+				}
+			}
+		}
+
+		private ScrollRect RecursiveFindParentWithScrollRect(Transform currentTransform)
+		{
+			if (currentTransform == null)
+			{
+				return null;
+			}
+			ScrollRect scrollR = currentTransform.GetComponent<ScrollRect>();
+			if (scrollR != null)
+			{
+				return scrollR;
+			}
+			if (currentTransform.parent == null)
+			{
+				return null;
+			}
+
+			return RecursiveFindParentWithScrollRect(currentTransform.parent);
 		}
 
 		public static TooltipDescriptor AddDescriptor(GameObject go, string name, string description)

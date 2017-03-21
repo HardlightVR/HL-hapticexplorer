@@ -5,9 +5,7 @@
 		{"time" : 0.05, "effect" : "bump", "strength" : 0.8, "duration" : 0.0},
 		{"time" : 0.20, "effect" : "bump", "strength" : 0.7, "duration" : 0.1},
 		{"time" : 0.3, "effect" : "bump", "strength" : 0.6, "duration" : 0.1},
-		{"time" : 0.4, "effect" : "bump", "strength" : 1.0, "duration" : 0.1}, < ------ MAKE SURE TO NOT INCLUDE THIS LAST COMMA (or a comment explaining why it's bad, that also will cause the file to fail)
+		{"time" : 0.4, "effect" : "bump", "strength" : 1.0, "duration" : 0.1},
 	]
 }
 
-This is a deliberately broken file included to show you failure to validate and to explain this common error.
-Good job discovering this. Mention it to Palmer@NullSpaceVR.com and he'll give you a cookie if you meet him.

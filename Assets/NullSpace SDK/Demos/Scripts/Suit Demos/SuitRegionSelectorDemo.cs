@@ -18,8 +18,10 @@ namespace NullSpace.SDK.Demos
 		private Color selectedColor = new Color(127 / 255f, 227 / 255f, 127 / 255f, 1f);
 		private Color unselectedColor = new Color(227 / 255f, 227 / 255f, 227 / 255f, 1f);
 		public List<SuitBodyCollider> selected;
+		bool Clicking = false;
+		bool Adding = false;
 
-		void Start()
+		public override void Start()
 		{
 			selected = new List<SuitBodyCollider>();
 			selected = FindObjectsOfType<SuitBodyCollider>().ToList();
@@ -31,6 +33,8 @@ namespace NullSpace.SDK.Demos
 					rend.material.color = selectedColor;
 				}
 			}
+			base.Start();
+
 		}
 
 		//Turn on my needed things
@@ -60,8 +64,12 @@ namespace NullSpace.SDK.Demos
 
 		public override void OnSuitClicked(SuitBodyCollider clicked, RaycastHit hit)
 		{
+			Clicking = true;
+			Adding = true;
+
 			if (selected.Contains(clicked))
 			{
+				Adding = false;
 				selected.Remove(clicked);
 				StartCoroutine(ChangeColorDelayed(
 				hit.collider.gameObject,
@@ -73,6 +81,35 @@ namespace NullSpace.SDK.Demos
 				hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = selectedColor;
 				selected.Add(clicked);
 			}
+		}
+
+		public override void OnSuitClicking(SuitBodyCollider clicked, RaycastHit hit)
+		{
+			if (!Adding)
+			{
+				if (selected.Contains(clicked))
+				{
+					selected.Remove(clicked);
+					StartCoroutine(ChangeColorDelayed(
+					hit.collider.gameObject,
+					unselectedColor,
+					0.0f));
+				}
+			}
+			else
+			{
+				if (!selected.Contains(clicked))
+				{
+					hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = selectedColor;
+					selected.Add(clicked);
+				}
+			}
+		}
+
+		public override void OnSuitNoInput()
+		{
+			Clicking = false;
+			Adding = false;
 		}
 
 		public void SelectAllSuitColliders()
