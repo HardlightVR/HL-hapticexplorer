@@ -195,7 +195,7 @@ namespace NullSpace.SDK.Demos
 
 			return string.Empty;
 
-			return "Failed due to comma after the last element\n";
+			//return "Failed due to comma after the last element\n";
 		}
 
 		private string ValidateForCommaAfterLastElement()
@@ -208,7 +208,7 @@ namespace NullSpace.SDK.Demos
 
 			return string.Empty;
 
-			return "Failed due to comma after the last element\n";
+			//return "Failed due to comma after the last element\n";
 		}
 
 		private string EvaluateName(string packageName)
@@ -243,7 +243,7 @@ namespace NullSpace.SDK.Demos
 
 			catch (Exception e)
 			{
-				Debug.LogError("Failure to duplicate file \n\t[" + fullFilePath + "]\n");
+				Debug.LogError("Failure to duplicate file \n\t[" + fullFilePath + "]\n" + e.Message);
 				return false;
 			}
 

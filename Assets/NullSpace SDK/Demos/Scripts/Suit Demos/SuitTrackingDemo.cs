@@ -22,14 +22,12 @@ namespace NullSpace.SDK.Demos
 		public override void ActivateDemo()
 		{
 			TrackingTestObject.EnableTracking();
-			HandleRequiredObjects(true);
 		}
 
 		//Turn off my needed things
 		public override void DeactivateDemo()
 		{
 			TrackingTestObject.DisableTracking();
-			HandleRequiredObjects(false);
 		}
 
 		public override void OnSuitClicked(SuitBodyCollider clicked, RaycastHit hit)

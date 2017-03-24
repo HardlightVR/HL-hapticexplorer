@@ -107,7 +107,7 @@ namespace NullSpace.SDK.Demos
 				float width = EditorGUIUtility.currentViewWidth;
 				GUILayoutOption[] innerOptions = { GUILayout.MaxWidth(width / 2 - 10), GUILayout.MinWidth(35) };
 
-				GUIStyle columnStyle = new GUIStyle(EditorStyles.toolbarButton);
+				//GUIStyle columnStyle = new GUIStyle(EditorStyles.toolbarButton);
 
 				EditorGUILayout.BeginVertical("Box");
 				#region Suit Auto-Configuration
@@ -167,7 +167,7 @@ namespace NullSpace.SDK.Demos
 			}
 			bool OperationButton(bool disabledWhenTrue, GUIContent content)
 			{
-				GUIStyle style = new GUIStyle(GUI.skin.button);
+				//GUIStyle style = new GUIStyle(GUI.skin.button);
 				using (new EditorGUI.DisabledGroupScope(disabledWhenTrue))
 				{
 					return GUILayout.Button(content);
@@ -271,7 +271,6 @@ namespace NullSpace.SDK.Demos
 			//When we change the field. Lookup that object and assign the quickbutton if it can
 			SuitBodyCollider LookupSceneReference(int index)
 			{
-				SuitBodyCollider suit = null;
 				GameObject targObj = MyDefinition.SuitHolders[index];
 				if (MyDefinition.SuitHolders[index] != null)
 				{
@@ -849,7 +848,7 @@ namespace NullSpace.SDK.Demos
 		void DrawQuickButtonsForSuitBodyColliders()
 		{
 			GUIStyle style = new GUIStyle(GUI.skin.button);
-			GUILayoutOption[] options = new GUILayoutOption[0];
+			//GUILayoutOption[] options = new GUILayoutOption[0];
 			float width = EditorGUIUtility.currentViewWidth;
 			GUILayoutOption[] innerOptions = { GUILayout.MaxWidth(width / 3), GUILayout.MinWidth(35) };
 			GUIContent content = new GUIContent(string.Empty);
@@ -911,7 +910,7 @@ namespace NullSpace.SDK.Demos
 
 			bool allowExpandAll = Suits != null && Suits.Count > 1;
 			GUIContent content = new GUIContent("Collapsed All");
-			bool result = NullSpaceEditorStyles.OperationButton(!allowExpandAll, content);
+			/*bool result = */NullSpaceEditorStyles.OperationButton(!allowExpandAll, content);
 
 			scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
@@ -1012,7 +1011,7 @@ namespace NullSpace.SDK.Demos
 
 		public static bool OperationButton(bool disabledWhenTrue, GUIContent content)
 		{
-			GUIStyle style = new GUIStyle(GUI.skin.button);
+			//GUIStyle style = new GUIStyle(GUI.skin.button);
 			using (new EditorGUI.DisabledGroupScope(disabledWhenTrue))
 			{
 				return GUILayout.Button(content);

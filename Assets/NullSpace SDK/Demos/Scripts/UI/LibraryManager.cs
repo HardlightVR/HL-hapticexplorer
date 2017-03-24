@@ -38,6 +38,8 @@ namespace NullSpace.SDK.Demos
 		public Text greenBoxText;
 		public SuitRegionSelectorDemo selector;
 
+		public Sequence LastSequence;
+
 		private ScrollRect DirectoryScroll;
 		private PackageViewer currentSelected;
 		public PackageViewer Selection
@@ -121,6 +123,11 @@ namespace NullSpace.SDK.Demos
 
 		void Start()
 		{
+			//We want to turn off tracking for some reason?
+			//Probably unnecessary.
+			NSManager.Instance.DisableTracking();
+
+			SetTriggerSequence("ns.pulse");
 			//Populate the folders that contain packages.
 			SetupLibraries();
 			DirectoryScroll = transform.FindChild("Folder Viewer").FindChild("Sub Directory").FindChild("Scroll View").GetComponent<ScrollRect>();
@@ -209,13 +216,13 @@ namespace NullSpace.SDK.Demos
 			//Safely proceed to avoid broken refs.
 			if (selector != null)
 			{
-				for (int i = 0; i < selector.selected.Count; i++)
+				for (int i = 0; i < selector.suitObjects.Count; i++)
 				{
 					//If this selected element isn't null
-					if (selector.selected[i] != null)
+					if (selector.suitObjects[i] != null)
 					{
 						//Add that flag
-						flag = flag | selector.selected[i].regionID;
+						flag = flag | selector.suitObjects[i].regionID;
 					}
 				}
 			}
@@ -229,6 +236,18 @@ namespace NullSpace.SDK.Demos
 
 		public void SetTriggerSequence(string sequenceName)
 		{
+			try
+			{
+				Sequence newSeq = new Sequence(sequenceName);
+				if (newSeq != null)
+				{
+					LastSequence = newSeq;
+				}
+			}
+			catch (HapticsLoadingException hExcept)
+			{
+				Debug.LogError("[Haptic Trigger - Haptics Loading Exception]   Attempted to set invalid sequence " + sequenceName + "\n\tLoad failed and set was disallowed\n" + hExcept.Message);
+			}
 			greenBox.SetSequence(sequenceName);
 			greenBoxText.text = greenBox.fileName;
 		}

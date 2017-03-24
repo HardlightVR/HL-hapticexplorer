@@ -196,7 +196,7 @@ namespace NullSpace.SDK.Demos
 		{
 			ColorSuit(ImpulseOrigin, OriginColor);
 
-			HandleRequiredObjects(true);
+			//HandleRequiredObjects(true);
 
 			//Pick a base sequence
 		}
@@ -204,7 +204,7 @@ namespace NullSpace.SDK.Demos
 		//Turn off my needed things
 		public override void DeactivateDemo()
 		{
-			HandleRequiredObjects(false);
+			//HandleRequiredObjects(false);
 			ColorSuit(ImpulseOrigin, unselectedColor);
 			ColorSuit(ImpulseDestination, unselectedColor);
 

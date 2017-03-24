@@ -60,7 +60,7 @@ namespace IOHelper
 			}
 			try
 			{
-				string[] pathSplit = macPath.Split(new char[] { '.' });
+				//string[] pathSplit = macPath.Split(new char[] { '.' });
 				int attempts = 1;
 				addedName = " " + attempts;
 				bool exists = false;
@@ -124,7 +124,7 @@ namespace IOHelper
 			{
 				try
 				{
-					string[] pathSplit = winPath.Split(new char[] { '.' });
+					//string[] pathSplit = winPath.Split(new char[] { '.' });
 					int attempts = 1;
 					addedName = " " + attempts;
 					bool exists = false;

@@ -14,34 +14,11 @@ namespace NullSpace.SDK.Demos
 	/// </summary>
 	public class HapticTrigger : MonoBehaviour
 	{
-		Sequence onTriggerEnterSequence;
-		public string fileName = "ns.pulse";
-
-		void Awake()
-		{
-		}
-
-		void Start()
-		{
-			NSManager.Instance.DisableTracking();
-			onTriggerEnterSequence = new Sequence(fileName);
-		}
+		public string fileName;
 
 		public void SetSequence(string sequenceName)
 		{
-			try
-			{
-				Sequence newSeq = new Sequence(sequenceName);
-				if (newSeq != null)
-				{
-					fileName = sequenceName;
-					onTriggerEnterSequence = newSeq;
-				}
-			}
-			catch (HapticsLoadingException hExcept)
-			{
-				Debug.LogError("[Haptic Trigger - Haptics Loading Exception]   Attempted to set invalid sequence " + sequenceName + "\n\tLoad failed and set was disallowed, defaulted to previous sequence " + fileName + "\n" + hExcept.Message);
-			}
+			fileName = sequenceName;
 		}
 
 		void OnTriggerEnter(Collider collider)
@@ -49,9 +26,8 @@ namespace NullSpace.SDK.Demos
 			SuitBodyCollider hit = collider.GetComponent<SuitBodyCollider>();
 			if (hit != null)
 			{
-				AreaFlag flag = hit.regionID;
-				//Debug.Log(flag.ToString() + "  " + (int)flag + "\n");
-				onTriggerEnterSequence.CreateHandle(collider.GetComponent<SuitBodyCollider>().regionID).Play();
-			} }
+				LibraryManager.Inst.LastSequence.CreateHandle(hit.regionID).Play();
+			}
+		}
 	}
 }

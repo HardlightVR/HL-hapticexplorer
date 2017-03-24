@@ -17,17 +17,15 @@ namespace NullSpace.SDK.Demos
 	{
 		private Color selectedColor = new Color(127 / 255f, 227 / 255f, 127 / 255f, 1f);
 		private Color unselectedColor = new Color(227 / 255f, 227 / 255f, 227 / 255f, 1f);
-		public List<SuitBodyCollider> selected;
-		bool Clicking = false;
 		bool Adding = false;
 
 		public override void Start()
 		{
-			selected = new List<SuitBodyCollider>();
-			selected = FindObjectsOfType<SuitBodyCollider>().ToList();
-			for (int i = 0; i < selected.Count; i++)
+			suitObjects = new List<SuitBodyCollider>();
+			suitObjects = FindObjectsOfType<SuitBodyCollider>().ToList();
+			for (int i = 0; i < suitObjects.Count; i++)
 			{
-				MeshRenderer rend = selected[i].GetComponent<MeshRenderer>();
+				MeshRenderer rend = suitObjects[i].GetComponent<MeshRenderer>();
 				if (rend != null)
 				{
 					rend.material.color = selectedColor;
@@ -40,7 +38,6 @@ namespace NullSpace.SDK.Demos
 		//Turn on my needed things
 		public override void ActivateDemo()
 		{
-			HandleRequiredObjects(true);
 			//Set the colors of the suit
 			SelectAllSuitColliders();
 		}
@@ -48,7 +45,6 @@ namespace NullSpace.SDK.Demos
 		//Turn off my needed things
 		public override void DeactivateDemo()
 		{
-			HandleRequiredObjects(false);
 			//Default behavior of inactive selector demo is all the colliders selected
 			SelectAllSuitColliders();
 
@@ -56,21 +52,14 @@ namespace NullSpace.SDK.Demos
 			UncolorAllSuitColliders();
 		}
 
-		public IEnumerator ChangeColorDelayed(GameObject g, Color c, float timeout)
-		{
-			yield return new WaitForSeconds(timeout);
-			g.GetComponent<MeshRenderer>().material.color = c;
-		}
-
 		public override void OnSuitClicked(SuitBodyCollider clicked, RaycastHit hit)
 		{
-			Clicking = true;
 			Adding = true;
 
-			if (selected.Contains(clicked))
+			if (suitObjects.Contains(clicked))
 			{
 				Adding = false;
-				selected.Remove(clicked);
+				suitObjects.Remove(clicked);
 				StartCoroutine(ChangeColorDelayed(
 				hit.collider.gameObject,
 				unselectedColor,
@@ -79,7 +68,7 @@ namespace NullSpace.SDK.Demos
 			else
 			{
 				hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = selectedColor;
-				selected.Add(clicked);
+				suitObjects.Add(clicked);
 			}
 		}
 
@@ -87,9 +76,9 @@ namespace NullSpace.SDK.Demos
 		{
 			if (!Adding)
 			{
-				if (selected.Contains(clicked))
+				if (suitObjects.Contains(clicked))
 				{
-					selected.Remove(clicked);
+					suitObjects.Remove(clicked);
 					StartCoroutine(ChangeColorDelayed(
 					hit.collider.gameObject,
 					unselectedColor,
@@ -98,30 +87,29 @@ namespace NullSpace.SDK.Demos
 			}
 			else
 			{
-				if (!selected.Contains(clicked))
+				if (!suitObjects.Contains(clicked))
 				{
 					hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = selectedColor;
-					selected.Add(clicked);
+					suitObjects.Add(clicked);
 				}
 			}
 		}
 
 		public override void OnSuitNoInput()
 		{
-			Clicking = false;
 			Adding = false;
 		}
 
 		public void SelectAllSuitColliders()
 		{
-			selected.Clear();
-			selected = FindObjectsOfType<SuitBodyCollider>().ToList();
-			for (int i = 0; i < selected.Count; i++)
+			suitObjects.Clear();
+			suitObjects = FindObjectsOfType<SuitBodyCollider>().ToList();
+			for (int i = 0; i < suitObjects.Count; i++)
 			{
-				MeshRenderer rend = selected[i].GetComponent<MeshRenderer>();
+				MeshRenderer rend = suitObjects[i].GetComponent<MeshRenderer>();
 				if (rend != null)
 				{
-					selected[i].GetComponent<MeshRenderer>().material.color = selectedColor;
+					suitObjects[i].GetComponent<MeshRenderer>().material.color = selectedColor;
 				}
 			}
 		}
@@ -129,17 +117,17 @@ namespace NullSpace.SDK.Demos
 		public void DeselectAllSuitColliders()
 		{
 			UncolorAllSuitColliders();
-			selected.Clear();
+			suitObjects.Clear();
 		}
 
 		public void UncolorAllSuitColliders()
 		{
-			for (int i = 0; i < selected.Count; i++)
+			for (int i = 0; i < suitObjects.Count; i++)
 			{
-				MeshRenderer rend = selected[i].GetComponent<MeshRenderer>();
+				MeshRenderer rend = suitObjects[i].GetComponent<MeshRenderer>();
 				if (rend != null)
 				{
-					selected[i].GetComponent<MeshRenderer>().material.color = unselectedColor;
+					suitObjects[i].GetComponent<MeshRenderer>().material.color = unselectedColor;
 				}
 			}
 		}

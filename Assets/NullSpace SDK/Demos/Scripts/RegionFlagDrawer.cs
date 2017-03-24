@@ -31,7 +31,7 @@ public class RegionFlagsAttributeDrawer : PropertyDrawer
 		int buttonsIntValue = _property.intValue;
 		int enumLength = _property.enumNames.Length;
 		int buttonCount = CountValidEntries(_property) + 4;
-		int bothCount = _property.enumNames.Where(x => x.Contains("Both")).Count();
+		//int bothCount = _property.enumNames.Where(x => x.Contains("Both")).Count();
 		bool[] buttonPressed = new bool[enumLength];
 		bool[] pressedLastFrame = new bool[enumLength];
 		float buttonWidth = EditorGUIUtility.currentViewWidth - (EditorGUIUtility.labelWidth + EditorGUIUtility.fieldWidth);
@@ -43,7 +43,7 @@ public class RegionFlagsAttributeDrawer : PropertyDrawer
 				buttonWidth,
 				20);
 
-		GUIStyle gStyle = new GUIStyle(GUI.skin.button);
+		//GUIStyle gStyle = new GUIStyle(GUI.skin.button);
 		FoldoutOpened = EditorGUI.Toggle(buttonPos, (FoldoutOpened ? "Hide Areas" : "Show Areas"), FoldoutOpened);
 
 		int offset = 0;
@@ -119,17 +119,17 @@ public class RegionFlagsAttributeDrawer : PropertyDrawer
 						}
 					}
 
-					bool wasPressed = false;
 					#region Debugging Buttons
 					if (ShowDebugButtons)
 					{
+						//bool wasPressed = false;
 						buttonPos = new Rect(
 							_position.x + EditorGUIUtility.labelWidth - 80,
 							_position.y + ((4 + i - offset) * buttonHeight),
 							80,
 							buttonHeight - 0);
 
-						wasPressed = buttonPressed[i];
+						//wasPressed = buttonPressed[i];
 						GUI.Toggle(buttonPos, pressedLastFrame[i], "" + (int)flag, "Button");
 					}
 					#endregion
@@ -140,7 +140,7 @@ public class RegionFlagsAttributeDrawer : PropertyDrawer
 						buttonWidth,
 						buttonHeight - 0);
 
-					wasPressed = pressedLastFrame[i];
+					//wasPressed = pressedLastFrame[i];
 					buttonPressed[i] = GUI.Toggle(buttonPos, buttonPressed[i], CleanString(_property.enumNames[i]), "Button");
 				}
 				else

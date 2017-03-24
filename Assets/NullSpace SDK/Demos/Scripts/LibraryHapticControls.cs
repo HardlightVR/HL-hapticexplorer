@@ -8,6 +8,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
@@ -45,12 +46,18 @@ namespace NullSpace.SDK.Demos
 			//So we can move the green box around
 			myRB = LibraryManager.Inst.greenBox.GetComponent<Rigidbody>();
 
+			for (int i = 0; i < AllDemos.Length; i++)
+			{
+				AllDemos[i].DeactivateDemoOverhead();
+			}
+
 			//If we have a demo
 			if (CurrentDemo != null)
 			{
 				//Turn it on. (To ensure it's needed elements are on)
 				SelectSuitDemo(CurrentDemo);
 			}
+
 		}
 
 		//Move the massaging green box up and down.
@@ -240,9 +247,7 @@ namespace NullSpace.SDK.Demos
 		public void ReloadScene()
 		{
 			//The goal of this function is to reload the plugin so we can support mid-exploring editing of haptics files
-			Application.LoadLevel(Application.loadedLevel);
-
-			//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 		//Hotkey: Escape
 		public void QuitScene()
