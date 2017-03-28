@@ -14,7 +14,7 @@ namespace NullSpace.SDK.Demos
 {
 	public class SuitDrawHapticsDemos : SuitDemo
 	{
-		private Color selectedColor = new Color(127 / 255f, 227 / 255f, 227 / 255f, 1f);
+		private Color selectedColor = new Color(100 / 255f, 200 / 255f, 200 / 255f, 1f);
 		private Color unselectedColor = new Color(227 / 255f, 227 / 255f, 227 / 255f, 1f);
 		public Dictionary<SuitBodyCollider, float> PlayingLocations;
 		public List<float> playingDurations;

@@ -58,7 +58,7 @@ namespace NullSpace.SDK.Demos
 					myIcon.sprite = LibraryManager.Inst.seqIcon;
 					visual.color = LibraryManager.Inst.seqColor;
 					TooltipDescriptor.AddDescriptor(gameObject, fileParts[0] + " - Sequence", "Plays on all selected pads\nOr when the green haptic trigger touches a pad");
-					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "Edit File", "View Source of " + fileParts[0] + "\nWe recommend a text editor");
+					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "<color=#FF4500>Edit File</color>", "View Source of " + fileParts[0] + "\nWe recommend a text editor", new Color32(135, 206, 255, 225));
 				}
 				else if (fullFilePath.Contains(".pat"))
 				{
@@ -66,7 +66,7 @@ namespace NullSpace.SDK.Demos
 					myIcon.sprite = LibraryManager.Inst.patIcon;
 					visual.color = LibraryManager.Inst.patColor;
 					TooltipDescriptor.AddDescriptor(gameObject, fileParts[0] + " - Pattern", "Plays pattern which is composed of sequences on specified areas");
-					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "Edit File", "View Source of " + fileParts[0] + "\nWe recommend a text editor");
+					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "<color=#FF4500>Edit File</color>", "View Source of " + fileParts[0] + "\nWe recommend a text editor", new Color32(135, 206, 255, 225));
 				}
 				else if (fullFilePath.Contains(".exp"))
 				{
@@ -74,7 +74,7 @@ namespace NullSpace.SDK.Demos
 					myIcon.sprite = LibraryManager.Inst.expIcon;
 					visual.color = LibraryManager.Inst.expColor;
 					TooltipDescriptor.AddDescriptor(gameObject, fileParts[0] + " - Experience", "Plays experience which is composed of multiple Patterns.");
-					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "Edit File", "View Source of " + fileParts[0] + "\nWe recommend a text editor");
+					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "<color=#FF4500>Edit File</color>", "View Source of " + fileParts[0] + "\nWe recommend a text editor", new Color32(135, 206, 255, 225));
 				}
 				else
 				{
@@ -84,7 +84,7 @@ namespace NullSpace.SDK.Demos
 					copyButton.transform.parent.parent.gameObject.SetActive(false);
 
 					TooltipDescriptor.AddDescriptor(gameObject, fileParts[0], "Haptic Package: A collection of sequences, patterns and experiences\nDefined by its config.json");
-					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "Open Explorer", "View directories of " + fileParts[0]);
+					TooltipDescriptor.AddDescriptor(openLocationButton.gameObject, "<color=#FF4500>Open Folder</color>", "View directories of " + fileParts[0], new Color32(135, 206, 255, 225));
 				}
 
 				//Temporary disabling of the copy-me feature.

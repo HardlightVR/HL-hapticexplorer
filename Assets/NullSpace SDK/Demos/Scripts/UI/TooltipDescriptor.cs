@@ -11,6 +11,7 @@ namespace NullSpace.SDK.Demos
 		public string TooltipName;
 		[Multiline]
 		public string DetailedTooltip;
+		[SerializeField]
 		private Color32 backgroundColor = new Color32(255, 255, 255, 200);
 		public Color32 BackgroundColor
 		{
@@ -115,6 +116,13 @@ namespace NullSpace.SDK.Demos
 			TooltipDescriptor desc = go.AddComponent<TooltipDescriptor>();
 			desc.TooltipName = name;
 			desc.DetailedTooltip = description;
+			return desc;
+		}
+
+		public static TooltipDescriptor AddDescriptor(GameObject go, string name, string description, Color color)
+		{
+			TooltipDescriptor desc = AddDescriptor(go, name, description);
+			desc.backgroundColor = color;
 			return desc;
 		}
 	}

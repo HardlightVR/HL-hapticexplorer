@@ -133,9 +133,7 @@ namespace NullSpace.SDK.Demos
 		{
 			Vector3 pos = Input.mousePosition;
 
-			//Check the 4 directions.
-			//if(pos.x + rectTooltip.a
-
+			//Check the 4 directions. This is just positive/negative direction handling
 			Vector2 direction = new Vector2(1, -1);
 
 			if (pos.x + rectTooltip.sizeDelta.x < Screen.width)
@@ -205,10 +203,5 @@ namespace NullSpace.SDK.Demos
 			TooltipBackground.color = backgroundColor;
 			ShowTooltip(nameText);
 		}
-		//public void ShowTooltip(string newText, Rect tooltipDimensions, Color backgroundColor)
-		//{
-		//	background.color = backgroundColor;
-		//	ShowTooltip(newText);
-		//}
 	}
 }
