@@ -1,0 +1,7 @@
+{
+	"experience" : [
+		{"time" : 0.0, "pattern" : "ns.inventory.simple_drink"},
+		{"time" : 0.4, "pattern" : "ns.dying.poison_in_stomach"},
+		{"time" : 4.0, "pattern" : "ns.dying.dying"}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"pattern" : [
+ 
+{"time" : 0.00, "sequence" : "ns.dying.pain_long", "area": "Mid_Ab_Right|Upper_Ab_Right"},
+{"time" : 0.00, "sequence" : "ns.dying.pain_long", "area": "Back_Left"},
+{"time" : 2.00, "sequence" : "ns.dying.pain_long", "strength": 0.6, "area": "Mid_Ab_Right|Upper_Ab_Right"},
+{"time" : 2.00, "sequence" : "ns.dying.pain_long", "strength": 0.6, "area": "Back_Left"}
+
+	]
+}

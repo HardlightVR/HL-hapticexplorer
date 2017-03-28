@@ -1,0 +1,32 @@
+{
+	"pattern" : [
+
+{"time" : 0.00, "sequence" : "ns.dying.pain_half_sec", "area": "Forearm_Both|Upper_Arm_Both"},
+{"time" : 0.15, "sequence" : "ns.dying.pain_half_sec", "area": "Back_Both|Shoulder_Both|Lower_Ab_Both"},
+{"time" : 0.30, "sequence" : "ns.dying.pain", "area": "Upper_Ab_Both|Chest_Both|Mid_Ab_Both"},
+
+{"time" : 0.90, "sequence" : "ns.dying.pain_half_sec", "area": "Forearm_Both|Upper_Arm_Both"},
+{"time" : 1.05, "sequence" : "ns.dying.pain_half_sec", "area": "Upper_Ab_Both|Chest_Both|Mid_Ab_Both"},
+{"time" : 1.20, "sequence" : "ns.dying.pain", "area": "Back_Both|Shoulder_Both|Lower_Ab_Both"},
+
+{"time" : 1.80, "sequence" : "ns.dying.pain_alt_4th_sec", "area": "Forearm_Both|Upper_Arm_Both"},
+{"time" : 1.90, "sequence" : "ns.dying.pain_alt_4th_sec", "area": "Back_Both|Shoulder_Both|Lower_Ab_Both"},
+{"time" : 2.00, "sequence" : "ns.dying.pain_alt_4th_sec", "area": "Upper_Ab_Both|Chest_Both|Mid_Ab_Both"},
+
+{"time" : 2.50, "sequence" : "ns.dying.pain_half_sec", "area": "Forearm_Both|Upper_Arm_Both"},
+{"time" : 2.65, "sequence" : "ns.dying.pain_half_sec", "area": "Upper_Ab_Both|Chest_Both|Mid_Ab_Both"},
+{"time" : 2.70, "sequence" : "ns.dying.pain", "area": "Back_Both|Shoulder_Both|Lower_Ab_Both"},
+
+{"time" : 3.10, "sequence" : "ns.dying.pain_alt_4th_sec", "area": "Forearm_Both|Upper_Arm_Both"},
+{"time" : 3.20, "sequence" : "ns.dying.pain_half_sec", "area": "Back_Both|Shoulder_Both|Lower_Ab_Both"},
+{"time" : 3.30, "sequence" : "ns.dying.pain_alt_4th_sec", "area": "Upper_Ab_Both|Chest_Both|Mid_Ab_Both"},
+
+{"time" : 3.40, "sequence" : "ns.dying.pain_half_sec", "area": "Forearm_Both|Upper_Arm_Both"},
+{"time" : 3.45, "sequence" : "ns.dying.pain_half_sec", "area": "Upper_Ab_Both|Chest_Both|Mid_Ab_Both"},
+{"time" : 3.50, "sequence" : "ns.dying.pain", "area": "Back_Both|Shoulder_Both|Lower_Ab_Both"},
+{"time" : 3.60, "sequence" : "ns.dying.pain_half_sec", "area": "Forearm_Both|Upper_Arm_Both"},
+{"time" : 3.75, "sequence" : "ns.dying.pain_half_sec", "area": "Upper_Ab_Both|Chest_Both|Mid_Ab_Both"},
+{"time" : 3.80, "sequence" : "ns.dying.pain", "area": "Back_Both|Shoulder_Both|Lower_Ab_Both"}
+
+	]
+}

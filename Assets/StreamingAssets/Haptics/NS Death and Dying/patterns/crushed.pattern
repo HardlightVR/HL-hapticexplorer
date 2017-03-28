@@ -1,0 +1,11 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.dying.pain", "area": "Shoulder_Both"},
+		{"time" : 0.08, "sequence" : "ns.dying.pain", "area": "Back_Both|Chest_Both|Upper_Arm_Both"},
+		{"time" : 0.16, "sequence" : "ns.dying.pain", "area": "Upper_Ab_Both"},
+		{"time" : 0.20, "sequence" : "ns.dying.pain", "area": "Mid_Ab_Both|Forearm_Both"},
+		{"time" : 0.24, "sequence" : "ns.dying.pain_short", "area": "Lower_Ab_Both"},
+		{"time" : 0.40, "sequence" : "ns.dying.pain_long", "area": "All_Areas"}
+	]
+}

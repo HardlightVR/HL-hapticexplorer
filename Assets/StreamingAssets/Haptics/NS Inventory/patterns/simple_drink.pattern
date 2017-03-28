@@ -1,0 +1,8 @@
+{
+	"pattern" : [
+		{"time" : 0.00, "sequence" : "ns.inventory.touch", "area": "Chest_Left"},
+		{"time" : 0.15, "sequence" : "ns.inventory.touch", "area": "Upper_Ab_Left"},
+		{"time" : 0.20, "sequence" : "ns.inventory.touch", "area": "Mid_Ab_Left"},
+		{"time" : 0.30, "sequence" : "ns.inventory.touch", "area": "Lower_Ab_Left"}
+	]
+}

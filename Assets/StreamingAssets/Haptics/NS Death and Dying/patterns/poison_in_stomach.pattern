@@ -1,0 +1,27 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.dod.StomachRumbleHeavy", "strength": 0.4, "area": "Lower_Ab_Right"},
+		{"time" : 0.10, "sequence" : "ns.dod.StomachRumble", "strength": 0.5, "area": "Mid_Ab_Left"},
+		{"time" : 0.20, "sequence" : "ns.dod.StomachRumbleHeavy", "strength": 0.6, "area": "Mid_Ab_Right"},
+		{"time" : 0.30, "sequence" : "ns.dod.StomachRumble", "strength": 0.6, "area": "Lower_Ab_Left"},
+		{"time" : 0.45, "sequence" : "ns.dod.StomachRumble", "strength": 0.5, "area": "Mid_Ab_Both"},
+		{"time" : 0.55, "sequence" : "ns.dod.StomachRumbleHeavy", "strength": 0.4, "area": "Mid_Ab_Right"},
+		{"time" : 0.70, "sequence" : "ns.dod.StomachRumble", "strength": 0.8, "area": "Lower_Ab_Left"},
+		{"time" : 0.80, "sequence" : "ns.dod.StomachRumble", "strength": 0.6, "area": "Mid_Ab_Both"},
+
+		{"time" : 0.95, "sequence" : "ns.dod.StomachRumbleHeavy", "strength": 0.3, "area": "Lower_Ab_Right"},
+		{"time" : 1.05, "sequence" : "ns.dod.StomachRumble", "strength": 0.7, "area": "Mid_Ab_Left"},
+		{"time" : 1.20, "sequence" : "ns.dod.StomachRumbleHeavy", "strength": 0.6, "area": "Mid_Ab_Right"},
+		{"time" : 1.30, "sequence" : "ns.dod.StomachRumble", "strength": 0.6, "area": "Lower_Ab_Left"},
+		{"time" : 1.40, "sequence" : "ns.dod.StomachRumble", "strength": 0.7, "area": "Mid_Ab_Both"},
+		{"time" : 1.55, "sequence" : "ns.dod.StomachRumbleHeavy", "strength": 0.6, "area": "Mid_Ab_Right"},
+		{"time" : 1.70, "sequence" : "ns.dod.StomachRumble", "strength": 0.8, "area": "Lower_Ab_Left"},
+		{"time" : 1.80, "sequence" : "ns.dod.StomachRumble", "strength": 0.7, "area": "Mid_Ab_Both"},
+
+		{"time" : 1.90, "sequence" : "ns.dying.pain_long", "strength": 1.0, "area": "Lower_Ab_Both"},
+		{"time" : 2.30, "sequence" : "ns.dying.pain_long", "strength": 1.0, "area": "Mid_Ab_Both"},
+		{"time" : 2.50, "sequence" : "ns.dying.pain_long", "strength": 1.0, "area": "Upper_Ab_Both"},
+		{"time" : 2.70, "sequence" : "ns.dying.pain_long", "strength": 1.0, "area": "Chest_Both"}
+	]
+}

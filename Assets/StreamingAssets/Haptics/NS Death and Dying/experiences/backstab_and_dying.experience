@@ -1,0 +1,6 @@
+{
+	"experience" : [
+		{"time" : 0.0, "pattern" : "ns.dying.backstab_no_buzz"},
+		{"time" : 2.3, "pattern" : "ns.dying.dying"}
+	]
+}

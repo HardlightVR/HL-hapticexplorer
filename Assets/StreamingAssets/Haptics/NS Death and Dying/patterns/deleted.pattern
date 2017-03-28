@@ -1,0 +1,21 @@
+{
+	"pattern" : [
+
+{"time" : 0.00, "sequence" : "ns.dying.pain_short", "area": "All_Areas"},
+{"time" : 0.20, "sequence" : "ns.dying.pain_short", "area": "Chest_Both|Upper_Ab_Both|Mid_Ab_Both|Lower_Ab_Both"},
+{"time" : 0.20, "sequence" : "ns.dying.pain_short", "area": "Shoulder_Both|Back_Both"},
+{"time" : 0.20, "sequence" : "ns.dying.pain_short", "area": "Upper_Arm_Both"},
+
+{"time" : 0.40, "sequence" : "ns.dying.pain_short", "area": "Chest_Both|Upper_Ab_Both|Mid_Ab_Both|Lower_Ab_Both"},
+{"time" : 0.40, "sequence" : "ns.dying.pain_short", "area": "Shoulder_Both|Back_Both"},
+
+{"time" : 0.60, "sequence" : "ns.dying.pain_short", "area": "Chest_Both|Upper_Ab_Both|Mid_Ab_Both|Lower_Ab_Both"},
+{"time" : 0.60, "sequence" : "ns.dying.pain_short", "area": "Shoulder_Both"},
+
+{"time" : 0.80, "sequence" : "ns.dying.pain_short", "area": "Chest_Both|Upper_Ab_Both|Mid_Ab_Both"},
+
+{"time" : 1.00, "sequence" : "ns.dying.pain_short", "area": "Chest_Both"}
+
+	]
+}
+The user is BUZZED all over and then it turns off the body from left to right or from out to center?

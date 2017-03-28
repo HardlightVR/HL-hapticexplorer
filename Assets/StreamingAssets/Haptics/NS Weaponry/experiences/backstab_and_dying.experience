@@ -1,6 +1,0 @@
-{
-	"experience" : [
-		{"time" : 0.0, "pattern" : "ns.weaponry.backstab_no_buzz"},
-		{"time" : 2.3, "pattern" : "ns.weaponry.dying"}
-	]
-}

@@ -1,0 +1,17 @@
+{
+	"pattern" : [
+
+		{"time" : 0.00, "sequence" : "ns.dying.pain_short", "strength": 0.6, "area": "Shoulder_Left"},
+		{"time" : 0.05, "sequence" : "ns.dying.pain_short", "strength": 0.6, "area": "Back_Left"},
+		{"time" : 0.05, "sequence" : "ns.dying.pain_short", "strength": 0.6, "area": "Chest_Left"},
+		{"time" : 0.10, "sequence" : "ns.dying.pain_short", "strength": 0.6, "area": "Upper_Ab_Right"},
+		{"time" : 0.10, "sequence" : "ns.dying.pain_short", "strength": 0.6, "area": "Mid_Ab_Right"},
+
+		{"time" : 0.40, "sequence" : "ns.dying.pain_long", "area": "Shoulder_Left"},
+		{"time" : 0.45, "sequence" : "ns.dying.pain_long", "area": "Back_Left"},
+		{"time" : 0.45, "sequence" : "ns.dying.pain_long", "area": "Chest_Left"},
+		{"time" : 0.50, "sequence" : "ns.dying.pain_long", "area": "Upper_Ab_Right"},
+		{"time" : 0.50, "sequence" : "ns.dying.pain_long", "area": "Mid_Ab_Right"}
+
+	]
+}

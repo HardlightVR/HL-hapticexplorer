@@ -1,0 +1,14 @@
+{
+	"pattern" : [
+
+{"time" : 0.00, "sequence" : "ns.dying.pain", "strength": 0.4, "area": "Back_Left"},
+{"time" : 0.25, "sequence" : "ns.dying.pain", "strength": 0.8, "area": "Back_Right"},
+{"time" : 0.50, "sequence" : "ns.dying.pain", "strength": 0.6, "area": "Back_Left"},
+{"time" : 0.60, "sequence" : "ns.dying.pain", "strength": 0.35, "area": "Back_Right"},
+{"time" : 0.80, "sequence" : "ns.dying.pain_long", "area": "Back_Left"},
+{"time" : 1.8, "sequence" : "ns.buzz", "area": "All_Areas"},
+{"time" : 2.2, "sequence" : "ns.buzz", "area": "All_Areas"},
+{"time" : 2.5, "sequence" : "ns.buzz", "area": "All_Areas"}
+
+	]
+}
