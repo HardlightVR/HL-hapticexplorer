@@ -15,6 +15,9 @@ namespace NullSpace.SDK.Demos
 		bool QuickButtonFoldout = true;
 		Vector2 scrollPos;
 
+		Texture2D icon;
+		Material mat;
+
 		[SerializeField]
 		public List<EditorSuitConfig> Suits;
 
@@ -810,8 +813,11 @@ namespace NullSpace.SDK.Demos
 
 		public void Setup()
 		{
-			Debug.Log("Performing Setup\n");
 			Suits = new List<EditorSuitConfig>();
+
+			icon = (Texture2D)Resources.Load("Button Icons/NullSpace Logo 256x256", typeof(Texture2D));
+			mat = Resources.Load<Material>("EditorIcon");
+
 
 			List<HardlightSuit> existingDefinitions = FindObjectsOfType<HardlightSuit>().ToList();
 
@@ -880,7 +886,7 @@ namespace NullSpace.SDK.Demos
 						{
 							content = new GUIContent(suitObjects[i].name, "Quick Navigate to " + suitObjects[i].name);
 							//Create a select button
-							NullSpaceEditorStyles.QuickSelectButton(false, suitObjects[i].gameObject, content, innerOptions);
+							NSEditorStyles.QuickSelectButton(false, suitObjects[i].gameObject, content, innerOptions);
 						}
 					}
 					if (horizOpen) EditorGUILayout.EndHorizontal();
@@ -902,15 +908,22 @@ namespace NullSpace.SDK.Demos
 			//Make a button that auto looks things up in children of an object
 			CheckIfInvalidSetup();
 
+			if (icon != null)
+			{
+				NSEditorStyles.DrawBackgroundImage(icon, mat, this);
+			}
+
 			//EditorGUILayout.InspectorTitlebar(true, this, true);
 			//GUILayoutOption[] innerOptions = { GUILayout.MaxHeight(45), GUILayout.MinHeight(35) };
 			GUIStyle title = new GUIStyle();
 			title.fontSize = 18;
+			GUILayout.Space(4);
 			GUILayout.Label(" Hardlight Quick Setup Tool", title);
 
 			bool allowExpandAll = Suits != null && Suits.Count > 1;
 			GUIContent content = new GUIContent("Collapsed All");
-			/*bool result = */NullSpaceEditorStyles.OperationButton(!allowExpandAll, content);
+			/*bool result = */
+			NSEditorStyles.OperationButton(!allowExpandAll, content);
 
 			scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
@@ -977,48 +990,4 @@ namespace NullSpace.SDK.Demos
 		}
 		#endregion
 	}
-
-	public static class NullSpaceEditorStyles
-	{
-		public static void QuickSelectButton(bool disabled, GameObject target, GUIContent content, GUILayoutOption[] options)
-		{
-			if (disabled)
-			{
-				//Disabling
-				EditorGUI.BeginDisabledGroup(disabled);
-				content.text = "Unassigned";
-			}
-			else
-			{
-				content.text = target.name;
-
-				//Max out the string size?
-			}
-
-			//Color this button differently if the AreaFlag doesn't match?
-			if (GUILayout.Button(content, EditorStyles.toolbarButton, options))
-			{
-				//Go to that object.
-				Selection.activeGameObject = target;
-			}
-
-			if (disabled)
-			{
-				//Re-enable
-				EditorGUI.EndDisabledGroup();
-			}
-		}
-
-		public static bool OperationButton(bool disabledWhenTrue, GUIContent content)
-		{
-			//GUIStyle style = new GUIStyle(GUI.skin.button);
-			using (new EditorGUI.DisabledGroupScope(disabledWhenTrue))
-			{
-				return GUILayout.Button(content);
-			}
-		}
-	}
-
-
 }
-
