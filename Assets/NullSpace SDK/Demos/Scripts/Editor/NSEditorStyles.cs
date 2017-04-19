@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
- 
+
 public class NSEditorStyles
 {
 	public static bool VisualOverhaul = true;
@@ -43,45 +44,112 @@ public class NSEditorStyles
 		}
 	}
 
-	public static bool OperationButton(bool disabledWhenTrue, GUIContent content)
-	{
-		//GUIStyle style = new GUIStyle(GUI.skin.button);
-		using (new EditorGUI.DisabledGroupScope(disabledWhenTrue))
-		{
-			return GUILayout.Button(content);
-		}
-	}
-
 	public static Texture2D toggleNormalBackground;
 	public static Texture2D toggleActiveBackground;
-	
+
 	public static Color activeColor = new Color(.3f, .8f, .4f);
 	public static Color inactiveColor = new Color(.7f, .7f, .7f);
 	public static Color otherColor = new Color(.4f, .4f, .9f);
-	
-	#region Title
+
+	#region Title Label
 	public static void DrawTitle(GUIContent content)
 	{
 
 	}
 	#endregion
 
-	public static bool DrawTitleFoldout(bool toggleDropDown, string displayText = "", string toolTip = "")
+	#region LabelField
+	public static string TextField(string value, string text, GUILayoutOption[] options)
 	{
-		if(VisualOverhaul != true)
+		return EditorGUILayout.TextField(value, text, options);
+	}
+	public static string TextField(string value, string text)
+	{
+		return EditorGUILayout.TextField(value, text);
+	}
+	#endregion
+
+	public static bool DrawFoldout(bool toggleDropDown, string displayText = "", string tooltip = "")
+	{
+		//if (VisualOverhaul != true)
+		//{
+		return EditorGUILayout.Foldout(toggleDropDown, displayText, GetButton());
+		//}
+
+		Rect buttonRect = EditorGUILayout.BeginVertical();
+		Rect extraRect = new Rect(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height + 8);
+		if (GUI.Button(extraRect, new GUIContent("", tooltip), GetSmallFoldoutButton()))
+		{
+			toggleDropDown = (toggleDropDown ? false : true);
+		}
+
+		EditorGUILayout.BeginHorizontal();
+		if (toggleDropDown)
+		{
+			GUILayout.Label(((Texture)ArrowIconDown), GetSmallLabelIcon());
+		}
+		else
+		{
+			GUILayout.Label(((Texture)ArrowIconRight), GetSmallLabelIcon());
+		}
+		GUILayout.Space(-14);
+		GUILayout.Label(displayText, GetSmallLabel());
+		EditorGUILayout.EndHorizontal();
+		EditorGUILayout.EndVertical();
+		if (toggleDropDown)
+		{
+			GUILayout.Space(10f);
+		}
+		return toggleDropDown;
+	}
+
+	#region GUILayoutToggle
+	public static bool DrawGUILayoutToggle(bool disabled, bool toggleDropDown, string displayText = "", string tooltip = "")
+	{
+		return DrawGUILayoutToggle(disabled, toggleDropDown, new GUIContent(displayText, tooltip));
+	}
+
+	public static bool DrawGUILayoutToggle(bool disabled, bool toggleDropDown, GUIContent content)
+	{
+		using (new EditorGUI.DisabledGroupScope(disabled))
+		{
+			return GUILayout.Toggle(toggleDropDown, content, GetButton());
+		}
+	}
+
+	public static bool DrawGUILayoutToggle(bool disabled, bool toggleDropDown, GUIContent content, GUILayoutOption[] options)
+	{
+		using (new EditorGUI.DisabledGroupScope(disabled))
+		{
+			return GUILayout.Toggle(toggleDropDown, content, GetButton(), options);
+		}
+	}
+
+	public static bool DrawGUILayoutToggle(bool toggleDropDown, string displayText = "", string tooltip = "")
+	{
+		return DrawGUILayoutToggle(false, toggleDropDown, new GUIContent(displayText, tooltip));
+	}
+	#endregion
+
+	#region Foldouts with Icons
+	public static bool DrawTitleIconFoldout(bool toggleDropDown, string displayText = "", string tooltip = "")
+	{
+		if (VisualOverhaul != true)
 		{
 			return EditorGUILayout.Foldout(toggleDropDown, displayText);
 		}
 
 		Rect buttonRect = EditorGUILayout.BeginVertical();
 		buttonRect = new Rect(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height + 12);
-		if (GUI.Button(buttonRect, new GUIContent("", toolTip), GetFoldoutButton())){
+		if (GUI.Button(buttonRect, new GUIContent("", tooltip), GetFoldoutButton()))
+		{
 			toggleDropDown = (toggleDropDown ? false : true);
 		}
 		GUILayout.Space(5f);
 		EditorGUILayout.BeginHorizontal();
 		GUILayout.Space(-5f);
-		if(toggleDropDown){
+		if (toggleDropDown)
+		{
 			GUILayout.Label(((Texture)ArrowIconDown), GetLargeLabelIcon());
 		}
 		else
@@ -96,21 +164,23 @@ public class NSEditorStyles
 		return toggleDropDown;
 	}
 
-	public static bool DrawFoldout(bool toggleDropDown, string displayText = "", string toolTip = "")
+	public static bool DrawIconFoldout(bool toggleDropDown, string displayText = "", string tooltip = "")
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			return EditorGUILayout.Foldout(toggleDropDown, displayText);
 		}
 
 		Rect buttonRect = EditorGUILayout.BeginVertical();
 		Rect extraRect = new Rect(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height + 8);
-		if (GUI.Button(extraRect, new GUIContent("", toolTip), GetSmallFoldoutButton())){
+		if (GUI.Button(extraRect, new GUIContent("", tooltip), GetSmallFoldoutButton()))
+		{
 			toggleDropDown = (toggleDropDown ? false : true);
 		}
 
 		EditorGUILayout.BeginHorizontal();
-		if(toggleDropDown){
+		if (toggleDropDown)
+		{
 			GUILayout.Label(((Texture)ArrowIconDown), GetSmallLabelIcon());
 		}
 		else
@@ -121,11 +191,13 @@ public class NSEditorStyles
 		GUILayout.Label(displayText, GetSmallLabel());
 		EditorGUILayout.EndHorizontal();
 		EditorGUILayout.EndVertical();
-		if(toggleDropDown){
+		if (toggleDropDown)
+		{
 			GUILayout.Space(10f);
 		}
 		return toggleDropDown;
 	}
+	#endregion
 
 	public static void DrawBackgroundImage(Texture2D Logo, Material transparentBackground, EditorWindow current)
 	{
@@ -148,14 +220,40 @@ public class NSEditorStyles
 		style.alignment = TextAnchor.UpperLeft;
 	}
 
+	public static GUILayoutOption[] NColumnsLayoutOptions(int columnCount = 2, float minWidthPerColumn = 35, float spacingAcrossEntireWidth = 10)
+	{
+		float width = EditorGUIUtility.currentViewWidth;
+		GUILayoutOption[] evenSplit = { GUILayout.MaxWidth(width / columnCount - spacingAcrossEntireWidth), GUILayout.MinWidth(minWidthPerColumn) };
+		return evenSplit;
+	}
+	public static GUILayoutOption[] NRowLayoutOptions(int rowCount = 2, float minHeightPerRow = 35, float spacingAcrossEntireHeight = 10)
+	{
+		float height = EditorGUIUtility.singleLineHeight;
+		GUILayoutOption[] evenSplit = { GUILayout.MaxHeight(height / rowCount - spacingAcrossEntireHeight), GUILayout.MaxHeight(minHeightPerRow) };
+		return evenSplit;
+	}
+
+	public static GUILayoutOption[] CombinineOptions(GUILayoutOption[] firstGroup, GUILayoutOption[] secondGroup)
+	{
+		return firstGroup.Concat(secondGroup).ToArray();
+	}
+
+	public static bool OperationButton(bool disabledWhenTrue, GUIContent content)
+	{
+		using (new EditorGUI.DisabledGroupScope(disabledWhenTrue))
+		{
+			return GUILayout.Button(content);
+		}
+	}
+
 	#region Buttons
 	public static bool DrawMinusButton(int size = -1)
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			return GUILayout.Button(MinusIcon, GUILayout.ExpandWidth(false));
 		}
-		if(size > 0)
+		if (size > 0)
 		{
 			GUIStyle tallerToolbar = new GUIStyle(EditorStyles.toolbarButton);
 			tallerToolbar.fixedHeight = size;
@@ -164,25 +262,25 @@ public class NSEditorStyles
 		}
 		return GUILayout.Button(MinusIcon, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
 	}
-	
+
 	public static bool DrawArrowButton()
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			return GUILayout.Button(ArrowIconDown, GUILayout.ExpandWidth(false));
 		}
 		return GUILayout.Button(ArrowIconDown, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
 	}
-	
+
 	public static bool DrawPlusButton()
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			return GUILayout.Button(PlusIcon, GUILayout.ExpandWidth(false));
 		}
 		return GUILayout.Button(PlusIcon, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
 	}
-	
+
 	public static void DrawLabel(string labelText, float minWidth = 105)
 	{
 		GUILayout.Label(labelText, NSEditorStyles.GetSubTitleLabel(), GUILayout.ExpandWidth(false), GUILayout.MinWidth(105));
@@ -201,42 +299,42 @@ public class NSEditorStyles
 
 	public static bool DrawButton(Texture image, params GUILayoutOption[] options)
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
-			return GUILayout.Button(image, GUILayout.ExpandWidth(false));;
+			return GUILayout.Button(image, GUILayout.ExpandWidth(false)); ;
 		}
 
 		GUIStyle buttonStyle = EditorStyles.toolbarButton;
 		return GUILayout.Button(image, buttonStyle, GUILayout.ExpandWidth(false));
 	}
-	
+
 	public static bool DrawButton(string content, params GUILayoutOption[] options)
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			GUIStyle oldButtonStyle = EditorStyles.miniButton;
-			return GUILayout.Button(content, oldButtonStyle, GUILayout.ExpandWidth(false));;
+			return GUILayout.Button(content, oldButtonStyle, GUILayout.ExpandWidth(false)); ;
 		}
 		GUIStyle buttonStyle = EditorStyles.toolbarButton;
 		return GUILayout.Button(content, buttonStyle, GUILayout.ExpandWidth(false));
 	}
-	
+
 	public static bool DrawButton(GUIContent content, params GUILayoutOption[] options)
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
-			return GUILayout.Button(content, GUILayout.ExpandWidth(false));;
+			return GUILayout.Button(content, GUILayout.ExpandWidth(false)); ;
 		}
 
 		GUIStyle buttonStyle = EditorStyles.toolbarButton;
 		return GUILayout.Button(content, buttonStyle, GUILayout.ExpandWidth(false));
 	}
 	#endregion
-	
+
 	#region Toggle
 	public static bool DrawToggle(bool value, params GUILayoutOption[] options)
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			return GUILayout.Toggle(value, "", options);
 		}
@@ -244,11 +342,13 @@ public class NSEditorStyles
 
 		GUILayout.Space(6f);
 
-		if (GUI.Button(buttonRect, new GUIContent("", ""), GetToggleLabelButton(value))){
+		if (GUI.Button(buttonRect, new GUIContent("", ""), GetToggleLabelButton(value)))
+		{
 			value = (value ? false : true);
 		}
 		GUIStyle label = new GUIStyle(GetToggleLabel(value));
-		if(value){
+		if (value)
+		{
 			GUILayout.Label(((Texture)toggleActiveIcon), label, GUILayout.Width(16));
 		}
 		else
@@ -259,7 +359,7 @@ public class NSEditorStyles
 
 		return value;
 	}
-	
+
 	public static bool DrawToggle(bool value, string text, params GUILayoutOption[] options)
 	{
 		return DrawToggle(value, new GUIContent(text), options);
@@ -267,7 +367,8 @@ public class NSEditorStyles
 
 	public static void DrawToggleIcon(bool value, GUIStyle label)
 	{
-		if(value){
+		if (value)
+		{
 			GUILayout.Label(((Texture)toggleActiveIcon), label, GUILayout.Width(16));
 		}
 		else
@@ -279,93 +380,95 @@ public class NSEditorStyles
 
 	public static bool DrawToggle(bool value, Texture image, params GUILayoutOption[] options)
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			return GUILayout.Toggle(value, image, options);
 		}
 
 		Rect buttonRect = EditorGUILayout.BeginVertical();
-		
-		if (GUI.Button(buttonRect, new GUIContent("", ""), GetToggleLabelButton(value))){
+
+		if (GUI.Button(buttonRect, new GUIContent("", ""), GetToggleLabelButton(value)))
+		{
 			value = (value ? false : true);
 		}
 		GUIStyle label = new GUIStyle(GetToggleLabel(value));
-		
+
 		EditorGUILayout.BeginHorizontal();
 		DrawToggleIcon(value, label);
 		GUILayout.Label(image, label);
 		EditorGUILayout.EndHorizontal();
 		EditorGUILayout.EndVertical();
-		
+
 		return value;
 	}
-	
+
 	public static bool DrawToggle(bool value, GUIContent content, params GUILayoutOption[] options)
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			return GUILayout.Toggle(value, content, GetToggleStyle(value), options);
 		}
-		
+
 		Rect buttonRect = EditorGUILayout.BeginVertical();
-		
-		if (GUI.Button(buttonRect, new GUIContent("", ""), GetToggleLabelButton(value))){
+
+		if (GUI.Button(buttonRect, new GUIContent("", ""), GetToggleLabelButton(value)))
+		{
 			value = (value ? false : true);
 		}
 		GUIStyle label = new GUIStyle(GetToggleLabel(value));
-		
+
 		EditorGUILayout.BeginHorizontal();
 		DrawToggleIcon(value, label);
 		GUILayout.Label(content, label);
 		EditorGUILayout.EndHorizontal();
 		EditorGUILayout.EndVertical();
-		
+
 		return value;
 	}
 	#endregion
-	
+
 	#region DrawPopup
 	public static int DrawPopup(int selectedIndex, string[] displayedOptions, params GUILayoutOption[] options)
 	{
 		return EditorGUILayout.Popup(selectedIndex, displayedOptions, GetPopup(), options);
 	}
-	
+
 	public static int DrawPopup(int selectedIndex, string[] displayedOptions, GUIStyle style, params GUILayoutOption[] options)
 	{
 		return EditorGUILayout.Popup(selectedIndex, displayedOptions, style, options);
 	}
-	
+
 	public static int DrawPopup(int selectedIndex, GUIContent[] displayedOptions, params GUILayoutOption[] options)
 	{
 		return EditorGUILayout.Popup(selectedIndex, displayedOptions, GetPopup(), options);
 	}
-	
+
 	public static int DrawPopup(int selectedIndex, GUIContent[] displayedOptions, GUIStyle style, params GUILayoutOption[] options)
 	{
 		return EditorGUILayout.Popup(selectedIndex, displayedOptions, style, options);
 	}
-	
+
 	public static int DrawPopup(string label, int selectedIndex, string[] displayedOptions, params GUILayoutOption[] options)
 	{
 		return EditorGUILayout.Popup(label, selectedIndex, displayedOptions, GetPopup(), options);
 	}
-	
+
 	public static int DrawPopup(string label, int selectedIndex, string[] displayedOptions, GUIStyle style, params GUILayoutOption[] options)
 	{
 		return EditorGUILayout.Popup(label, selectedIndex, displayedOptions, style, options);
 	}
-	
+
 	public static int DrawPopup(GUIContent label, int selectedIndex, GUIContent[] displayedOptions, params GUILayoutOption[] options)
 	{
 		return EditorGUILayout.Popup(label, selectedIndex, displayedOptions, GetPopup(), options);
 	}
-	
+
 	public static int DrawPopup(GUIContent label, int selectedIndex, GUIContent[] displayedOptions, GUIStyle style, params GUILayoutOption[] options)
 	{
 		return EditorGUILayout.Popup(label, selectedIndex, displayedOptions, style, options);
 	}
 	#endregion
-	
+
 	#region EnumPopup
 	public static System.Enum DrawEnumPopup(System.Enum selectedIndex, params GUILayoutOption[] options)
 	{
@@ -373,19 +476,20 @@ public class NSEditorStyles
 		return thing;
 	}
 	#endregion
-	
+
 	#region GUIStyles
-	public static GUIStyle GetTitleLabel(){
+	public static GUIStyle GetTitleLabel()
+	{
 		GUIStyle titleLabel = new GUIStyle(EditorStyles.largeLabel);
 		titleLabel.fontSize = 18;
 		return titleLabel;
 	}
-	
+
 	public static GUIStyle GetToggleStyle(bool value)
 	{
 		GUIStyle toggleStyle = new GUIStyle(EditorStyles.toggle);
 
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			return toggleStyle;
 		}
@@ -399,8 +503,9 @@ public class NSEditorStyles
 	}
 
 	//A bit obsolete
-	public static GUIStyle GetSubTitleLabel(){
-		if(VisualOverhaul != true)
+	public static GUIStyle GetSubTitleLabel()
+	{
+		if (VisualOverhaul != true)
 		{
 			return new GUIStyle(EditorStyles.boldLabel);
 		}
@@ -413,7 +518,7 @@ public class NSEditorStyles
 
 	public static GUIStyle GetSubTitleLabel(Rect offset)
 	{
-		if(VisualOverhaul != true)
+		if (VisualOverhaul != true)
 		{
 			return new GUIStyle(EditorStyles.boldLabel);
 		}
@@ -423,15 +528,17 @@ public class NSEditorStyles
 		//subtitleLabel = new GUIStyle(EditorStyles.boldLabel);
 		return subtitleLabel;
 	}
-	
-	public static GUIStyle GetLargeLabel(){
+
+	public static GUIStyle GetLargeLabel()
+	{
 		GUIStyle largeLabel = new GUIStyle(EditorStyles.largeLabel);
 		largeLabel.fontStyle = FontStyle.Bold;
 		return largeLabel;
 	}
-	
-	public static GUIStyle GetPopup(){
-		if(VisualOverhaul != true)
+
+	public static GUIStyle GetPopup()
+	{
+		if (VisualOverhaul != true)
 		{
 			return new GUIStyle(EditorStyles.popup);
 		}
@@ -440,9 +547,10 @@ public class NSEditorStyles
 		popupStyle.margin = new RectOffset(popupStyle.margin.left, popupStyle.margin.right, popupStyle.margin.top + 2, popupStyle.margin.bottom);
 		return popupStyle;
 	}
-	
-	public static GUIStyle GetEnumPopup(){
-		if(VisualOverhaul != true)
+
+	public static GUIStyle GetEnumPopup()
+	{
+		if (VisualOverhaul != true)
 		{
 			return new GUIStyle(EditorStyles.popup);
 		}
@@ -453,8 +561,9 @@ public class NSEditorStyles
 		return enumPopupStyle;
 	}
 
-	public static GUIStyle GetSmallFoldoutButton(){
-		if(VisualOverhaul != true)
+	public static GUIStyle GetSmallFoldoutButton()
+	{
+		if (VisualOverhaul != true)
 		{
 			return new GUIStyle(EditorStyles.foldout);
 		}
@@ -464,8 +573,9 @@ public class NSEditorStyles
 		return smallFoldoutButton;
 	}
 
-	public static GUIStyle GetFoldoutButton(){
-		if(VisualOverhaul != true)
+	public static GUIStyle GetFoldoutButton()
+	{
+		if (VisualOverhaul != true)
 		{
 			return new GUIStyle(EditorStyles.foldout);
 		}
@@ -476,11 +586,25 @@ public class NSEditorStyles
 		return foldoutButton;
 	}
 
-	public static GUIStyle GetToggleLabelButton(bool toggled){
+	public static GUIStyle GetButton()
+	{
+		if (VisualOverhaul != true)
+		{
+			return new GUIStyle(GUI.skin.button);
+		}
 
-		if(VisualOverhaul != true)
-		{}
-			return EditorStyles.label;
+		GUIStyle fullWidthButton = new GUIStyle(GUI.skin.button);
+		//foldoutButton.fixedHeight = 30f;
+		//foldoutButton.fixedWidth = 300;
+		return fullWidthButton;
+	}
+
+	public static GUIStyle GetToggleLabelButton(bool toggled)
+	{
+
+		if (VisualOverhaul != true)
+		{ }
+		return EditorStyles.label;
 		//}
 
 		//If we wanted to have custom backgrounds or something for the toggle labels.
@@ -496,10 +620,11 @@ public class NSEditorStyles
 		return toggleLabel;*/
 	}
 
-	public static GUIStyle GetToggleLabel(bool toggled){
+	public static GUIStyle GetToggleLabel(bool toggled)
+	{
 
 		GUIStyle toggleLabel = new GUIStyle(EditorStyles.label);
-		if(toggled)
+		if (toggled)
 		{
 			//Active focused and hover don't appear to work at all. Probably needs to force repaints.
 			toggleLabel.normal.textColor = activeColor;
@@ -516,8 +641,9 @@ public class NSEditorStyles
 		}
 		return toggleLabel;
 	}
-	
-	public static GUIStyle GetLargeLabelIcon(){
+
+	public static GUIStyle GetLargeLabelIcon()
+	{
 		GUIStyle largeLabelIcon = new GUIStyle(EditorStyles.largeLabel);
 		largeLabelIcon.padding = new RectOffset(12, 0, 0, 0);
 		largeLabelIcon.fontStyle = FontStyle.Bold;
@@ -526,20 +652,27 @@ public class NSEditorStyles
 		return largeLabelIcon;
 	}
 
-	public static GUIStyle GetSmallLabelIcon(){
+	public static GUIStyle GetSmallLabelIcon()
+	{
 		GUIStyle largeLabelIcon = new GUIStyle(EditorStyles.largeLabel);
 		largeLabelIcon.fixedWidth = 36;
 		largeLabelIcon.padding = new RectOffset(6, 0, -2, 0);
 		largeLabelIcon.fontStyle = FontStyle.Bold;
-		if(EditorGUIUtility.isProSkin)
+		if (EditorGUIUtility.isProSkin)
 			largeLabelIcon.normal.textColor = Color.white;
 		return largeLabelIcon;
 	}
 
-	public static GUIStyle GetSmallLabel(){
+	public static GUIStyle GetSmallLabel()
+	{
 		GUIStyle label = new GUIStyle(EditorStyles.label);
 		label.alignment = TextAnchor.LowerLeft;
 		return label;
+	}
+
+	public static GUIStyle GetColumnStyle()
+	{
+		return new GUIStyle(EditorStyles.toolbarButton);
 	}
 	#endregion
 }

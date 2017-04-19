@@ -60,12 +60,13 @@ namespace NullSpace.SDK.Demos
 			{
 				CheckSuitDefinition();
 
+				//Local scrollview
 				//scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
 				GUIStyle style = new GUIStyle(GUI.skin.button);
 				GUILayoutOption[] options = new GUILayoutOption[0];
 				string suitDisplayName = MyDefinition.SuitName.Length > 0 ? MyDefinition.SuitName : MyDefinition.SuitRoot == null ? "Unnamed Suit" : MyDefinition.SuitRoot.name;
-				TopFoldout = GUILayout.Toggle(TopFoldout, "Show Suit: " + suitDisplayName, style);
+				TopFoldout = NSEditorStyles.DrawGUILayoutToggle(TopFoldout, "Show Suit: " + suitDisplayName);
 				#region Top Foldout
 				if (TopFoldout)
 				{
@@ -75,7 +76,8 @@ namespace NullSpace.SDK.Demos
 					EditorGUILayout.BeginVertical("Box");
 					SuitNaming(options);
 
-					ObjectFieldFoldout = GUILayout.Toggle(ObjectFieldFoldout, "Show Suit Configuration", style);
+					//ObjectFieldFoldout = NSEditorStyles.DrawFoldout(ObjectFieldFoldout, "Show Suit Configuration");
+					ObjectFieldFoldout = NSEditorStyles.DrawGUILayoutToggle(ObjectFieldFoldout, "Show Suit Configuration");
 					if (ObjectFieldFoldout)
 					{
 						DrawOptions(options);
@@ -89,7 +91,6 @@ namespace NullSpace.SDK.Demos
 					DrawOutputMessages();
 				}
 				#endregion
-
 
 				//EditorGUILayout.EndScrollView();
 			}
@@ -107,10 +108,6 @@ namespace NullSpace.SDK.Demos
 			void DrawOptions(GUILayoutOption[] options)
 			{
 				GUIContent content = new GUIContent();
-				float width = EditorGUIUtility.currentViewWidth;
-				GUILayoutOption[] innerOptions = { GUILayout.MaxWidth(width / 2 - 10), GUILayout.MinWidth(35) };
-
-				//GUIStyle columnStyle = new GUIStyle(EditorStyles.toolbarButton);
 
 				EditorGUILayout.BeginVertical("Box");
 				#region Suit Auto-Configuration
@@ -118,7 +115,7 @@ namespace NullSpace.SDK.Demos
 				SuitRootObjectField(options);
 
 				content = new GUIContent("Autoconfigure based on Root Object", "Uses common names to try and establish the different suit body colliders for the suit.");
-				bool Result = OperationButton(MyDefinition.SuitRoot == null, content);
+				bool Result = NSEditorStyles.OperationButton(MyDefinition.SuitRoot == null, content);
 				if (Result)
 				{
 					HardlightSuit definition = MyDefinition.SuitRoot.GetComponent<HardlightSuit>();
@@ -139,12 +136,15 @@ namespace NullSpace.SDK.Demos
 				//content = new GUIContent("Can Change Values", "Can't be adjusted if you have a current layout. Remove SuitBodyColliders to adjust config.");
 				//CanChangeValues = CreateStyledToggle(false, CanChangeValues, content, innerOptions);
 
+				GUILayoutOption[] twoColumns = NSEditorStyles.NColumnsLayoutOptions();
+
 				EditorGUILayout.BeginHorizontal();
 				content = new GUIContent("Add Child Objects", "Create child objects instead of directly adding to the targeted object.");
-				MyDefinition.AddChildObjects = CreateStyledToggle(!CanChangeValues, MyDefinition.AddChildObjects, content, innerOptions);
+				MyDefinition.AddChildObjects = NSEditorStyles.DrawGUILayoutToggle(!CanChangeValues, MyDefinition.AddChildObjects, content, twoColumns);
+				//MyDefinition.AddChildObjects = CreateStyledToggle(!CanChangeValues, MyDefinition.AddChildObjects, content, twoColumns);
 
 				content = new GUIContent("Add New Colliders", "Adds SuitBodyCollider objects instead of using existing ones or letting you configure it manually.\nWill add the colliders to child objects if that is also selected.");
-				MyDefinition.AddExclusiveTriggerCollider = CreateStyledToggle(!CanChangeValues, MyDefinition.AddExclusiveTriggerCollider, content, innerOptions);
+				MyDefinition.AddExclusiveTriggerCollider = NSEditorStyles.DrawGUILayoutToggle(!CanChangeValues, MyDefinition.AddExclusiveTriggerCollider, content, twoColumns);
 
 				EditorGUILayout.EndHorizontal();
 				EditorGUILayout.EndVertical();
@@ -152,7 +152,7 @@ namespace NullSpace.SDK.Demos
 
 			void SuitNaming(GUILayoutOption[] options)
 			{
-				MyDefinition.SuitName = EditorGUILayout.TextField("Suit Name", MyDefinition.SuitName, options);
+				NSEditorStyles.TextField("Suit Name", MyDefinition.SuitName, options);
 			}
 			void SuitRootObjectField(GUILayoutOption[] options)
 			{
@@ -168,42 +168,13 @@ namespace NullSpace.SDK.Demos
 					MyDefinition.SuitRoot = null;
 				}
 			}
-			bool OperationButton(bool disabledWhenTrue, GUIContent content)
-			{
-				//GUIStyle style = new GUIStyle(GUI.skin.button);
-				using (new EditorGUI.DisabledGroupScope(disabledWhenTrue))
-				{
-					return GUILayout.Button(content);
-				}
-			}
-			bool CreateStyledToggle(bool disabled, bool toggleState, GUIContent content, GUILayoutOption[] options)
-			{
-				GUIStyle style = new GUIStyle(GUI.skin.button);
-				//GUIStyle style = new GUIStyle(GUI.skin.button);
-				//style.fixedWidth = EditorGUIUtility.currentViewWidth / 3;
-				using (new EditorGUI.DisabledGroupScope(disabled))
-				{
-					//if (this != null)
-					//{
-					//	Debug.Log("Record toggle\n");
-					//	Undo.RecordObject(this, "Toggle Field");
-					//}
-
-					bool result = GUILayout.Toggle(toggleState, content, style);
-					return result;
-				}
-			}
 			#endregion
 
 			#region Core Columns
 			void DrawAssignmentAndDisplay()
 			{
-				float width = EditorGUIUtility.currentViewWidth;
-				GUILayoutOption[] innerOptions = { GUILayout.MaxWidth(width / 3 - 10), GUILayout.MinWidth(35) };
-
-				GUIStyle columnStyle = new GUIStyle(EditorStyles.toolbarButton);
-				//columnStyle.fixedHeight = 22;
-
+				GUILayoutOption[] threeColumns = NSEditorStyles.NColumnsLayoutOptions(3);
+				GUIStyle columnStyle = NSEditorStyles.GetColumnStyle();
 
 				for (int i = 0; i < MyDefinition.DefaultOptions.Count; i++)
 				{
@@ -212,25 +183,22 @@ namespace NullSpace.SDK.Demos
 
 					EditorGUILayout.BeginHorizontal(columnStyle);
 					//Create the default option display
-					DisplayAreaFlag(i, innerOptions);
+					DisplayAreaFlag(i, threeColumns);
 					EditorGUILayout.EndHorizontal();
 
 					EditorGUILayout.BeginHorizontal(columnStyle);
 					//The object field for selecting the relevant object
-					CreateSuitObjectField(i, innerOptions);
+					CreateSuitObjectField(i, threeColumns);
 					EditorGUILayout.EndHorizontal();
 
 					EditorGUILayout.BeginHorizontal(columnStyle);
 					//If we have a suitbodycollider for this index
-					SuitQuickButton(i, innerOptions);
+					SuitQuickButton(i, threeColumns);
 					EditorGUILayout.EndHorizontal();
 
 					//End Horizontal
 					EditorGUILayout.EndHorizontal();
-
-					//GUILayout.Space(24);
 				}
-
 			}
 
 			void DisplayAreaFlag(int index, GUILayoutOption[] options)
@@ -241,9 +209,8 @@ namespace NullSpace.SDK.Demos
 					AreaFlag o = MyDefinition.DefaultOptions[index];
 					string label = o.ToString();
 
-					//Remove the underscores?
-
-					GUILayout.Label(label, options);
+					//Make the label but remove the underscores
+					GUILayout.Label(label.Replace('_', ' '), options);
 				}
 			}
 
@@ -352,7 +319,7 @@ namespace NullSpace.SDK.Demos
 				string tooltip = "This will create Suit components on " + (MyDefinition.AddChildObjects ? " children of the selected objects" : " the selected objects");
 				GUIContent content = new GUIContent("Create SuitBodyColliders", tooltip);
 				bool OperationForbidden = CountValidSuitHolders() < 1;
-				bool Result = OperationButton(OperationForbidden, content);
+				bool Result = NSEditorStyles.OperationButton(OperationForbidden, content);
 				if (Result)
 				{
 					//If we should add child objects
@@ -361,7 +328,6 @@ namespace NullSpace.SDK.Demos
 					//Then create the component (it will handle the Collider functionalities)
 					output += AddComponentForSuit();
 				}
-
 				return output;
 			}
 
@@ -856,7 +822,7 @@ namespace NullSpace.SDK.Demos
 			GUIStyle style = new GUIStyle(GUI.skin.button);
 			//GUILayoutOption[] options = new GUILayoutOption[0];
 			float width = EditorGUIUtility.currentViewWidth;
-			GUILayoutOption[] innerOptions = { GUILayout.MaxWidth(width / 3), GUILayout.MinWidth(35) };
+			GUILayoutOption[] threeColumns = NSEditorStyles.NColumnsLayoutOptions(3);
 			GUIContent content = new GUIContent(string.Empty);
 			//Toggle to show a list of all the suits
 			List<SuitBodyCollider> suitObjects = new List<SuitBodyCollider>();
@@ -870,7 +836,9 @@ namespace NullSpace.SDK.Demos
 					EditorGUILayout.BeginVertical("box");
 				}
 				string showQuickButtonName = QuickButtonFoldout ? "Hide" : "Show";
-				QuickButtonFoldout = GUILayout.Toggle(QuickButtonFoldout, showQuickButtonName + " Existing Suit Body Colliders", style);
+
+				QuickButtonFoldout = NSEditorStyles.DrawGUILayoutToggle(QuickButtonFoldout, showQuickButtonName + " Existing Suit Body Colliders");
+
 				if (QuickButtonFoldout)
 				{
 					bool horizOpen = false;
@@ -886,7 +854,7 @@ namespace NullSpace.SDK.Demos
 						{
 							content = new GUIContent(suitObjects[i].name, "Quick Navigate to " + suitObjects[i].name);
 							//Create a select button
-							NSEditorStyles.QuickSelectButton(false, suitObjects[i].gameObject, content, innerOptions);
+							NSEditorStyles.QuickSelectButton(false, suitObjects[i].gameObject, content, threeColumns);
 						}
 					}
 					if (horizOpen) EditorGUILayout.EndHorizontal();
@@ -914,16 +882,18 @@ namespace NullSpace.SDK.Demos
 			}
 
 			//EditorGUILayout.InspectorTitlebar(true, this, true);
-			//GUILayoutOption[] innerOptions = { GUILayout.MaxHeight(45), GUILayout.MinHeight(35) };
 			GUIStyle title = new GUIStyle();
 			title.fontSize = 18;
 			GUILayout.Space(4);
 			GUILayout.Label(" Hardlight Quick Setup Tool", title);
 
-			bool allowExpandAll = Suits != null && Suits.Count > 1;
-			GUIContent content = new GUIContent("Collapsed All");
-			/*bool result = */
-			NSEditorStyles.OperationButton(!allowExpandAll, content);
+			if (Suits != null && Suits.Count > 1)
+			{
+				bool allowExpandAll = Suits != null && Suits.Count > 1;
+				GUIContent content = new GUIContent("Collapsed All");
+				/*bool result = */
+				NSEditorStyles.OperationButton(!allowExpandAll, content);
+			}
 
 			scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
@@ -935,7 +905,6 @@ namespace NullSpace.SDK.Demos
 			EditorGUILayout.EndScrollView();
 
 			DrawQuickButtonsForSuitBodyColliders();
-
 
 			bool clicked = GUILayout.Button("Add Suit Configuration");
 
